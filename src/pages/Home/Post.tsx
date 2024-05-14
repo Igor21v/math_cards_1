@@ -15,7 +15,6 @@ interface Props {
 }
 
 export const Post = ({title, imageUrl, createdAt}: Props) => {
-  console.log(typeof title);
   return (
     <View style={styles.postView}>
       <Image

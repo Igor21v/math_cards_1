@@ -28,7 +28,6 @@ export const HomeScreen = ({navigation}: Props) => {
       .then(({data}) => {
         console.log(JSON.parse(JSON.stringify(data)));
         setItems(JSON.parse(JSON.stringify(data)));
-        console.log('success');
       })
       .catch(err => {
         console.log(err);
