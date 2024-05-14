@@ -1,6 +1,6 @@
 import {Image, StyleSheet, Text, View} from 'react-native';
 
-const truncateTitle = str => {
+const truncateTitle = (str: string) => {
   if (str.length >= 50) {
     return str.substring(0, 50) + '...';
   }
@@ -8,17 +8,25 @@ const truncateTitle = str => {
   return str;
 };
 
-// date-fns => format
+interface Props {
+  title: string;
+  imageUrl: string;
+  createdAt: string;
+}
 
-export const Post = ({title, imageUrl, createdAt}) => {
+export const Post = ({title, imageUrl, createdAt}: Props) => {
+  console.log(typeof title);
   return (
     <View style={styles.postView}>
-      <Image source={{uri: imageUrl}} style={styles.postImage} />
+      <Image
+        source={{
+          uri: imageUrl,
+        }}
+        style={styles.postImage}
+      />
       <View style={styles.postDetails}>
         <Text style={styles.postTitle}>{truncateTitle(title)}</Text>
-        <Text style={styles.postDate}>
-          {new Date(createdAt).toLocaleDateString()}
-        </Text>
+        <Text style={styles.postDate}>{createdAt}</Text>
       </View>
     </View>
   );
@@ -40,7 +48,7 @@ const styles = StyleSheet.create({
   },
   postTitle: {
     fontSize: 17,
-    fontWeight: 700,
+    fontWeight: 'bold',
   },
   postDetails: {
     flex: 1,

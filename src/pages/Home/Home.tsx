@@ -10,17 +10,25 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import {Post} from './Post';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {RootStackParamList} from '../../shared/types/route';
 
-export const HomeScreen = ({navigation}) => {
+type Props = NativeStackScreenProps<RootStackParamList, 'Home'>;
+
+export const HomeScreen = ({navigation}: Props) => {
   const [isLoading, setIsLoading] = React.useState(true);
   const [items, setItems] = React.useState();
 
   const fetchPosts = () => {
     setIsLoading(true);
     axios
-      .get('https://5c3755177820ff0014d92711.mockapi.io/articles')
+      .get(
+        'https://webitem.ru/api/items/?_limit=20&_page=1&_sort=createdAt&_order=desc&q=',
+      )
       .then(({data}) => {
-        setItems(data);
+        console.log(JSON.parse(JSON.stringify(data)));
+        setItems(JSON.parse(JSON.stringify(data)));
+        console.log('success');
       })
       .catch(err => {
         console.log(err);
@@ -61,7 +69,7 @@ export const HomeScreen = ({navigation}) => {
             }>
             <Post
               title={item.title}
-              imageUrl={item.imageUrl}
+              imageUrl={`https://webitem.ru/static/items/${item?.title}.png`}
               createdAt={item.createdAt}
             />
           </TouchableOpacity>

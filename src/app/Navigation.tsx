@@ -1,11 +1,10 @@
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {NavigationContainer} from '@react-navigation/native';
-import {FullPostScreen} from './FullPost';
-import {HomeScreen} from './Home';
+import {HomeScreen} from '../pages/Home/Home';
+import {FullPostScreen} from '../pages/FullPost/FullPostScreen';
+import {RootStackParamList} from '../shared/types/route';
 
-const Stack = createNativeStackNavigator();
-
-// <Routes>....</Routes> => Stack.Navigator
+const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export const Navigation = () => {
   return (

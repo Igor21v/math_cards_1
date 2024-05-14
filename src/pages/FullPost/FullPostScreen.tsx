@@ -2,13 +2,17 @@ import React from 'react';
 import axios from 'axios';
 import {View, Text, Alert, StyleSheet, Image} from 'react-native';
 import {Loading} from '../../shared/ui/Loading';
+import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {RootStackParamList} from '../../shared/types/route';
 
 interface dataType {
-  imageUrl: string;
-  text: string;
+  title: string;
+  description: string;
 }
 
-export const FullPostScreen = ({route, navigation}) => {
+type Props = NativeStackScreenProps<RootStackParamList, 'FullPost'>;
+
+export const FullPostScreen = ({route, navigation}: Props) => {
   const [isLoading, setIsLoading] = React.useState(true);
   const [data, setData] = React.useState<dataType>();
   const {id, title} = route.params;
@@ -18,7 +22,7 @@ export const FullPostScreen = ({route, navigation}) => {
       title,
     });
     axios
-      .get('https://5c3755177820ff0014d92711.mockapi.io/articles/' + id)
+      .get('https://webitem.ru/api/items/' + id)
       .then(({data}) => {
         setData(data);
       })
@@ -41,8 +45,11 @@ export const FullPostScreen = ({route, navigation}) => {
 
   return (
     <View style={{padding: 20}}>
-      <Image source={{uri: data?.imageUrl}} style={styles.postImage} />
-      <Text style={styles.postText}>{data?.text}</Text>
+      <Image
+        source={{uri: `https://webitem.ru/static/items/${data?.title}.png`}}
+        style={styles.postImage}
+      />
+      <Text style={styles.postText}>{data?.description}</Text>
     </View>
   );
 };
