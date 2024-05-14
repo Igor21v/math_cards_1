@@ -26,7 +26,6 @@ export const HomeScreen = ({navigation}: Props) => {
         'https://webitem.ru/api/items/?_limit=20&_page=1&_sort=createdAt&_order=desc&q=',
       )
       .then(({data}) => {
-        console.log(JSON.parse(JSON.stringify(data)));
         setItems(JSON.parse(JSON.stringify(data)));
       })
       .catch(err => {
