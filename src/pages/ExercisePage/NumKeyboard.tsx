@@ -37,11 +37,15 @@ const styles = StyleSheet.create({
   keyboard: {
     width: '100%',
     alignItems: 'center',
+    gap: 5,
+    padding: 5,
   },
   row: {
     flexDirection: 'row',
-    width: '100%',
     justifyContent: 'space-evenly',
+    width: '100%',
+    gap: 5,
+    height: 80,
   },
   button: {
     flex: 1,
