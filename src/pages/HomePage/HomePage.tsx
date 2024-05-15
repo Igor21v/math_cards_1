@@ -2,6 +2,7 @@ import React from 'react';
 import {ScrollView, StyleSheet, Text, TouchableOpacity, View} from 'react-native';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {RootStackParamList} from '../../shared/types/route';
+import {colors} from '../../shared/ui/Colors';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Home'>;
 
@@ -42,10 +43,11 @@ const styles = StyleSheet.create({
     width: '90%',
     marginLeft: '5%',
     marginTop: 10,
-    backgroundColor: '#66A3D2',
+    backgroundColor: colors.first,
   },
   text: {
     fontWeight: 'bold',
     fontSize: 24,
+    color: colors.second,
   },
 });
