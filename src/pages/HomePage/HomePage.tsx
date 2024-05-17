@@ -3,6 +3,7 @@ import {ScrollView, StyleSheet, Text, TouchableOpacity, View} from 'react-native
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {RootStackParamList} from '../../shared/types/route';
 import {colors} from '../../shared/ui/Colors';
+import {AppText} from '../../shared/ui/AppText';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Home'>;
 
@@ -12,7 +13,7 @@ export const HomePage = ({navigation}: Props) => {
       <TouchableOpacity
         style={styles.section}
         onPress={() => navigation.navigate('Exercise', {maxNum: 10, type: 'all'})}>
-        <Text style={styles.text}> Примеры</Text>
+        <AppText text="Примеры" style={styles.text} />
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.section}
