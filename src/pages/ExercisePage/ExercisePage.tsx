@@ -4,6 +4,7 @@ import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {RootStackParamList} from '../../shared/types/route';
 import {NumKeyboard} from './NumKeyboard';
 import {colors} from '../../shared/ui/Colors';
+import {AppText} from '../../shared/ui/AppText';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Exercise'>;
 
@@ -11,21 +12,18 @@ export const ExercisePage = ({route, navigation}: Props) => {
   const {maxNum, type} = route.params;
 
   return (
-    <View style={styles.page}>
+    <>
       <Text>Icon ?</Text>
-      <Text style={styles.task}>TASK</Text>
+      <AppText size="l" style={styles.task}>
+        TASK
+      </AppText>
       <NumKeyboard />
-    </View>
+    </>
   );
 };
 
 const styles = StyleSheet.create({
-  page: {
-    flex: 1,
-  },
   task: {
-    fontSize: 32,
     margin: 'auto',
-    color: colors.third,
   },
 });

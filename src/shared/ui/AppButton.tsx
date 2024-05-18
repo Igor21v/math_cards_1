@@ -6,11 +6,11 @@ interface Props extends TouchableOpacityProps {
   title: string;
 }
 
-export const AppButton = (props: Props) => {
-  const {title, style, ...otherProps} = props;
+export const AppButton = (props: TouchableOpacityProps) => {
+  const {children, style, ...otherProps} = props;
   return (
     <TouchableOpacity {...otherProps} style={[styles.wrap, style]}>
-      <Text style={styles.text}>{title}</Text>
+      <Text style={styles.text}>{children}</Text>
     </TouchableOpacity>
   );
 };

@@ -7,13 +7,14 @@ import {ExercisePage} from '../pages/ExercisePage/ExercisePage';
 import {LinePage} from '../pages/LinePage/LinePage';
 import {ComparePage} from '../pages/ComparePage/ComparePage';
 import {StyleSheet} from 'react-native';
+import {colors} from '../shared/ui/Colors';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 export const Navigation = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator>
+      <Stack.Navigator /* screenOptions={{contentStyle: styles.stackNav}} */>
         <Stack.Screen name="Home" component={HomePage} options={{title: 'Математика 1 класс'}} />
         <Stack.Screen name="Line" component={LinePage} options={{title: 'Соедини линию'}} />
         <Stack.Screen name="Exercise" component={ExercisePage} options={{title: 'Примеры'}} />
@@ -23,3 +24,9 @@ export const Navigation = () => {
     </NavigationContainer>
   );
 };
+
+/* const styles = StyleSheet.create({
+  stackNav: {
+    backgroundColor: colors.second,
+  },
+}); */

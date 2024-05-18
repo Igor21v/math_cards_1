@@ -11,9 +11,10 @@ interface Props extends TextProps {
 
 export const AppText = (props: Props) => {
   const {children, style, bold, size = 'm', ...otherProps} = props;
-
+  const mods = [];
+  bold && mods.push(styles.bold);
   return (
-    <Text style={[styles.text, styles[size], style]} {...otherProps}>
+    <Text style={[styles.text, styles[size], style, ...mods]} {...otherProps}>
       {children}
     </Text>
   );
@@ -34,5 +35,8 @@ const styles = StyleSheet.create({
   },
   xl: {
     fontSize: 48,
+  },
+  bold: {
+    fontWeight: 'bold',
   },
 });

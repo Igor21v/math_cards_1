@@ -10,24 +10,24 @@ export const NumKeyboard = () => {
   return (
     <View style={styles.keyboard}>
       <View style={styles.row}>
-        <AppButton title="1" style={styles.button} />
-        <AppButton title="2" style={styles.button} />
-        <AppButton title="3" style={styles.button} />
+        <AppButton style={styles.button}> 1</AppButton>
+        <AppButton style={styles.button}>2</AppButton>
+        <AppButton style={styles.button}>3</AppButton>
       </View>
       <View style={styles.row}>
-        <AppButton title="4" style={styles.button} />
-        <AppButton title="5" style={styles.button} />
-        <AppButton title="6" style={styles.button} />
+        <AppButton style={styles.button}>4</AppButton>
+        <AppButton style={styles.button}>5</AppButton>
+        <AppButton style={styles.button}>6</AppButton>
       </View>
       <View style={styles.row}>
-        <AppButton title="7" style={styles.button} />
-        <AppButton title="8" style={styles.button} />
-        <AppButton title="9" style={styles.button} />
+        <AppButton style={styles.button}>7</AppButton>
+        <AppButton style={styles.button}>8</AppButton>
+        <AppButton style={styles.button}>9</AppButton>
       </View>
       <View style={styles.row}>
-        <AppButton title="<" style={styles.button} />
-        <AppButton title="0" style={styles.button} />
-        <AppButton title="J" style={styles.button} />
+        <AppButton style={styles.button}>{String.fromCharCode(13)}</AppButton>
+        <AppButton style={styles.button}>0</AppButton>
+        <AppButton style={styles.button}></AppButton>
       </View>
     </View>
   );
