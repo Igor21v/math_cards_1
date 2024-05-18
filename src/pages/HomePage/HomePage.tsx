@@ -13,7 +13,7 @@ export const HomePage = ({navigation}: Props) => {
       <TouchableOpacity
         style={styles.section}
         onPress={() => navigation.navigate('Exercise', {maxNum: 10, type: 'all'})}>
-        <AppText text="Примеры" style={styles.text} />
+        <AppText style={styles.text}>Примеры</AppText>
       </TouchableOpacity>
       <TouchableOpacity
         style={styles.section}

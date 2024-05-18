@@ -5,17 +5,16 @@ import {colors} from './Colors';
 type Sizes = 's' | 'm' | 'l' | 'xl';
 
 interface Props extends TextProps {
-  text: string;
   size?: Sizes;
   bold?: boolean;
 }
 
 export const AppText = (props: Props) => {
-  const {text, style, bold, size = 'm', ...otherProps} = props;
+  const {children, style, bold, size = 'm', ...otherProps} = props;
 
   return (
     <Text style={[styles.text, styles[size], style]} {...otherProps}>
-      {text}
+      {children}
     </Text>
   );
 };
