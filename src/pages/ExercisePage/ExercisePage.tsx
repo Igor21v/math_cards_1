@@ -5,6 +5,7 @@ import {RootStackParamList} from '../../shared/types/route';
 import {NumKeyboard} from './NumKeyboard';
 import {colors} from '../../shared/ui/Colors';
 import {AppText} from '../../shared/ui/AppText';
+import {Backspace} from '../../shared/icons/Backspace';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Exercise'>;
 

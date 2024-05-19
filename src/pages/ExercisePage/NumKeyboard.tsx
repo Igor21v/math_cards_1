@@ -3,6 +3,8 @@ import {View, Text, Alert, StyleSheet, Image, Button, TouchableOpacity} from 're
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {RootStackParamList} from '../../shared/types/route';
 import {AppButton} from '../../shared/ui/AppButton';
+import {Backspace} from '../../shared/icons/Backspace';
+import {Enter} from '../../shared/icons/Enter';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Exercise'>;
 
@@ -25,9 +27,13 @@ export const NumKeyboard = () => {
         <AppButton style={styles.button}>9</AppButton>
       </View>
       <View style={styles.row}>
-        <AppButton style={styles.button}>{String.fromCharCode(13)}</AppButton>
+        <AppButton style={styles.button}>
+          <Backspace />
+        </AppButton>
         <AppButton style={styles.button}>0</AppButton>
-        <AppButton style={styles.button}></AppButton>
+        <AppButton style={styles.button}>
+          <Enter />
+        </AppButton>
       </View>
     </View>
   );
