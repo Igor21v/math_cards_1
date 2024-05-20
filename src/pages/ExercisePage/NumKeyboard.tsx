@@ -1,18 +1,21 @@
 import React from 'react';
-import {View, Text, Alert, StyleSheet, Image, Button, TouchableOpacity} from 'react-native';
-import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {RootStackParamList} from '../../shared/types/route';
+import {View, StyleSheet} from 'react-native';
 import {AppButton} from '../../shared/ui/AppButton';
 import {Backspace} from '../../shared/icons/Backspace';
 import {Enter} from '../../shared/icons/Enter';
 
-type Props = NativeStackScreenProps<RootStackParamList, 'Exercise'>;
-
-export const NumKeyboard = () => {
+export const NumKeyboard = (props: {fn: (num: number) => void}) => {
   return (
     <View style={styles.keyboard}>
       <View style={styles.row}>
-        <AppButton style={styles.button}> 1</AppButton>
+        <AppButton
+          style={styles.button}
+          onPress={() => {
+            props.fn(1);
+          }}>
+          {' '}
+          1
+        </AppButton>
         <AppButton style={styles.button}>2</AppButton>
         <AppButton style={styles.button}>3</AppButton>
       </View>

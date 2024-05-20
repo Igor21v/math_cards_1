@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {View, Text, Alert, StyleSheet, Image} from 'react-native';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {RootStackParamList} from '../../shared/types/route';
@@ -11,6 +11,7 @@ type Props = NativeStackScreenProps<RootStackParamList, 'Exercise'>;
 
 export const ExercisePage = ({route, navigation}: Props) => {
   const {maxNum, type} = route.params;
+  const [ans, setAns] = useState();
 
   return (
     <>
@@ -18,7 +19,11 @@ export const ExercisePage = ({route, navigation}: Props) => {
       <AppText size="l" style={styles.task}>
         TASK
       </AppText>
-      <NumKeyboard />
+      <NumKeyboard
+        fn={num => {
+          console.log(num);
+        }}
+      />
     </>
   );
 };
