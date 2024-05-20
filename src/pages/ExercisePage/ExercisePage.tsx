@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, Text, Alert, StyleSheet, Image} from 'react-native';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {RootStackParamList} from '../../shared/types/route';
@@ -11,19 +11,29 @@ type Props = NativeStackScreenProps<RootStackParamList, 'Exercise'>;
 
 export const ExercisePage = ({route, navigation}: Props) => {
   const {maxNum, type} = route.params;
-  const [ans, setAns] = useState();
+  const [task, setTask] = useState({firstNum: 0, secondNum: 0});
+  const genTask = (max: number) => {
+    const firstNum = Math.floor(Math.random() * (max - 1)) + 1;
+    const secondMax = max - firstNum;
+    const secondNum = Math.floor(Math.random() * secondMax) + 1;
+    setTask({firstNum: firstNum, secondNum: secondNum});
+  };
+  useEffect(() => {
+    genTask(20);
+  }, []);
+
+  const [ans, setAns] = useState('');
+  const check = () => {
+    genTask(5);
+  };
 
   return (
     <>
       <Text>Icon ?</Text>
       <AppText size="l" style={styles.task}>
-        TASK
+        {task.firstNum}+{task.secondNum}={ans}
       </AppText>
-      <NumKeyboard
-        fn={num => {
-          console.log(num);
-        }}
-      />
+      <NumKeyboard setNum={setAns} enter={check} />
     </>
   );
 };
