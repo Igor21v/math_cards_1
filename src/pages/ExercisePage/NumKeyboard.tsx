@@ -7,19 +7,23 @@ import {Enter} from '../../shared/icons/Enter';
 interface KeyboardProps {
   setNum: Dispatch<SetStateAction<string>>;
   enter: () => void;
+  setError: Dispatch<SetStateAction<boolean>>;
 }
 
 export const NumKeyboard = (props: KeyboardProps) => {
-  const {setNum, enter} = props;
+  const {setNum, enter, setError} = props;
   const addDigit = (num: string) => {
     return () => {
       setNum(currNum => {
+        setError(false);
+        if (currNum === '?') return num;
         if (currNum.length < 3) return currNum + num;
         return currNum;
       });
     };
   };
   const delDegit = () => {
+    setError(false);
     setNum(currNum => {
       return currNum.slice(0, -1);
     });

@@ -7,12 +7,14 @@ type Sizes = 's' | 'm' | 'l' | 'xl';
 interface Props extends TextProps {
   size?: Sizes;
   bold?: boolean;
+  error?: boolean;
 }
 
 export const AppText = (props: Props) => {
-  const {children, style, bold, size = 'm', ...otherProps} = props;
+  const {children, style, bold, error, size = 'm', ...otherProps} = props;
   const mods = [];
   bold && mods.push(styles.bold);
+  error && mods.push(styles.error);
   return (
     <Text style={[styles.text, styles[size], style, ...mods]} {...otherProps}>
       {children}
@@ -38,5 +40,8 @@ const styles = StyleSheet.create({
   },
   bold: {
     fontWeight: 'bold',
+  },
+  error: {
+    color: colors.error,
   },
 });
