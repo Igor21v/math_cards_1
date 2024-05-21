@@ -1,20 +1,16 @@
 import React, {useEffect, useState} from 'react';
-import {View, Text, Alert, StyleSheet, Image, StyleSheetProperties, StyleProp, TextStyle} from 'react-native';
+import {StyleSheet, TouchableOpacity} from 'react-native';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {RootStackParamList} from '../../shared/types/route';
 import {NumKeyboard} from './NumKeyboard';
-import {colors} from '../../shared/ui/Colors';
 import {AppText} from '../../shared/ui/AppText';
-import {Backspace} from '../../shared/icons/Backspace';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Exercise'>;
 
 export const ExercisePage = ({route, navigation}: Props) => {
-  const {maxNum, type} = route.params;
   const [ans, setAns] = useState('?');
   const [task, setTask] = useState({firstNum: 0, secondNum: 0});
   const [error, setError] = useState(false);
-  const taskMods: StyleProp<TextStyle> = [];
 
   const genTask = (max: number) => {
     const firstNum = Math.floor(Math.random() * (max - 1)) + 1;
@@ -30,16 +26,18 @@ export const ExercisePage = ({route, navigation}: Props) => {
   const check = () => {
     if (task.firstNum + task.secondNum === +ans) {
       setError(false);
+      setAns('?');
       genTask(20);
     } else {
       setError(true);
     }
   };
-  console.log(taskMods);
 
   return (
     <>
-      <Text>Icon ?</Text>
+      <TouchableOpacity style={styles.help}>
+        <AppText size="s">Нужна помощь?</AppText>
+      </TouchableOpacity>
       <AppText size="l" error={error} style={styles.task}>
         {task.firstNum}+{task.secondNum}={ans}
       </AppText>
@@ -51,5 +49,12 @@ export const ExercisePage = ({route, navigation}: Props) => {
 const styles = StyleSheet.create({
   task: {
     margin: 'auto',
+  },
+  help: {
+    marginLeft: 'auto',
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 4,
+    marginRight: 4,
   },
 });
