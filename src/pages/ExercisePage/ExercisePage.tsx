@@ -1,5 +1,5 @@
-import React, {useEffect, useState} from 'react';
-import {StyleSheet, TouchableOpacity} from 'react-native';
+import React, {useEffect, useRef, useState} from 'react';
+import {Animated, StyleSheet, TouchableOpacity} from 'react-native';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {RootStackParamList} from '../../shared/types/route';
 import {NumKeyboard} from './NumKeyboard';
@@ -11,6 +11,11 @@ export const ExercisePage = ({route, navigation}: Props) => {
   const [ans, setAns] = useState('?');
   const [task, setTask] = useState({firstNum: 0, secondNum: 0});
   const [error, setError] = useState(false);
+
+  let value = useRef(new Animated.Value(0)).current;
+  const startAnimate = () => {
+    Animated.timing(value, {toValue: 1.2, useNativeDriver: true}).start();
+  };
 
   const genTask = (max: number) => {
     const firstNum = Math.floor(Math.random() * (max - 1)) + 1;
@@ -30,14 +35,19 @@ export const ExercisePage = ({route, navigation}: Props) => {
       genTask(20);
     } else {
       setError(true);
+      value.setValue(0);
+      startAnimate();
     }
   };
 
   return (
     <>
-      <TouchableOpacity style={styles.help}>
-        <AppText size="s">Нужна помощь?</AppText>
-      </TouchableOpacity>
+      <Animated.View style={[styles.help, {opacity: value}]}>
+        <TouchableOpacity>
+          <AppText size="s">Нужна помощь?</AppText>
+        </TouchableOpacity>
+      </Animated.View>
+
       <AppText size="l" error={error} style={styles.task}>
         {task.firstNum}+{task.secondNum}={ans}
       </AppText>
