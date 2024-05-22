@@ -25,6 +25,7 @@ export const AppText = (props: Props) => {
 const styles = StyleSheet.create({
   text: {
     color: colors.third,
+    textAlign: 'center',
   },
   s: {
     fontSize: 12,

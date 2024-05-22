@@ -4,6 +4,7 @@ import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {RootStackParamList} from '../../shared/types/route';
 import {NumKeyboard} from './NumKeyboard';
 import {AppText} from '../../shared/ui/AppText';
+import {Help} from './Help';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Exercise'>;
 
@@ -11,6 +12,7 @@ export const ExercisePage = ({route, navigation}: Props) => {
   const [ans, setAns] = useState('?');
   const [task, setTask] = useState({firstNum: 0, secondNum: 0});
   const [error, setError] = useState(false);
+  const [showHelp, setShowHelp] = useState(false);
   useEffect(() => {
     genTask(20);
   }, []);
@@ -49,7 +51,8 @@ export const ExercisePage = ({route, navigation}: Props) => {
 
   return (
     <>
-      <TouchableOpacity style={styles.help}>
+      <Help showHelp={showHelp} setShowHelp={setShowHelp} />
+      <TouchableOpacity style={styles.help} onPress={() => setShowHelp(true)}>
         <AppText size="s">Нужна помощь?</AppText>
       </TouchableOpacity>
       <Animated.View style={[styles.task, {transform: [{translateX: value}]}]}>
