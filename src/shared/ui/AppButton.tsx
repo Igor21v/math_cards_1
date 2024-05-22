@@ -2,7 +2,7 @@ import React from 'react';
 import {StyleSheet, Text, TouchableOpacity, TouchableOpacityProps, ViewStyle} from 'react-native';
 import {colors} from './Colors';
 
-type Sizes = 's' | 'm' | 'l' | 'xl';
+type Sizes = 's' | 'm' | 'l' | 'xl' | 'xxl';
 
 interface Props extends TouchableOpacityProps {
   size?: Sizes;
@@ -30,17 +30,20 @@ const styles = StyleSheet.create({
     color: colors.second,
   },
   s: {
-    fontSize: 12,
+    fontSize: 14,
   },
   m: {
-    fontSize: 24,
+    fontSize: 20,
     marginRight: 8,
     marginLeft: 8,
   },
   l: {
-    fontSize: 36,
+    fontSize: 26,
   },
   xl: {
-    fontSize: 48,
+    fontSize: 32,
+  },
+  xxl: {
+    fontSize: 38,
   },
 });

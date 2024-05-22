@@ -32,46 +32,46 @@ export const NumKeyboard = (props: KeyboardProps) => {
   return (
     <View style={styles.keyboard}>
       <View style={styles.row}>
-        <AppButton style={styles.button} onPress={addDigit('1')}>
+        <AppButton style={styles.button} size="xl" onPress={addDigit('1')}>
           1
         </AppButton>
-        <AppButton style={styles.button} onPress={addDigit('2')}>
+        <AppButton style={styles.button} size="xl" onPress={addDigit('2')}>
           2
         </AppButton>
-        <AppButton style={styles.button} onPress={addDigit('3')}>
+        <AppButton style={styles.button} size="xl" onPress={addDigit('3')}>
           3
         </AppButton>
       </View>
       <View style={styles.row}>
-        <AppButton style={styles.button} onPress={addDigit('4')}>
+        <AppButton style={styles.button} size="xl" onPress={addDigit('4')}>
           4{' '}
         </AppButton>
-        <AppButton style={styles.button} onPress={addDigit('5')}>
+        <AppButton style={styles.button} size="xl" onPress={addDigit('5')}>
           5
         </AppButton>
-        <AppButton style={styles.button} onPress={addDigit('6')}>
+        <AppButton style={styles.button} size="xl" onPress={addDigit('6')}>
           6
         </AppButton>
       </View>
       <View style={styles.row}>
-        <AppButton style={styles.button} onPress={addDigit('7')}>
+        <AppButton style={styles.button} size="xl" onPress={addDigit('7')}>
           7
         </AppButton>
-        <AppButton style={styles.button} onPress={addDigit('8')}>
+        <AppButton style={styles.button} size="xl" onPress={addDigit('8')}>
           8
         </AppButton>
-        <AppButton style={styles.button} onPress={addDigit('9')}>
+        <AppButton style={styles.button} size="xl" onPress={addDigit('9')}>
           9
         </AppButton>
       </View>
       <View style={styles.row}>
-        <AppButton style={styles.button} onPress={delDegit}>
+        <AppButton style={styles.button} size="xl" onPress={delDegit}>
           <Backspace />
         </AppButton>
-        <AppButton style={styles.button} onPress={addDigit('0')}>
+        <AppButton style={styles.button} size="xl" onPress={addDigit('0')}>
           0
         </AppButton>
-        <AppButton style={styles.button} onPress={enter}>
+        <AppButton style={styles.button} size="xl" onPress={enter}>
           <Enter />
         </AppButton>
       </View>
