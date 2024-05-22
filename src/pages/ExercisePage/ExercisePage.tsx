@@ -70,7 +70,8 @@ const styles = StyleSheet.create({
     margin: 'auto',
   },
   help: {
-    marginLeft: 'auto',
+    position: 'absolute',
+    right: 4,
     flexDirection: 'row',
     alignItems: 'center',
     padding: 8,
