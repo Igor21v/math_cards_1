@@ -13,19 +13,19 @@ export const Help = (props: HelpProps) => {
   return (
     <Modal
       animationType="slide"
-      transparent={true}
+      transparent
       visible={showHelp}
       onRequestClose={() => {
         setShowHelp(false);
       }}>
-      <View style={styles.centeredView}>
+      <Pressable style={styles.centeredView} onPress={() => setShowHelp(false)}>
         <View style={styles.modalView}>
           <AppText style={styles.text}>Здесь будет объяснение что к чему</AppText>
-          <AppButton onPress={() => setShowHelp(false)}>
+          <AppButton onPress={() => setShowHelp(false)} style={styles.button}>
             <Text>Понятно</Text>
           </AppButton>
         </View>
-      </View>
+      </Pressable>
     </Modal>
   );
 };
@@ -36,6 +36,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 22,
+    backgroundColor: 'rgba(0,0,0,0.5)',
+    height: '100%',
   },
   modalView: {
     margin: 20,
@@ -52,11 +54,7 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     elevation: 50,
   },
-  button: {
-    borderRadius: 12,
-    padding: 10,
-    elevation: 50,
-  },
+  button: {},
   buttonOpen: {
     backgroundColor: '#F194FF',
   },
