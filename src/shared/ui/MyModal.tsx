@@ -1,9 +1,8 @@
 import React, {Dispatch, SetStateAction, useState} from 'react';
-import {View, StyleSheet, Alert, Text, Pressable, StatusBar} from 'react-native';
+import {View, StyleSheet, Modal, Alert, Text, Pressable, StatusBar} from 'react-native';
 import {AppButton} from '../../shared/ui/AppButton';
 import {AppText} from '../../shared/ui/AppText';
 import {colors} from '../../shared/ui/Colors';
-import Modal from 'react-native-modal';
 
 interface HelpProps {
   showHelp: boolean;
@@ -14,13 +13,14 @@ export const Help = (props: HelpProps) => {
   const {showHelp, setShowHelp} = props;
   return (
     <Modal
-      isVisible={showHelp}
       statusBarTranslucent
-      swipeDirection="down"
-      onSwipeComplete={() => {
+      animationType="slide"
+      transparent
+      visible={showHelp}
+      onRequestClose={() => {
         setShowHelp(false);
-      }}
-      style={{justifyContent: 'flex-end', margin: 0}}>
+      }}>
+      <Pressable style={styles.overlay} onPress={() => setShowHelp(false)}></Pressable>
       <View style={styles.modalView}>
         <AppText style={styles.text}>Здесь будет объяснение что к чему</AppText>
         <AppButton onPress={() => setShowHelp(false)}>
@@ -32,6 +32,14 @@ export const Help = (props: HelpProps) => {
 };
 
 const styles = StyleSheet.create({
+  overlay: {
+    backgroundColor: 'rgba(0,0,0,0.5)',
+    position: 'absolute',
+    top: 0,
+    bottom: 0,
+    right: 0,
+    left: 0,
+  },
   modalView: {
     margin: 20,
     backgroundColor: colors.second,
