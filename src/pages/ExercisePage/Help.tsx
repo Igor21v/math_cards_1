@@ -62,7 +62,7 @@ const styles = StyleSheet.create({
     width: '40%',
     top: 18,
   },
-  cross: {position: 'absolute', right: 14, top: 8},
+  cross: {position: 'absolute', right: 14, top: 10},
   text: {
     paddingBottom: 20,
   },
