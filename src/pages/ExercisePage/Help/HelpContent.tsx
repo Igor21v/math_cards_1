@@ -1,8 +1,14 @@
 import React from 'react';
 import {StyleSheet} from 'react-native';
 import {AppText} from '../../../shared/ui/AppText';
+import {TaskProps} from '../ExercisePage';
 
-export const HelpContent = () => {
+interface HelpProps {
+  task: TaskProps;
+}
+
+export const HelpContent = (props: HelpProps) => {
+  const {task} = props;
   return <AppText style={styles.text}>Здесь будет объяснение что к чему</AppText>;
 };
 

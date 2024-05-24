@@ -6,14 +6,16 @@ import {colors} from '../../../shared/ui/Colors';
 import Modal from 'react-native-modal';
 import {Cross} from '../../../shared/icons/Cross';
 import {HelpContent} from './HelpContent';
+import {TaskProps} from '../ExercisePage';
 
 interface HelpProps {
   showHelp: boolean;
   setShowHelp: Dispatch<SetStateAction<boolean>>;
+  task: TaskProps;
 }
 
 export const HelpModal = (props: HelpProps) => {
-  const {showHelp, setShowHelp} = props;
+  const {showHelp, setShowHelp, task} = props;
   return (
     <Modal
       isVisible={showHelp}
@@ -27,7 +29,7 @@ export const HelpModal = (props: HelpProps) => {
         <View style={styles.line}></View>
         <View style={styles.line2}></View>
         <Cross style={styles.cross} onPress={() => setShowHelp(false)} />
-        <HelpContent />
+        <HelpContent task={task} />
       </View>
     </Modal>
   );

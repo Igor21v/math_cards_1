@@ -7,10 +7,14 @@ import {AppText} from '../../shared/ui/AppText';
 import {HelpModal} from './Help/HelpModal';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Exercise'>;
+export interface TaskProps {
+  firstNum: number;
+  secondNum: number;
+}
 
 export const ExercisePage = ({route, navigation}: Props) => {
   const [ans, setAns] = useState('?');
-  const [task, setTask] = useState({firstNum: 0, secondNum: 0});
+  const [task, setTask] = useState<TaskProps>({firstNum: 0, secondNum: 0});
   const [error, setError] = useState(false);
   const [showHelp, setShowHelp] = useState(false);
   useEffect(() => {
@@ -51,7 +55,7 @@ export const ExercisePage = ({route, navigation}: Props) => {
 
   return (
     <>
-      <HelpModal showHelp={showHelp} setShowHelp={setShowHelp} />
+      <HelpModal showHelp={showHelp} setShowHelp={setShowHelp} task={task} />
       <TouchableOpacity style={styles.help} onPress={() => setShowHelp(true)}>
         <AppText size="s">Нужна помощь?</AppText>
       </TouchableOpacity>
