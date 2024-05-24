@@ -4,7 +4,7 @@ import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {RootStackParamList} from '../../shared/types/route';
 import {NumKeyboard} from './NumKeyboard';
 import {AppText} from '../../shared/ui/AppText';
-import {Help} from './Help';
+import {HelpModal} from './Help/HelpModal';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Exercise'>;
 
@@ -51,7 +51,7 @@ export const ExercisePage = ({route, navigation}: Props) => {
 
   return (
     <>
-      <Help showHelp={showHelp} setShowHelp={setShowHelp} />
+      <HelpModal showHelp={showHelp} setShowHelp={setShowHelp} />
       <TouchableOpacity style={styles.help} onPress={() => setShowHelp(true)}>
         <AppText size="s">Нужна помощь?</AppText>
       </TouchableOpacity>

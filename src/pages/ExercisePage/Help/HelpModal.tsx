@@ -1,17 +1,18 @@
 import React, {Dispatch, SetStateAction, useState} from 'react';
 import {View, StyleSheet, Alert, Text, Pressable, StatusBar} from 'react-native';
-import {AppButton} from '../../shared/ui/AppButton';
-import {AppText} from '../../shared/ui/AppText';
-import {colors} from '../../shared/ui/Colors';
+import {AppButton} from '../../../shared/ui/AppButton';
+import {AppText} from '../../../shared/ui/AppText';
+import {colors} from '../../../shared/ui/Colors';
 import Modal from 'react-native-modal';
-import {Cross} from '../../shared/icons/Cross';
+import {Cross} from '../../../shared/icons/Cross';
+import {HelpContent} from './HelpContent';
 
 interface HelpProps {
   showHelp: boolean;
   setShowHelp: Dispatch<SetStateAction<boolean>>;
 }
 
-export const Help = (props: HelpProps) => {
+export const HelpModal = (props: HelpProps) => {
   const {showHelp, setShowHelp} = props;
   return (
     <Modal
@@ -26,7 +27,7 @@ export const Help = (props: HelpProps) => {
         <View style={styles.line}></View>
         <View style={styles.line2}></View>
         <Cross style={styles.cross} onPress={() => setShowHelp(false)} />
-        <AppText style={styles.text}>Здесь будет объяснение что к чему</AppText>
+        <HelpContent />
       </View>
     </Modal>
   );
@@ -63,9 +64,6 @@ const styles = StyleSheet.create({
     top: 18,
   },
   cross: {position: 'absolute', right: 14, top: 10},
-  text: {
-    paddingBottom: 20,
-  },
   modalText: {
     marginBottom: 15,
     textAlign: 'center',
