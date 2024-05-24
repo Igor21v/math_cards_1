@@ -4,6 +4,7 @@ import {AppButton} from '../../shared/ui/AppButton';
 import {AppText} from '../../shared/ui/AppText';
 import {colors} from '../../shared/ui/Colors';
 import Modal from 'react-native-modal';
+import {Cross} from '../../shared/icons/Cross';
 
 interface HelpProps {
   showHelp: boolean;
@@ -20,29 +21,48 @@ export const Help = (props: HelpProps) => {
       onSwipeComplete={() => {
         setShowHelp(false);
       }}
-      style={{justifyContent: 'flex-end', margin: 0}}>
+      style={styles.wrap}>
       <View style={styles.modalView}>
+        <View style={styles.line}></View>
+        <View style={styles.line2}></View>
+        <Cross style={styles.cross} onPress={() => setShowHelp(false)} />
         <AppText style={styles.text}>Здесь будет объяснение что к чему</AppText>
-        <AppButton onPress={() => setShowHelp(false)}>
-          <Text>Понятно</Text>
-        </AppButton>
       </View>
     </Modal>
   );
 };
 
 const styles = StyleSheet.create({
+  wrap: {
+    justifyContent: 'flex-end',
+    margin: 0,
+  },
   modalView: {
-    margin: 20,
     backgroundColor: colors.second,
-    borderRadius: 20,
+    borderTopRightRadius: 20,
+    borderTopLeftRadius: 20,
+    height: 340,
     padding: 35,
     alignItems: 'center',
-    shadowColor: '#000',
-    elevation: 50,
     marginTop: 'auto',
-    marginBottom: 'auto',
   },
+  line: {
+    backgroundColor: colors.first,
+    position: 'absolute',
+    height: 2,
+    borderRadius: 2,
+    width: '30%',
+    top: 10,
+  },
+  line2: {
+    backgroundColor: colors.first,
+    position: 'absolute',
+    height: 2,
+    borderRadius: 2,
+    width: '40%',
+    top: 18,
+  },
+  cross: {position: 'absolute', right: 14, top: 8},
   text: {
     paddingBottom: 20,
   },
