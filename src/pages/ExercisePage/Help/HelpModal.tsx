@@ -26,8 +26,9 @@ export const HelpModal = (props: HelpProps) => {
       }}
       style={styles.wrap}>
       <View style={styles.modalView}>
-        <View style={styles.line}></View>
+        <View style={styles.line1}></View>
         <View style={styles.line2}></View>
+        <View style={styles.line3}></View>
         <Cross style={styles.cross} onPress={() => setShowHelp(false)} />
         <HelpContent task={task} />
       </View>
@@ -49,12 +50,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: 'auto',
   },
-  line: {
+  line1: {
     backgroundColor: colors.first,
     position: 'absolute',
     height: 2,
     borderRadius: 2,
-    width: '30%',
+    width: '20%',
     top: 10,
   },
   line2: {
@@ -62,8 +63,16 @@ const styles = StyleSheet.create({
     position: 'absolute',
     height: 2,
     borderRadius: 2,
-    width: '40%',
+    width: '30%',
     top: 18,
+  },
+  line3: {
+    backgroundColor: colors.first,
+    position: 'absolute',
+    height: 2,
+    borderRadius: 2,
+    width: '40%',
+    top: 26,
   },
   cross: {position: 'absolute', right: 14, top: 10},
   modalText: {

@@ -5,16 +5,18 @@ import {RootStackParamList} from '../../shared/types/route';
 import {NumKeyboard} from './NumKeyboard';
 import {AppText} from '../../shared/ui/AppText';
 import {HelpModal} from './Help/HelpModal';
+import {genTaskFn} from './genTask';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Exercise'>;
 export interface TaskProps {
   firstNum: number;
   secondNum: number;
+  operation: 'add' | 'subtract';
 }
 
 export const ExercisePage = ({route, navigation}: Props) => {
   const [ans, setAns] = useState('?');
-  const [task, setTask] = useState<TaskProps>({firstNum: 0, secondNum: 0});
+  const [task, setTask] = useState<TaskProps>({firstNum: 0, secondNum: 0, operation: 'add'});
   const [error, setError] = useState(false);
   const [showHelp, setShowHelp] = useState(false);
   useEffect(() => {
@@ -33,10 +35,8 @@ export const ExercisePage = ({route, navigation}: Props) => {
 
   // Генерим задачу
   const genTask = (max: number) => {
-    const firstNum = Math.floor(Math.random() * (max - 1)) + 1;
-    const secondMax = max - firstNum;
-    const secondNum = Math.floor(Math.random() * secondMax) + 1;
-    setTask({firstNum: firstNum, secondNum: secondNum});
+    const {firstNum, secondNum, operation} = genTaskFn({max, mode: 'all'});
+    setTask({firstNum, secondNum, operation});
   };
 
   // Проверка ответа
@@ -50,6 +50,7 @@ export const ExercisePage = ({route, navigation}: Props) => {
       value.setValue(0);
       startAnimate();
       Vibration.vibrate(80);
+      genTask(5);
     }
   };
 
@@ -61,7 +62,9 @@ export const ExercisePage = ({route, navigation}: Props) => {
       </TouchableOpacity>
       <Animated.View style={[styles.task, {transform: [{translateX: value}]}]}>
         <AppText size="l" error={error}>
-          {task.firstNum}+{task.secondNum}={ans}
+          {task.firstNum}
+          {task.operation === 'add' ? '+' : '-'}
+          {task.secondNum}={ans}
         </AppText>
       </Animated.View>
       <NumKeyboard setNum={setAns} enter={check} setError={setError} />
