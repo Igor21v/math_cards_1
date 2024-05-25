@@ -23,7 +23,8 @@ export const genTaskFn = (props: GenTaskProps): TaskProps => {
 
   function add(): TaskProps {
     const firstNum = Math.floor(Math.random() * (max - 1)) + 1;
-    const secondMax = max - firstNum;
+    // Ограничиваем второй аргумент одной цифрой, т.к. первый класс
+    const secondMax = Math.min(max - firstNum, 9);
     const secondNum = Math.floor(Math.random() * secondMax) + 1;
     const ans = firstNum + secondNum;
     return {firstNum, secondNum, operation: 'add', ans};
@@ -31,14 +32,10 @@ export const genTaskFn = (props: GenTaskProps): TaskProps => {
 
   function subtract(): TaskProps {
     const firstNum = Math.floor(Math.random() * (max - 1)) + 2;
-    const secondMax = firstNum - 1;
+    // Ограничиваем второй аргумент одной цифрой, т.к. первый класс
+    const secondMax = Math.max(firstNum - 1, 9);
     const secondNum = Math.floor(Math.random() * secondMax) + 1;
     const ans = firstNum - secondNum;
     return {firstNum, secondNum, operation: 'subtract', ans};
   }
 };
-
-interface CheckAnsFnProps {
-  task: TaskProps;
-  ans: number;
-}

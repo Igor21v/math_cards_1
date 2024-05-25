@@ -36,7 +36,7 @@ export const ExercisePage = ({route, navigation}: Props) => {
 
   // Генерим задачу
   const genTask = (max: number) => {
-    const {firstNum, secondNum, operation, ans} = genTaskFn({max, mode: 'all'});
+    const {firstNum, secondNum, operation, ans} = genTaskFn({max, mode: 'add'});
     setTask({firstNum, secondNum, operation, ans});
   };
 
@@ -51,6 +51,7 @@ export const ExercisePage = ({route, navigation}: Props) => {
       value.setValue(0);
       startAnimate();
       Vibration.vibrate(80);
+      genTask(10);
     }
   };
 
