@@ -33,7 +33,7 @@ export const genTaskFn = (props: GenTaskProps): TaskProps => {
   function subtract(): TaskProps {
     const firstNum = Math.floor(Math.random() * (max - 1)) + 2;
     // Ограничиваем второй аргумент одной цифрой, т.к. первый класс
-    const secondMax = Math.max(firstNum - 1, 9);
+    const secondMax = Math.min(firstNum - 1, 9);
     const secondNum = Math.floor(Math.random() * secondMax) + 1;
     const ans = firstNum - secondNum;
     return {firstNum, secondNum, operation: 'subtract', ans};

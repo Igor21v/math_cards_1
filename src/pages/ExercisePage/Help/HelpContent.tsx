@@ -16,17 +16,30 @@ export const HelpContent = (props: HelpProps) => {
     return <AppText>Здесь про дополнение чисел до 10</AppText>;
   }
 
-  // Задача простая, поэтому рисуем фрукты
-  const bananas = Array.from(Array(task.firstNum)).map((x, index) => <Banana width={'10%'} key={index} />);
-  const apples = Array.from(Array(task.secondNum)).map((x, index) => <Apple width={'10%'} key={index} />);
+  // Задача на сложение до 10, поэтому рисуем фрукты
+  if (task.operation === 'add') {
+    const bananas = Array.from(Array(task.firstNum)).map((x, index) => <Banana width={'10%'} key={index} />);
+    const apples = Array.from(Array(task.secondNum)).map((x, index) => <Apple width={'10%'} key={index} />);
+    return (
+      <>
+        <AppText>Посчитай сколько всего фруктов и получишь ответ :)</AppText>
+        <View style={styles.icons}>
+          {bananas}
+          {apples}
+        </View>
+      </>
+    );
+  }
 
+  // Задача на вычитание до 10, рисуем только яблоки
+  const apples = Array.from(Array(task.firstNum)).map((x, index) => {
+    const opacity = index >= task.ans ? 0.3 : 1;
+    return <Apple width={'10%'} key={index} opacity={opacity} />;
+  });
   return (
     <>
-      <AppText>Посчитай сколько всего фруктов и получишь ответ :)</AppText>
-      <View style={styles.icons}>
-        {bananas}
-        {apples}
-      </View>
+      <AppText>Посчитай сколько осталось яблок и получишь ответ :)</AppText>
+      <View style={styles.icons}>{apples}</View>
     </>
   );
 };

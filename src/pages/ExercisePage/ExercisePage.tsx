@@ -36,7 +36,7 @@ export const ExercisePage = ({route, navigation}: Props) => {
 
   // Генерим задачу
   const genTask = (max: number) => {
-    const {firstNum, secondNum, operation, ans} = genTaskFn({max, mode: 'add'});
+    const {firstNum, secondNum, operation, ans} = genTaskFn({max, mode: 'subtract'});
     setTask({firstNum, secondNum, operation, ans});
   };
 
