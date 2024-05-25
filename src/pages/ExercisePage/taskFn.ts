@@ -35,3 +35,16 @@ export const genTaskFn = (props: GenTaskProps): TaskProps => {
     return {firstNum, secondNum, operation: 'subtract'};
   }
 };
+
+interface CheckAnsFnProps {
+  task: TaskProps;
+  ans: number;
+}
+
+// Проверка ответа
+export const checkAnsFn = (props: CheckAnsFnProps): boolean => {
+  const {task, ans} = props;
+  if (task.operation === 'add' && task.firstNum + task.secondNum === ans) return true;
+  if (task.operation === 'subtract' && task.firstNum - task.secondNum === ans) return true;
+  return false;
+};

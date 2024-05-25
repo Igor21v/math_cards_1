@@ -5,7 +5,7 @@ import {RootStackParamList} from '../../shared/types/route';
 import {NumKeyboard} from './NumKeyboard';
 import {AppText} from '../../shared/ui/AppText';
 import {HelpModal} from './Help/HelpModal';
-import {genTaskFn} from './genTask';
+import {checkAnsFn, genTaskFn} from './taskFn';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Exercise'>;
 export interface TaskProps {
@@ -41,7 +41,7 @@ export const ExercisePage = ({route, navigation}: Props) => {
 
   // Проверка ответа
   const check = () => {
-    if (task.firstNum + task.secondNum === +ans) {
+    if (checkAnsFn({task, ans: +ans})) {
       setError(false);
       setAns('?');
       genTask(20);
@@ -50,7 +50,6 @@ export const ExercisePage = ({route, navigation}: Props) => {
       value.setValue(0);
       startAnimate();
       Vibration.vibrate(80);
-      genTask(5);
     }
   };
 
