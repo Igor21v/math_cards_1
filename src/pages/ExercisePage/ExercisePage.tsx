@@ -5,18 +5,19 @@ import {RootStackParamList} from '../../shared/types/route';
 import {NumKeyboard} from './NumKeyboard';
 import {AppText} from '../../shared/ui/AppText';
 import {HelpModal} from './Help/HelpModal';
-import {checkAnsFn, genTaskFn} from './taskFn';
+import {genTaskFn} from './taskFn';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Exercise'>;
 export interface TaskProps {
   firstNum: number;
   secondNum: number;
   operation: 'add' | 'subtract';
+  ans: number;
 }
 
 export const ExercisePage = ({route, navigation}: Props) => {
   const [ans, setAns] = useState('?');
-  const [task, setTask] = useState<TaskProps>({firstNum: 0, secondNum: 0, operation: 'add'});
+  const [task, setTask] = useState<TaskProps>({firstNum: 0, secondNum: 0, operation: 'add', ans: 0});
   const [error, setError] = useState(false);
   const [showHelp, setShowHelp] = useState(false);
   useEffect(() => {
@@ -35,13 +36,13 @@ export const ExercisePage = ({route, navigation}: Props) => {
 
   // Генерим задачу
   const genTask = (max: number) => {
-    const {firstNum, secondNum, operation} = genTaskFn({max, mode: 'all'});
-    setTask({firstNum, secondNum, operation});
+    const {firstNum, secondNum, operation, ans} = genTaskFn({max, mode: 'all'});
+    setTask({firstNum, secondNum, operation, ans});
   };
 
   // Проверка ответа
   const check = () => {
-    if (checkAnsFn({task, ans: +ans})) {
+    if (task.ans === +ans) {
       setError(false);
       setAns('?');
       genTask(20);

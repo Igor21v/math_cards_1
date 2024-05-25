@@ -25,14 +25,16 @@ export const genTaskFn = (props: GenTaskProps): TaskProps => {
     const firstNum = Math.floor(Math.random() * (max - 1)) + 1;
     const secondMax = max - firstNum;
     const secondNum = Math.floor(Math.random() * secondMax) + 1;
-    return {firstNum, secondNum, operation: 'add'};
+    const ans = firstNum + secondNum;
+    return {firstNum, secondNum, operation: 'add', ans};
   }
 
   function subtract(): TaskProps {
     const firstNum = Math.floor(Math.random() * (max - 1)) + 2;
     const secondMax = firstNum - 1;
     const secondNum = Math.floor(Math.random() * secondMax) + 1;
-    return {firstNum, secondNum, operation: 'subtract'};
+    const ans = firstNum - secondNum;
+    return {firstNum, secondNum, operation: 'subtract', ans};
   }
 };
 
@@ -40,11 +42,3 @@ interface CheckAnsFnProps {
   task: TaskProps;
   ans: number;
 }
-
-// Проверка ответа
-export const checkAnsFn = (props: CheckAnsFnProps): boolean => {
-  const {task, ans} = props;
-  if (task.operation === 'add' && task.firstNum + task.secondNum === ans) return true;
-  if (task.operation === 'subtract' && task.firstNum - task.secondNum === ans) return true;
-  return false;
-};

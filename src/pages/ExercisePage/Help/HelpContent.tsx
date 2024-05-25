@@ -9,7 +9,11 @@ interface HelpProps {
 
 export const HelpContent = (props: HelpProps) => {
   const {task} = props;
-  return <AppText style={styles.text}>Здесь будет объяснение что к чему</AppText>;
+  const maxNum = Math.max(task.ans, task.firstNum, task.secondNum);
+  if (maxNum > 10) {
+    return <AppText style={styles.text}>Здесь про дополнение чисел до 10</AppText>;
+  }
+  return <AppText style={styles.text}>Здесь будет картинка с фигурами</AppText>;
 };
 
 const styles = StyleSheet.create({
