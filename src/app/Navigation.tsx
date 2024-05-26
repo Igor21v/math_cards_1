@@ -15,7 +15,7 @@ export const Navigation = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator /* screenOptions={{contentStyle: styles.stackNav}} */>
-        <Stack.Screen name="Home" component={HomePage} options={{title: 'Математика 1 класс'}} />
+        <Stack.Screen name="Home" component={HomePage} options={{title: 'Математика 1й класс'}} />
         <Stack.Screen name="Line" component={LinePage} options={{title: 'Соедини линию'}} />
         <Stack.Screen name="Exercise" component={ExercisePage} options={{title: 'Примеры'}} />
         <Stack.Screen name="Test" component={TestPage} options={{title: 'Тесты'}} />

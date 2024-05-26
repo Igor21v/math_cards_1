@@ -10,25 +10,26 @@ type Props = NativeStackScreenProps<RootStackParamList, 'Home'>;
 export const HomePage = ({navigation}: Props) => {
   return (
     <ScrollView>
-      <TouchableOpacity
-        style={styles.section}
-        onPress={() => navigation.navigate('Exercise', {maxNum: 10, type: 'all'})}>
+      <TouchableOpacity style={styles.section} onPress={() => navigation.navigate('Exercise', {maxNum: 10, type: 'all'})}>
         <AppText style={styles.text}>Примеры</AppText>
       </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.section}
-        onPress={() => navigation.navigate('Test', {maxNum: 10, type: 'all'})}>
+      <TouchableOpacity style={styles.section} onPress={() => navigation.navigate('Test', {maxNum: 10, type: 'all'})}>
         <Text style={styles.text}> Тесты</Text>
       </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.section}
-        onPress={() => navigation.navigate('Compare', {maxNum: 10, type: 'all'})}>
+      <TouchableOpacity style={styles.section} onPress={() => navigation.navigate('Compare', {maxNum: 10, type: 'all'})}>
         <Text style={styles.text}> Неравенства</Text>
       </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.section}
-        onPress={() => navigation.navigate('Line', {maxNum: 10, type: 'all'})}>
+      <TouchableOpacity style={styles.section} onPress={() => navigation.navigate('Line', {maxNum: 10, type: 'all'})}>
         <Text style={styles.text}> Соедини линию</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.section} onPress={() => navigation.navigate('Line', {maxNum: 10, type: 'all'})}>
+        <Text style={styles.text}> Контрольная (на время)</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.section} onPress={() => navigation.navigate('Line', {maxNum: 10, type: 'all'})}>
+        <Text style={styles.text}> Статистика</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.section} onPress={() => navigation.navigate('Line', {maxNum: 10, type: 'all'})}>
+        <Text style={styles.text}> Настройки</Text>
       </TouchableOpacity>
     </ScrollView>
   );

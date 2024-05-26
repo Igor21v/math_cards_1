@@ -51,7 +51,7 @@ export const ExercisePage = ({route, navigation}: Props) => {
       value.setValue(0);
       startAnimate();
       Vibration.vibrate(80);
-      genTask(10);
+      genTask(20);
     }
   };
 

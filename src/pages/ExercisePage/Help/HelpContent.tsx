@@ -11,10 +11,41 @@ interface HelpProps {
 
 export const HelpContent = (props: HelpProps) => {
   const {task} = props;
-  const maxNum = Math.max(task.ans, task.firstNum, task.secondNum);
   const Smile = () => <Image source={require('../../../shared/emojis/Smile.png')} style={styles.smile} />;
-  if (maxNum > 10) {
-    return <AppText>Здесь про дополнение чисел до 10</AppText>;
+
+  // Задача на сложение с суммой больше 10
+  if (task.ans > 10 && task.operation === 'add') {
+    if (task.firstNum < 10) {
+      const addition = 10 - task.firstNum;
+      return (
+        <>
+          <AppText>Дополни число {task.firstNum} до 10ти и прибавь то что осталось</AppText>
+          <View style={styles.wrapContent}>
+            <View style={styles.content}>
+              <AppText size="l" style={styles.green}>
+                {task.firstNum}
+                {' + '}
+              </AppText>
+              <AppText size="l" style={styles.red}>
+                {addition} + {task.secondNum - addition}
+              </AppText>
+            </View>
+          </View>
+        </>
+      );
+    } else {
+      return (
+        <>
+          <AppText>Сделай что то сам уже</AppText>
+          <AppText size="l"></AppText>
+        </>
+      );
+    }
+  }
+
+  // Задача на вычитание из числа больше 10
+  if (task.firstNum > 10 && task.operation === 'add') {
+    return <AppText>Здесь про вычитание чисел из числа больше 10ти</AppText>;
   }
 
   // Задача на сложение до 10, поэтому рисуем фрукты
@@ -52,6 +83,9 @@ export const HelpContent = (props: HelpProps) => {
 
 const styles = StyleSheet.create({
   icons: {flexDirection: 'row', justifyContent: 'space-evenly', flex: 1, width: '100%'},
-  text: {},
   smile: {width: 24, height: 24},
+  wrapContent: {flex: 1, justifyContent: 'center'},
+  content: {flexDirection: 'row'},
+  green: {color: 'green'},
+  red: {color: 'red'},
 });
