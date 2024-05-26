@@ -12,6 +12,7 @@ interface HelpProps {
 export const HelpContent = (props: HelpProps) => {
   const {task} = props;
   const maxNum = Math.max(task.ans, task.firstNum, task.secondNum);
+  const Smile = () => <Image source={require('../../../shared/emojis/Smile.png')} style={styles.smile} />;
   if (maxNum > 10) {
     return <AppText>Здесь про дополнение чисел до 10</AppText>;
   }
@@ -22,7 +23,10 @@ export const HelpContent = (props: HelpProps) => {
     const apples = Array.from(Array(task.secondNum)).map((x, index) => <Apple width={'10%'} key={index} />);
     return (
       <>
-        <AppText>Посчитай сколько всего фруктов и получишь ответ :)</AppText>
+        <AppText>
+          Посчитай сколько всего фруктов и получишь ответ <Smile />{' '}
+        </AppText>
+
         <View style={styles.icons}>
           {bananas}
           {apples}
@@ -38,7 +42,9 @@ export const HelpContent = (props: HelpProps) => {
   });
   return (
     <>
-      <AppText>Посчитай сколько осталось яблок и получишь ответ :)</AppText>
+      <AppText>
+        Посчитай сколько осталось ярких яблок и получишь ответ <Smile />{' '}
+      </AppText>
       <View style={styles.icons}>{apples}</View>
     </>
   );
@@ -46,4 +52,6 @@ export const HelpContent = (props: HelpProps) => {
 
 const styles = StyleSheet.create({
   icons: {flexDirection: 'row', justifyContent: 'space-evenly', flex: 1, width: '100%'},
+  text: {},
+  smile: {width: 24, height: 24},
 });
