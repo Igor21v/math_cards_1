@@ -34,18 +34,49 @@ export const HelpContent = (props: HelpProps) => {
         </>
       );
     } else {
+      const addition = task.firstNum - 10;
       return (
         <>
-          <AppText>Сделай что то сам уже</AppText>
-          <AppText size="l"></AppText>
+          <AppText>Вычти из первого слогаемого 10, сложи со вторым и затем прибавь 10</AppText>
+          <View style={styles.wrapContent}>
+            <View style={styles.content}>
+              <AppText size="l" style={styles.green}>
+                {addition}
+                {' + '}
+                {task.secondNum}
+                {' + '}
+              </AppText>
+              <AppText size="l" style={styles.red}>
+                10
+              </AppText>
+            </View>
+          </View>
         </>
       );
     }
   }
 
   // Задача на вычитание из числа больше 10
-  if (task.firstNum > 10 && task.operation === 'add') {
-    return <AppText>Здесь про вычитание чисел из числа больше 10ти</AppText>;
+  if (task.firstNum > 10 && task.operation === 'subtract') {
+    const addition = task.firstNum - 10;
+    return (
+      <>
+        <AppText>
+          Вычти из числа {task.firstNum} число {addition}, получишь 10. А затем вычти то что осталось.
+        </AppText>
+        <View style={styles.wrapContent}>
+          <View style={styles.content}>
+            <AppText size="l" style={styles.green}>
+              {task.firstNum}
+              {' - '}
+            </AppText>
+            <AppText size="l" style={styles.red}>
+              {addition} - {task.secondNum - addition}
+            </AppText>
+          </View>
+        </View>
+      </>
+    );
   }
 
   // Задача на сложение до 10, поэтому рисуем фрукты
