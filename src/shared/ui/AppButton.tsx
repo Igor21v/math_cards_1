@@ -3,22 +3,24 @@ import {StyleSheet, Text, TouchableOpacity, TouchableOpacityProps, ViewStyle} fr
 import {colors} from './Colors';
 
 type Sizes = 's' | 'm' | 'l' | 'xl' | 'xxl';
+type Modes = 'background' | 'outline' | 'clear';
 
 interface Props extends TouchableOpacityProps {
   size?: Sizes;
+  mode?: Modes;
 }
 
 export const AppButton = (props: Props) => {
-  const {children, size = 'm', style, ...otherProps} = props;
+  const {children, size = 'm', mode = 'background', style, ...otherProps} = props;
   return (
-    <TouchableOpacity {...otherProps} style={[styles.wrap, style]}>
-      <Text style={[styles.text, styles[size]]}>{children}</Text>
+    <TouchableOpacity {...otherProps} style={[styles[`${mode}Wrap`], style]}>
+      <Text style={[styles[`${mode}Text`], styles[size]]}>{children}</Text>
     </TouchableOpacity>
   );
 };
 
 const styles = StyleSheet.create({
-  wrap: {
+  backgroundWrap: {
     backgroundColor: colors.first,
     padding: 4,
     borderRadius: 12,
@@ -26,9 +28,18 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     elevation: 8,
   },
-  text: {
+  backgroundText: {
     color: colors.second,
   },
+  outlineWrap: {},
+  outlineText: {},
+  clearWrap: {
+    padding: 4,
+  },
+  clearText: {
+    color: colors.third,
+  },
+
   s: {
     fontSize: 14,
   },

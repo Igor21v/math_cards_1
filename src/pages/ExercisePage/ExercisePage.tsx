@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useContext, useEffect, useRef, useState} from 'react';
 import {Animated, Easing, StyleSheet, TouchableOpacity, Vibration} from 'react-native';
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import {RootStackParamList} from '../../shared/types/route';
@@ -6,6 +6,8 @@ import {NumKeyboard} from './NumKeyboard';
 import {AppText} from '../../shared/ui/AppText';
 import {HelpModal} from './Help/HelpModal';
 import {genTaskFn} from './taskFn';
+import {Context} from '../../shared/lib/Context';
+import {AppButton} from '../../shared/ui/AppButton';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Exercise'>;
 export interface TaskProps {
@@ -20,8 +22,9 @@ export const ExercisePage = ({route, navigation}: Props) => {
   const [task, setTask] = useState<TaskProps>({firstNum: 0, secondNum: 0, operation: 'add', ans: 0});
   const [error, setError] = useState(false);
   const [showHelp, setShowHelp] = useState(false);
+  const {limit} = useContext(Context);
   useEffect(() => {
-    genTask(20);
+    genTask(limit);
   }, []);
 
   // Анимация ошибки
@@ -45,13 +48,12 @@ export const ExercisePage = ({route, navigation}: Props) => {
     if (task.ans === +ans) {
       setError(false);
       setAns('?');
-      genTask(20);
+      genTask(limit);
     } else {
       setError(true);
       value.setValue(0);
       startAnimate();
       Vibration.vibrate(80);
-      genTask(20);
     }
   };
 
