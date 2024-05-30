@@ -1,6 +1,6 @@
 import {useContext, useState} from 'react';
 import {Pressable, StyleSheet, View} from 'react-native';
-import {AppMenu} from '../../shared/ui/AppMenu';
+import {AppMenu, ItemMenu} from '../../shared/ui/AppMenu';
 import {AppButton} from '../../shared/ui/AppButton';
 import {Context, Limit} from '../../shared/lib/Context';
 import {AppText} from '../../shared/ui/AppText';
@@ -16,25 +16,33 @@ export const MenuMode = () => {
       setShowMM(false);
     };
   };
+  const items: ItemMenu[] = [
+    {
+      el: <>+ -</>,
+      fn: pressHendler('all'),
+    },
+    {
+      el: <>+</>,
+      fn: pressHendler('add'),
+    },
+    {
+      el: <>-</>,
+      fn: pressHendler('subtract'),
+    },
+  ];
+
   return (
     <>
       <AppButton onPress={() => setShowMM(true)} style={styles.button}>
         +
       </AppButton>
-      <AppMenu show={showMM} setShow={setShowMM} styleWrap={styles.modalStyle}>
-        <AppText size="s" style={styles.title}>
-          Режим
-        </AppText>
-        <AppText style={styles.item} onPress={pressHendler('all')}>
-          +-
-        </AppText>
-        <AppText style={styles.item} onPress={pressHendler('add')}>
-          +
-        </AppText>
-        <AppText style={styles.item} onPress={pressHendler('add')}>
-          -
-        </AppText>
-      </AppMenu>
+      <AppMenu
+        show={showMM}
+        setShow={setShowMM}
+        styleWrap={styles.modalStyle}
+        items={items}
+        title="Режим"
+      />
     </>
   );
 };
@@ -42,15 +50,6 @@ export const MenuMode = () => {
 const styles = StyleSheet.create({
   button: {
     marginRight: 8,
-  },
-  title: {
-    paddingHorizontal: 30,
-    paddingTop: 10,
-  },
-  item: {
-    color: colors.first,
-    paddingHorizontal: 30,
-    paddingVertical: 10,
   },
   modalStyle: {
     right: 100,

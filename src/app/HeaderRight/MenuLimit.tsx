@@ -1,10 +1,8 @@
 import {useContext, useState} from 'react';
-import {Pressable, StyleSheet, View} from 'react-native';
-import {AppMenu} from '../../shared/ui/AppMenu';
-import {AppButton} from '../../shared/ui/AppButton';
+import {StyleSheet} from 'react-native';
 import {Context, Limit} from '../../shared/lib/Context';
-import {AppText} from '../../shared/ui/AppText';
-import {colors} from '../../shared/ui/Colors';
+import {AppButton} from '../../shared/ui/AppButton';
+import {AppMenu, ItemMenu} from '../../shared/ui/AppMenu';
 
 export const MenuLimit = () => {
   const {limit, setLimit} = useContext(Context);
@@ -15,35 +13,28 @@ export const MenuLimit = () => {
       setShowML(false);
     };
   };
+  const items: ItemMenu[] = [
+    {el: <>10</>, fn: pressHendler(10)},
+    {el: <>20</>, fn: pressHendler(20)},
+  ];
+
   return (
     <>
       <AppButton onPress={() => setShowML(true)}>{limit}</AppButton>
-      <AppMenu show={showML} setShow={setShowML} styleWrap={styles.modalStyle}>
-        <AppText size="s" style={styles.title}>
-          Максимальное число
-        </AppText>
-        <AppText style={styles.item} onPress={pressHendler(10)}>
-          10
-        </AppText>
-        <AppText style={styles.item} onPress={pressHendler(20)}>
-          20
-        </AppText>
-      </AppMenu>
+      <AppMenu
+        show={showML}
+        setShow={setShowML}
+        styleWrap={styles.modalStyle}
+        title="Максимальное число в примерах"
+        items={items}
+      />
     </>
   );
 };
 
 const styles = StyleSheet.create({
-  title: {
-    paddingHorizontal: 30,
-    paddingTop: 10,
-  },
-  item: {
-    color: colors.first,
-    paddingHorizontal: 30,
-    paddingVertical: 10,
-  },
   modalStyle: {
+    maxWidth: 200,
     right: 60,
     top: 50,
   },
