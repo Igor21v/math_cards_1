@@ -1,12 +1,12 @@
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {NavigationContainer} from '@react-navigation/native';
+import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {StyleSheet} from 'react-native';
+import {ComparePage} from '../pages/ComparePage/ComparePage';
+import {ExercisePage} from '../pages/ExercisePage/ExercisePage';
 import {HomePage} from '../pages/HomePage/HomePage';
+import {LinePage} from '../pages/LinePage/LinePage';
 import {TestPage} from '../pages/TestPage/TestPage';
 import {RootStackParamList} from '../shared/types/route';
-import {ExercisePage} from '../pages/ExercisePage/ExercisePage';
-import {LinePage} from '../pages/LinePage/LinePage';
-import {ComparePage} from '../pages/ComparePage/ComparePage';
-import {StyleSheet} from 'react-native';
 import {colors} from '../shared/ui/Colors';
 import {HeaderRight} from './HeaderRight/HeaderRight';
 

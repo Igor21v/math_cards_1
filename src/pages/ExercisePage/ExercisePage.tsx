@@ -32,7 +32,7 @@ export const ExercisePage = ({route, navigation}: Props) => {
   }, [limit, mode]);
 
   // Анимация ошибки
-  let value = useRef(new Animated.Value(0)).current;
+  const value = useRef(new Animated.Value(0)).current;
   const startAnimate = () => {
     Animated.timing(value, {
       toValue: 3,
