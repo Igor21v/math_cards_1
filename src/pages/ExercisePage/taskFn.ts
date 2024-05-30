@@ -1,19 +1,18 @@
+import {Limit, Mode} from '../../shared/lib/Context';
 import {TaskProps} from './ExercisePage';
 
-export type Mode = 'add' | 'subtract' | 'all';
-
 interface GenTaskProps {
-  max: number;
+  limit: Limit;
   mode: Mode;
 }
 
 // Генератор задач
 export const genTaskFn = (props: GenTaskProps): TaskProps => {
-  const {max, mode} = props;
-  if (mode === 'add') {
+  const {limit: max, mode} = props;
+  if (mode === '+') {
     return add();
   }
-  if (mode === 'subtract') {
+  if (mode === '-') {
     return subtract();
   }
   if (Math.random() < 0.5) {
@@ -27,7 +26,7 @@ export const genTaskFn = (props: GenTaskProps): TaskProps => {
     const secondMax = Math.min(max - firstNum, 9);
     const secondNum = Math.floor(Math.random() * secondMax) + 1;
     const ans = firstNum + secondNum;
-    return {firstNum, secondNum, operation: 'add', ans};
+    return {firstNum, secondNum, operation: '+', ans};
   }
 
   function subtract(): TaskProps {
@@ -36,6 +35,6 @@ export const genTaskFn = (props: GenTaskProps): TaskProps => {
     const secondMax = Math.min(firstNum - 1, 9);
     const secondNum = Math.floor(Math.random() * secondMax) + 1;
     const ans = firstNum - secondNum;
-    return {firstNum, secondNum, operation: 'subtract', ans};
+    return {firstNum, secondNum, operation: '-', ans};
   }
 };

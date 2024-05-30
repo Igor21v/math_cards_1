@@ -15,6 +15,7 @@ import {AppText} from './AppText';
 export interface ItemMenu {
   el: ReactElement;
   fn: () => void;
+  selected?: boolean;
 }
 
 interface AppMenuProps {
@@ -42,13 +43,16 @@ export const AppMenu = (props: AppMenuProps) => {
     if (index === items.length - 1) {
       wrapItemStyle = {...styles.endItem};
     }
+    const itemMods = [];
+    item.selected && itemMods.push(styles.itemSelected);
+
     return (
       <TouchableHighlight
         underlayColor={colors.third}
         onPress={item.fn}
         style={wrapItemStyle}
         key={index}>
-        <AppText style={styles.item}> {item.el} </AppText>
+        <AppText style={[styles.item, itemMods]}> {item.el} </AppText>
       </TouchableHighlight>
     );
   });
@@ -86,6 +90,9 @@ const styles = StyleSheet.create({
     color: colors.first,
     paddingHorizontal: 30,
     paddingVertical: 10,
+  },
+  itemSelected: {
+    opacity: 0.5,
   },
   endItem: {
     borderBottomRightRadius: 20,

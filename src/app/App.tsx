@@ -1,12 +1,13 @@
-import React, {createContext, useState} from 'react';
-import {SafeAreaView, StatusBar, StyleSheet, Text, View} from 'react-native';
+import React, {useState} from 'react';
+import {Context, Limit, Mode} from '../shared/lib/Context';
 import {Navigation} from './Navigation';
-import {Context, ContextProps, Limit} from '../shared/lib/Context';
 
 function App(): React.JSX.Element {
   const [limit, setLimit] = useState<Limit>(10);
+  const [mode, setMode] = useState<Mode>('+');
+
   return (
-    <Context.Provider value={{limit, setLimit}}>
+    <Context.Provider value={{limit, setLimit, mode, setMode}}>
       <Navigation />
     </Context.Provider>
   );
