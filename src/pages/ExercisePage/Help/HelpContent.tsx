@@ -11,10 +11,12 @@ interface HelpProps {
 
 export const HelpContent = (props: HelpProps) => {
   const {task} = props;
-  const Smile = () => <Image source={require('../../../shared/emojis/Smile.png')} style={styles.smile} />;
+  const Smile = () => (
+    <Image source={require('../../../shared/emojis/Smile.png')} style={styles.smile} />
+  );
 
   // Задача на сложение с суммой больше 10
-  if (task.ans > 10 && task.operation === 'add') {
+  if (task.ans > 10 && task.operation === '+') {
     if (task.firstNum < 10) {
       const addition = 10 - task.firstNum;
       return (
@@ -57,12 +59,13 @@ export const HelpContent = (props: HelpProps) => {
   }
 
   // Задача на вычитание из числа больше 10
-  if (task.firstNum > 10 && task.operation === 'subtract') {
+  if (task.firstNum > 10 && task.operation === '-') {
     const addition = task.firstNum - 10;
     return (
       <>
         <AppText>
-          Вычти из числа {task.firstNum} число {addition}, получишь 10. А затем вычти то что осталось.
+          Вычти из числа {task.firstNum} число {addition}, получишь 10. А затем вычти то что
+          осталось.
         </AppText>
         <View style={styles.wrapContent}>
           <View style={styles.content}>
@@ -80,9 +83,13 @@ export const HelpContent = (props: HelpProps) => {
   }
 
   // Задача на сложение до 10, поэтому рисуем фрукты
-  if (task.operation === 'add') {
-    const bananas = Array.from(Array(task.firstNum)).map((x, index) => <Banana width={'10%'} key={index} />);
-    const apples = Array.from(Array(task.secondNum)).map((x, index) => <Apple width={'10%'} key={index} />);
+  if (task.operation === '+') {
+    const bananas = Array.from(Array(task.firstNum)).map((x, index) => (
+      <Banana width={'10%'} key={index} />
+    ));
+    const apples = Array.from(Array(task.secondNum)).map((x, index) => (
+      <Apple width={'10%'} key={index} />
+    ));
     return (
       <>
         <AppText>
