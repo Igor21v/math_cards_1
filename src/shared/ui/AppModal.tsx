@@ -1,8 +1,8 @@
 import React, {Dispatch, SetStateAction, useState} from 'react';
 import {View, StyleSheet, Modal, Alert, Text, Pressable, StatusBar} from 'react-native';
-import {AppButton} from '../../shared/ui/AppButton';
-import {AppText} from '../../shared/ui/AppText';
-import {colors} from '../../shared/ui/Colors';
+import {AppButton} from './AppButton';
+import {AppText} from './AppText';
+import {colors} from './Colors';
 
 interface HelpProps {
   showHelp: boolean;
