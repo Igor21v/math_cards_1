@@ -45,6 +45,6 @@ const styles = StyleSheet.create({
   },
   modalStyle: {
     right: 60,
-    top: 40,
+    top: 50,
   },
 });

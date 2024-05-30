@@ -19,7 +19,12 @@ export interface TaskProps {
 
 export const ExercisePage = ({route, navigation}: Props) => {
   const [ans, setAns] = useState('?');
-  const [task, setTask] = useState<TaskProps>({firstNum: 0, secondNum: 0, operation: 'add', ans: 0});
+  const [task, setTask] = useState<TaskProps>({
+    firstNum: 0,
+    secondNum: 0,
+    operation: 'add',
+    ans: 0,
+  });
   const [error, setError] = useState(false);
   const [showHelp, setShowHelp] = useState(false);
   const {limit} = useContext(Context);

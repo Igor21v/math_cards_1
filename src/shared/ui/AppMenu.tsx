@@ -12,7 +12,7 @@ export const AppMenu = (props: AppMenuProps) => {
   const {show, setShow, children, styleWrap} = props;
   return (
     <Modal animationType="fade" transparent visible={show}>
-      <Pressable style={styles.overlay} onPress={() => setShow(false)}></Pressable>
+      <Pressable style={styles.overlay} onPress={() => setShow(false)} />
       <View style={[styles.modalView, styleWrap]}>{children}</View>
     </Modal>
   );

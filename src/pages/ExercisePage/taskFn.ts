@@ -1,6 +1,6 @@
 import {TaskProps} from './ExercisePage';
 
-type Mode = 'add' | 'subtract' | 'all';
+export type Mode = 'add' | 'subtract' | 'all';
 
 interface GenTaskProps {
   max: number;
