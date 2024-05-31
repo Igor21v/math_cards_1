@@ -50,11 +50,13 @@ export const ExercisePage = ({route, navigation}: Props) => {
       setError(false);
       setAns('?');
       genTask();
+      setAnsArr(ansArr.concat(true));
     } else {
       setError(true);
       animValue.setValue(0);
       startAnimate();
       Vibration.vibrate(80);
+      setAnsArr(ansArr.concat(false));
     }
   };
 
