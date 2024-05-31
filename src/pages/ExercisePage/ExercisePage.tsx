@@ -29,7 +29,7 @@ export const ExercisePage = ({route, navigation}: Props) => {
   });
   const [error, setError] = useState(false);
   const [showHelp, setShowHelp] = useState(false);
-  const [ansArr, setAnsArr] = useState<boolean[]>([]);
+  const [ansCount, setAnsCount] = useState<number>(0);
   const {limit, mode} = useContext(Context);
   useEffect(() => {
     genTask();
@@ -50,13 +50,12 @@ export const ExercisePage = ({route, navigation}: Props) => {
       setError(false);
       setAns('?');
       genTask();
-      setAnsArr(ansArr.concat(true));
+      setAnsCount(ansCount + 1);
     } else {
       setError(true);
       animValue.setValue(0);
       startAnimate();
       Vibration.vibrate(80);
-      setAnsArr(ansArr.concat(false));
     }
   };
 
@@ -67,7 +66,7 @@ export const ExercisePage = ({route, navigation}: Props) => {
         <AppText size="s">Нужна помощь?</AppText>
       </TouchableOpacity>
       <Task task={task} ans={ans} error={error} animValue={animValue} />
-      <ProgressBar ansArr={ansArr} />
+      <ProgressBar ansCount={ansCount} />
       <NumKeyboard setNum={setAns} enter={check} setError={setError} />
     </>
   );
