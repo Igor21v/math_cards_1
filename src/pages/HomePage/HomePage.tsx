@@ -46,7 +46,7 @@ export const HomePage = ({navigation}: Props) => {
         <Text style={styles.text}> Статистика</Text>
       </TouchableOpacity>
       <TouchableOpacity
-        style={styles.section}
+        style={[styles.section, styles.endSection]}
         onPress={() => navigation.navigate('Line', {maxNum: 10, type: 'all'})}>
         <Text style={styles.text}> Настройки</Text>
       </TouchableOpacity>
@@ -65,6 +65,9 @@ const styles = StyleSheet.create({
     marginLeft: '5%',
     marginTop: 10,
     backgroundColor: colors.first,
+  },
+  endSection: {
+    marginBottom: 10,
   },
   text: {
     fontWeight: 'bold',
