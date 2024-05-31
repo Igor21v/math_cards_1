@@ -38,6 +38,11 @@ export const HomePage = ({navigation}: Props) => {
       <TouchableOpacity
         style={styles.section}
         onPress={() => navigation.navigate('Line', {maxNum: 10, type: 'all'})}>
+        <Text style={styles.text}> Задачи</Text>
+      </TouchableOpacity>
+      <TouchableOpacity
+        style={styles.section}
+        onPress={() => navigation.navigate('Line', {maxNum: 10, type: 'all'})}>
         <Text style={styles.text}> Статистика</Text>
       </TouchableOpacity>
       <TouchableOpacity

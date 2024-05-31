@@ -3,6 +3,7 @@ import {StyleSheet} from 'react-native';
 import {Context, Limit} from '../../shared/lib/Context';
 import {AppButton} from '../../shared/ui/AppButton';
 import {AppMenu, ItemMenu} from '../../shared/ui/AppMenu';
+import {setStorage} from '../../shared/lib/setStorage';
 
 export const MenuLimit = () => {
   const {limit, setLimit} = useContext(Context);
@@ -11,6 +12,7 @@ export const MenuLimit = () => {
     return () => {
       setLimit(lim);
       setShowML(false);
+      setStorage('limit', String(lim));
     };
   };
   const items: ItemMenu[] = [
