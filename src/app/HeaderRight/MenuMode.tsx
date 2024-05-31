@@ -4,6 +4,7 @@ import {StyleSheet} from 'react-native';
 import {AppButton} from '../../shared/ui/AppButton';
 import {AppMenu, ItemMenu} from '../../shared/ui/AppMenu';
 import {Context, Mode} from '../../shared/lib/Context';
+import {setStorage} from '../../shared/lib/setStorage';
 
 export const MenuMode = () => {
   const {mode, setMode} = useContext(Context);
@@ -12,6 +13,7 @@ export const MenuMode = () => {
     return () => {
       setMode(mode);
       setShowMM(false);
+      setStorage('mode', String(mode));
     };
   };
 

@@ -11,8 +11,14 @@ function App(): React.JSX.Element {
       setLimit(value);
     }
   };
+  const initMode = (mode: Mode) => {
+    if (mode) {
+      setMode(mode);
+    }
+  };
   useEffect(() => {
     getStorage('limit', initLimit);
+    getStorage('mode', initMode);
   }, []);
 
   return (
