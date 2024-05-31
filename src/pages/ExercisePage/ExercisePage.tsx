@@ -9,6 +9,7 @@ import {NumKeyboard} from './NumKeyboard';
 import {Task} from './Task/Task';
 import {genTaskFn} from './Task/taskFn';
 import {useAnimateError} from './Task/useAnimateError';
+import {ProgressBar} from './ProgressBar';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Exercise'>;
 export interface TaskProps {
@@ -28,6 +29,7 @@ export const ExercisePage = ({route, navigation}: Props) => {
   });
   const [error, setError] = useState(false);
   const [showHelp, setShowHelp] = useState(false);
+  const [ansArr, setAnsArr] = useState<boolean[]>([]);
   const {limit, mode} = useContext(Context);
   useEffect(() => {
     genTask();
@@ -63,6 +65,7 @@ export const ExercisePage = ({route, navigation}: Props) => {
         <AppText size="s">Нужна помощь?</AppText>
       </TouchableOpacity>
       <Task task={task} ans={ans} error={error} animValue={animValue} />
+      <ProgressBar ansArr={ansArr} />
       <NumKeyboard setNum={setAns} enter={check} setError={setError} />
     </>
   );

@@ -1,7 +1,13 @@
 import React from 'react';
 import {StyleSheet, View} from 'react-native';
 
-export const ProgressBar = (responses: boolean[]) => {
+interface Props {
+  ansArr: boolean[];
+}
+
+export const ProgressBar = (props: Props) => {
+  const {ansArr} = props;
+
   return <View style={styles.bar}></View>;
 };
 
