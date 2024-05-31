@@ -1,12 +1,14 @@
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import React, {useContext, useEffect, useRef, useState} from 'react';
-import {Animated, Easing, StyleSheet, TouchableOpacity, Vibration} from 'react-native';
+import React, {useContext, useEffect, useState} from 'react';
+import {StyleSheet, TouchableOpacity, Vibration} from 'react-native';
 import {Context} from '../../shared/lib/Context';
 import {RootStackParamList} from '../../shared/types/route';
 import {AppText} from '../../shared/ui/AppText';
 import {HelpModal} from './Help/HelpModal';
 import {NumKeyboard} from './NumKeyboard';
-import {genTaskFn} from './taskFn';
+import {Task} from './Task/Task';
+import {genTaskFn} from './Task/taskFn';
+import {useAnimateError} from './Task/useAnimateError';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Exercise'>;
 export interface TaskProps {
@@ -32,14 +34,7 @@ export const ExercisePage = ({route, navigation}: Props) => {
   }, [limit, mode]);
 
   // Анимация ошибки
-  const value = useRef(new Animated.Value(0)).current;
-  const startAnimate = () => {
-    Animated.timing(value, {
-      toValue: 3,
-      useNativeDriver: true,
-      easing: Easing.elastic(10),
-    }).start();
-  };
+  const {startAnimate, animValue} = useAnimateError();
 
   // Генерим задачу
   const genTask = () => {
@@ -55,7 +50,7 @@ export const ExercisePage = ({route, navigation}: Props) => {
       genTask();
     } else {
       setError(true);
-      value.setValue(0);
+      animValue.setValue(0);
       startAnimate();
       Vibration.vibrate(80);
     }
@@ -67,22 +62,13 @@ export const ExercisePage = ({route, navigation}: Props) => {
       <TouchableOpacity style={styles.help} onPress={() => setShowHelp(true)}>
         <AppText size="s">Нужна помощь?</AppText>
       </TouchableOpacity>
-      <Animated.View style={[styles.task, {transform: [{translateX: value}]}]}>
-        <AppText size="l" error={error}>
-          {task.firstNum}
-          {task.operation}
-          {task.secondNum}={ans}
-        </AppText>
-      </Animated.View>
+      <Task task={task} ans={ans} error={error} animValue={animValue} />
       <NumKeyboard setNum={setAns} enter={check} setError={setError} />
     </>
   );
 };
 
 const styles = StyleSheet.create({
-  task: {
-    margin: 'auto',
-  },
   help: {
     position: 'absolute',
     right: 4,
