@@ -5,13 +5,13 @@ import {TaskProps} from '../ExercisePage';
 
 export interface Props {
   task: TaskProps;
-  error: boolean;
+  isError: boolean;
   ans: string;
   animValue: Animated.Value;
 }
 
 export const Task = (props: Props) => {
-  const {task, error, ans, animValue} = props;
+  const {task, isError: error, ans, animValue} = props;
   return (
     <Animated.View style={[styles.task, {transform: [{translateX: animValue}]}]}>
       <AppText size="l" error={error}>

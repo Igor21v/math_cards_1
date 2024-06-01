@@ -10,8 +10,8 @@ import {Task} from './Task/Task';
 import {genTaskFn} from './Task/taskFn';
 import {useAnimateError} from './Task/useAnimateError';
 import {ProgressBar} from './ProgressBar';
+import {Results} from './Results/Results';
 
-type Props = NativeStackScreenProps<RootStackParamList, 'Exercise'>;
 export interface TaskProps {
   firstNum: number;
   secondNum: number;
@@ -19,7 +19,7 @@ export interface TaskProps {
   ans: number;
 }
 
-export const ExercisePage = ({route, navigation}: Props) => {
+export const ExercisePage = () => {
   const [ans, setAns] = useState('?');
   const [task, setTask] = useState<TaskProps>({
     firstNum: 0,
@@ -27,7 +27,8 @@ export const ExercisePage = ({route, navigation}: Props) => {
     operation: '+',
     ans: 0,
   });
-  const [error, setError] = useState(false);
+  const [isError, setIsError] = useState(false);
+  const [errors, setErrors] = useState<TaskProps[]>([]);
   const [showHelp, setShowHelp] = useState(false);
   const [ansCount, setAnsCount] = useState<number>(0);
   const {limit, mode} = useContext(Context);
@@ -47,17 +48,22 @@ export const ExercisePage = ({route, navigation}: Props) => {
   // Проверка ответа
   const check = () => {
     if (task.ans === +ans) {
-      setError(false);
+      setIsError(false);
       setAns('?');
       genTask();
       setAnsCount(ansCount + 1);
     } else {
-      setError(true);
+      setIsError(true);
       animValue.setValue(0);
       startAnimate();
       Vibration.vibrate(80);
     }
   };
+
+  // Отбражение итоговой странцы
+  if (ansCount > 1) {
+    return <Results errors={errors} />;
+  }
 
   return (
     <>
@@ -65,9 +71,9 @@ export const ExercisePage = ({route, navigation}: Props) => {
       <TouchableOpacity style={styles.help} onPress={() => setShowHelp(true)}>
         <AppText size="s">Нужна помощь?</AppText>
       </TouchableOpacity>
-      <Task task={task} ans={ans} error={error} animValue={animValue} />
+      <Task task={task} ans={ans} isError={isError} animValue={animValue} />
       <ProgressBar ansCount={ansCount} />
-      <NumKeyboard setNum={setAns} enter={check} setError={setError} />
+      <NumKeyboard setNum={setAns} enter={check} setError={setIsError} />
     </>
   );
 };
