@@ -57,6 +57,7 @@ export const ExercisePage = () => {
       animValue.setValue(0);
       startAnimate();
       Vibration.vibrate(80);
+      setErrors(errors.concat(task));
     }
   };
 

@@ -22,7 +22,7 @@ export const AppButton = (props: Props) => {
 const styles = StyleSheet.create({
   backgroundWrap: {
     backgroundColor: colors.first,
-    padding: 4,
+    padding: 8,
     borderRadius: 12,
     alignItems: 'center',
     justifyContent: 'center',

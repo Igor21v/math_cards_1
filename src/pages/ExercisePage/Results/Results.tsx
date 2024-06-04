@@ -14,10 +14,20 @@ export const Results = (props: Props) => {
   return (
     <>
       <AppText>Урок пройден. Ты допустил ошибки в следующих примерах:</AppText>
-      <AppButton>Потренироваться еще</AppButton>
-      <AppButton>Выйти в меню</AppButton>
+      {errors.map((item, index) => (
+        <AppText key={index}>
+          {`${item.firstNum} ${item.operation} ${item.secondNum} =  ${item.ans}`}
+        </AppText>
+      ))}
+      <AppButton style={styles.button}>Потренироваться еще</AppButton>
+      <AppButton style={styles.button}>Выйти в меню</AppButton>
     </>
   );
 };
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  button: {
+    marginHorizontal: 'auto',
+    marginVertical: 6,
+  },
+});
