@@ -6,26 +6,32 @@ import {AppButton} from '../../../shared/ui/AppButton';
 
 interface Props {
   errors: TaskProps[];
+  errorCount: number;
 }
 
 export const Results = (props: Props) => {
-  const {errors} = props;
+  const {errors, errorCount} = props;
 
   return (
     <>
-      <AppText>Урок пройден. Ты допустил ошибки в следующих примерах:</AppText>
+      <AppText>Урок пройден.</AppText>
+      <AppText>Неправильных ответов: {errorCount}</AppText>
+      <AppText>Ты допустил ошибки в следующих примерах:</AppText>
       {errors.map((item, index) => (
         <AppText key={index}>
           {`${item.firstNum} ${item.operation} ${item.secondNum} =  ${item.ans}`}
         </AppText>
       ))}
-      <AppButton style={styles.button}>Потренироваться еще</AppButton>
-      <AppButton style={styles.button}>Выйти в меню</AppButton>
+      <View style={styles.buttons}>
+        <AppButton style={styles.button}>Потренироваться еще</AppButton>
+        <AppButton style={styles.button}>Выйти в меню</AppButton>
+      </View>
     </>
   );
 };
 
 const styles = StyleSheet.create({
+  buttons: {marginVertical: 'auto'},
   button: {
     marginHorizontal: 'auto',
     marginVertical: 6,

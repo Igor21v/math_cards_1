@@ -29,6 +29,7 @@ export const ExercisePage = () => {
   });
   const [isError, setIsError] = useState(false);
   const [errors, setErrors] = useState<TaskProps[]>([]);
+  const [errorCount, setErrorCount] = useState<number>(0);
   const [showHelp, setShowHelp] = useState(false);
   const [ansCount, setAnsCount] = useState<number>(0);
   const {limit, mode} = useContext(Context);
@@ -58,12 +59,13 @@ export const ExercisePage = () => {
       startAnimate();
       Vibration.vibrate(80);
       setErrors(errors.concat(task));
+      setErrorCount(errorCount + 1);
     }
   };
 
   // Отбражение итоговой странцы
   if (ansCount > 1) {
-    return <Results errors={errors} />;
+    return <Results errors={errors} errorCount={errorCount} />;
   }
 
   return (
