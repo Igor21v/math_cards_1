@@ -1,0 +1,1 @@
+export {ResultspPage} from './ResultspPage';

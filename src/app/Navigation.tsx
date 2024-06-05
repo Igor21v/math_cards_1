@@ -9,6 +9,7 @@ import {TestPage} from '../pages/TestPage/TestPage';
 import {RootStackParamList} from '../shared/types/route';
 import {colors} from '../shared/ui/Colors';
 import {HeaderRight} from './HeaderRight/HeaderRight';
+import {ResultspPage} from '../pages/ResultspPage';
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
@@ -33,6 +34,7 @@ export const Navigation = () => {
         <Stack.Screen name="Exercise" component={ExercisePage} options={{title: 'Примеры'}} />
         <Stack.Screen name="Test" component={TestPage} options={{title: 'Тесты'}} />
         <Stack.Screen name="Compare" component={ComparePage} options={{title: 'Неравенства'}} />
+        <Stack.Screen name="Results" component={ResultspPage} options={{title: 'Результаты'}} />
       </Stack.Navigator>
     </NavigationContainer>
   );

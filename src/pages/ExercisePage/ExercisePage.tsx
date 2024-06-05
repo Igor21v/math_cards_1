@@ -10,7 +10,6 @@ import {Task} from './Task/Task';
 import {genTaskFn} from './Task/taskFn';
 import {useAnimateError} from './Task/useAnimateError';
 import {ProgressBar} from './ProgressBar';
-import {Results} from './Results/Results';
 
 export interface TaskProps {
   firstNum: number;
@@ -19,7 +18,9 @@ export interface TaskProps {
   ans: number;
 }
 
-export const ExercisePage = () => {
+type Props = NativeStackScreenProps<RootStackParamList, 'Exercise'>;
+
+export const ExercisePage = ({navigation}: Props) => {
   const [ans, setAns] = useState('?');
   const [task, setTask] = useState<TaskProps>({
     firstNum: 0,
@@ -65,7 +66,8 @@ export const ExercisePage = () => {
 
   // Отбражение итоговой странцы
   if (ansCount > 1) {
-    return <Results errors={errors} errorCount={errorCount} />;
+    /* return <Results errors={errors} errorCount={errorCount} />; */
+    navigation.push('Results', {errorCount, errors});
   }
 
   return (
