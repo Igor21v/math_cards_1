@@ -12,19 +12,26 @@ type Props = NativeStackScreenProps<RootStackParamList, 'Results'>;
 export const ResultspPage = (props: Props) => {
   const {navigation, route} = props;
   const {errorCount, errors} = route.params;
+  const back = () => {
+    navigation.replace('Exercise');
+  };
 
   return (
     <>
       <AppText>Урок пройден.</AppText>
       <AppText>Неправильных ответов: {errorCount}</AppText>
-      <AppText>Ты допустил ошибки в следующих примерах:</AppText>
-      {errors.map((item, index) => (
-        <AppText key={index}>
-          {`${item.firstNum} ${item.operation} ${item.secondNum} =  ${item.ans}`}
-        </AppText>
-      ))}
+      {errorCount > 0 && (
+        <>
+          <AppText>Ты допустил ошибки в следующих примерах:</AppText>
+          {errors.map((item, index) => (
+            <AppText key={index}>
+              {`${item.firstNum} ${item.operation} ${item.secondNum} =  ${item.ans}`}
+            </AppText>
+          ))}
+        </>
+      )}
       <View style={styles.buttons}>
-        <AppButton style={styles.button} onPress={() => navigation.navigate('Exercise')}>
+        <AppButton style={styles.button} onPress={() => navigation.replace('Exercise')}>
           Потренироваться еще
         </AppButton>
         <AppButton style={styles.button} onPress={() => navigation.navigate('Home')}>

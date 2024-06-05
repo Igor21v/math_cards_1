@@ -38,6 +38,13 @@ export const ExercisePage = ({navigation}: Props) => {
     genTask();
   }, [limit, mode]);
 
+  // Отбражение итоговой странцы
+  useEffect(() => {
+    if (ansCount > 1) {
+      navigation.navigate('Results', {errorCount, errors});
+    }
+  }, [ansCount]);
+
   // Анимация ошибки
   const {startAnimate, animValue} = useAnimateError();
 
@@ -63,12 +70,6 @@ export const ExercisePage = ({navigation}: Props) => {
       setErrorCount(errorCount + 1);
     }
   };
-
-  // Отбражение итоговой странцы
-  if (ansCount > 1) {
-    /* return <Results errors={errors} errorCount={errorCount} />; */
-    navigation.push('Results', {errorCount, errors});
-  }
 
   return (
     <>
