@@ -10,44 +10,30 @@ type Props = NativeStackScreenProps<RootStackParamList, 'Home'>;
 export const HomePage = ({navigation}: Props) => {
   return (
     <ScrollView>
-      <TouchableOpacity
-        style={styles.section}
-        onPress={() => navigation.navigate('Exercise', {maxNum: 10, type: 'all'})}>
+      <TouchableOpacity style={styles.section} onPress={() => navigation.navigate('Exercise')}>
         <AppText style={styles.text}>Примеры</AppText>
       </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.section}
-        onPress={() => navigation.navigate('Test', {maxNum: 10, type: 'all'})}>
+      <TouchableOpacity style={styles.section} onPress={() => navigation.navigate('Test')}>
         <Text style={styles.text}> Тесты</Text>
       </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.section}
-        onPress={() => navigation.navigate('Compare', {maxNum: 10, type: 'all'})}>
+      <TouchableOpacity style={styles.section} onPress={() => navigation.navigate('Compare')}>
         <Text style={styles.text}> Неравенства</Text>
       </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.section}
-        onPress={() => navigation.navigate('Line', {maxNum: 10, type: 'all'})}>
+      <TouchableOpacity style={styles.section} onPress={() => navigation.navigate('Line')}>
         <Text style={styles.text}> Соедини линию</Text>
       </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.section}
-        onPress={() => navigation.navigate('Line', {maxNum: 10, type: 'all'})}>
+      <TouchableOpacity style={styles.section} onPress={() => navigation.navigate('Line')}>
         <Text style={styles.text}> Контрольная</Text>
       </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.section}
-        onPress={() => navigation.navigate('Line', {maxNum: 10, type: 'all'})}>
+      <TouchableOpacity style={styles.section} onPress={() => navigation.navigate('Line')}>
         <Text style={styles.text}> Задачи</Text>
       </TouchableOpacity>
-      <TouchableOpacity
-        style={styles.section}
-        onPress={() => navigation.navigate('Line', {maxNum: 10, type: 'all'})}>
+      <TouchableOpacity style={styles.section} onPress={() => navigation.navigate('Line')}>
         <Text style={styles.text}> Статистика</Text>
       </TouchableOpacity>
       <TouchableOpacity
         style={[styles.section, styles.endSection]}
-        onPress={() => navigation.navigate('Line', {maxNum: 10, type: 'all'})}>
+        onPress={() => navigation.navigate('Line')}>
         <Text style={styles.text}> Настройки</Text>
       </TouchableOpacity>
     </ScrollView>

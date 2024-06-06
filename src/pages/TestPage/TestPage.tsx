@@ -6,8 +6,6 @@ import {RootStackParamList} from '../../shared/types/route';
 type Props = NativeStackScreenProps<RootStackParamList, 'Test'>;
 
 export const TestPage = ({route, navigation}: Props) => {
-  const {maxNum, type} = route.params;
-
   return (
     <View>
       <Text style={styles.postText}>Test Page</Text>

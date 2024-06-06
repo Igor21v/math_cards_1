@@ -29,7 +29,7 @@ export const ExercisePage = ({navigation}: Props) => {
     ans: 0,
   });
   const [isError, setIsError] = useState(false);
-  const [errors, setErrors] = useState<TaskProps[]>([]);
+  const [errors, setErrors] = useState<Set<string>>(new Set());
   const [errorCount, setErrorCount] = useState<number>(0);
   const [showHelp, setShowHelp] = useState(false);
   const [ansCount, setAnsCount] = useState<number>(0);
@@ -41,7 +41,7 @@ export const ExercisePage = ({navigation}: Props) => {
   // Отбражение итоговой странцы
   useEffect(() => {
     if (ansCount > 1) {
-      navigation.navigate('Results', {errorCount, errors});
+      navigation.navigate('Results', {errorCount, errors: Array.from(errors.values())});
     }
   }, [ansCount]);
 
@@ -66,7 +66,7 @@ export const ExercisePage = ({navigation}: Props) => {
       animValue.setValue(0);
       startAnimate();
       Vibration.vibrate(80);
-      setErrors(errors.concat(task));
+      setErrors(errors.add(`${task.firstNum} ${task.operation} ${task.secondNum} =  ${task.ans}`));
       setErrorCount(errorCount + 1);
     }
   };
