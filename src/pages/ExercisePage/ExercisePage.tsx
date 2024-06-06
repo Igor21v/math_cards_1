@@ -34,9 +34,6 @@ export const ExercisePage = ({navigation}: Props) => {
   const [showHelp, setShowHelp] = useState(false);
   const [ansCount, setAnsCount] = useState<number>(0);
   const {limit, mode} = useContext(Context);
-  useEffect(() => {
-    genTask();
-  }, [limit, mode]);
 
   // Отбражение итоговой странцы
   useEffect(() => {
@@ -44,6 +41,10 @@ export const ExercisePage = ({navigation}: Props) => {
       navigation.navigate('Results', {errorCount, errors: Array.from(errors.values())});
     }
   }, [ansCount]);
+
+  useEffect(() => {
+    genTask();
+  }, [limit, mode]);
 
   // Анимация ошибки
   const {startAnimate, animValue} = useAnimateError();
