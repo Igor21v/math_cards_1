@@ -11,7 +11,7 @@ interface Props extends TouchableOpacityProps {
 }
 
 export const AppButton = (props: Props) => {
-  const {children, size = 'm', mode = 'background', style, ...otherProps} = props;
+  const {children, size = 'm', mode: mode = 'background', style, ...otherProps} = props;
   return (
     <TouchableOpacity {...otherProps} style={[styles[`${mode}Wrap`], style]}>
       <Text style={[styles[`${mode}Text`], styles[size]]}>{children}</Text>
@@ -22,7 +22,8 @@ export const AppButton = (props: Props) => {
 const styles = StyleSheet.create({
   backgroundWrap: {
     backgroundColor: colors.first,
-    padding: 8,
+    paddingVertical: 8,
+    paddingHorizontal: 16,
     borderRadius: 12,
     alignItems: 'center',
     justifyContent: 'center',
@@ -45,11 +46,10 @@ const styles = StyleSheet.create({
   },
   m: {
     fontSize: 20,
-    marginRight: 8,
-    marginLeft: 8,
   },
   l: {
-    fontSize: 26,
+    fontSize: 20,
+    margin: 8,
   },
   xl: {
     fontSize: 32,

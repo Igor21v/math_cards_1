@@ -1,6 +1,6 @@
 import {createContext} from 'react';
 
-export type Limit = 10 | 20;
+export type Limit = 5 | 10 | 20;
 export type Mode = '+' | '-' | '+ -';
 
 export interface ContextProps {

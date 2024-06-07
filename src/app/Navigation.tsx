@@ -34,7 +34,11 @@ export const Navigation = () => {
         <Stack.Screen name="Exercise" component={ExercisePage} options={{title: 'Примеры'}} />
         <Stack.Screen name="Test" component={TestPage} options={{title: 'Тесты'}} />
         <Stack.Screen name="Compare" component={ComparePage} options={{title: 'Неравенства'}} />
-        <Stack.Screen name="Results" component={ResultspPage} options={{title: 'Результаты'}} />
+        <Stack.Screen
+          name="Results"
+          component={ResultspPage}
+          options={{title: 'Результаты', headerBackVisible: false}}
+        />
       </Stack.Navigator>
     </NavigationContainer>
   );

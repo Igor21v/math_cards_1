@@ -16,6 +16,7 @@ export const MenuLimit = () => {
     };
   };
   const items: ItemMenu[] = [
+    {el: <>5</>, fn: pressHendler(5)},
     {el: <>10</>, fn: pressHendler(10)},
     {el: <>20</>, fn: pressHendler(20)},
   ];
