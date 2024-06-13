@@ -1,6 +1,6 @@
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import React from 'react';
-import {Image, StyleSheet, View} from 'react-native';
+import {Image, ScrollView, StyleSheet, View} from 'react-native';
 import {RootStackParamList} from '../../shared/types/route';
 import {AppButton} from '../../shared/ui/AppButton';
 import {AppText} from '../../shared/ui/AppText';
@@ -29,7 +29,7 @@ export const ResultspPage = (props: Props) => {
   };
 
   return (
-    <View style={styles.wrap}>
+    <ScrollView style={styles.wrap}>
       <AppText>Урок пройден.</AppText>
       <AppText>Неправильных ответов: {errorCount}</AppText>
       <ErrorsRend />
@@ -41,7 +41,7 @@ export const ResultspPage = (props: Props) => {
           Выйти в меню
         </AppButton>
       </View>
-    </View>
+    </ScrollView>
   );
 };
 
