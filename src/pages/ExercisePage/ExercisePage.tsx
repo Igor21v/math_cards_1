@@ -37,7 +37,7 @@ export const ExercisePage = ({navigation}: Props) => {
 
   // Отбражение итоговой странцы
   useEffect(() => {
-    if (ansCount > 1) {
+    if (ansCount > 9) {
       navigation.navigate('Results', {errorCount, errors: Array.from(errors.values())});
     }
   }, [ansCount]);
