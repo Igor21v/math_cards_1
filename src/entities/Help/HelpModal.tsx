@@ -1,12 +1,11 @@
-import React, {Dispatch, SetStateAction, useState} from 'react';
-import {View, StyleSheet, Alert, Text, Pressable, StatusBar} from 'react-native';
-import {AppButton} from '../../../shared/ui/AppButton';
-import {AppText} from '../../../shared/ui/AppText';
-import {colors} from '../../../shared/ui/Colors';
+import React, {Dispatch, SetStateAction} from 'react';
+import {StyleSheet, View} from 'react-native';
 import Modal from 'react-native-modal';
-import {Cross} from '../../../shared/icons/Cross';
+
 import {HelpContent} from './HelpContent';
-import {TaskProps} from '../ExercisePage';
+import {TaskProps} from '@/shared/types/task';
+import {Cross} from '@/shared/icons/Cross';
+import {colors} from '@/shared/ui/Colors';
 
 interface HelpProps {
   showHelp: boolean;

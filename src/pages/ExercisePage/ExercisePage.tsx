@@ -1,22 +1,15 @@
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import React, {useContext, useEffect, useState} from 'react';
-import {StyleSheet, TouchableOpacity, Vibration} from 'react-native';
+import {StyleSheet, Vibration} from 'react-native';
 import {Context} from '../../shared/lib/Context';
 import {RootStackParamList} from '../../shared/types/route';
-import {AppText} from '../../shared/ui/AppText';
-import {HelpModal} from './Help/HelpModal';
 import {NumKeyboard} from './NumKeyboard';
-import {Task} from './Task/Task';
-import {genTaskFn} from './Task/taskFn';
-import {useAnimateError} from './Task/useAnimateError';
-import {ProgressBar} from './ProgressBar';
-
-export interface TaskProps {
-  firstNum: number;
-  secondNum: number;
-  operation: '+' | '-';
-  ans: number;
-}
+import {Task} from '../../entities/Task';
+import {genTaskFn} from '../../entities/Task/taskFn';
+import {useAnimateError} from '../../entities/Task/useAnimateError';
+import {HelpButton} from '../../entities/Help';
+import {TaskProps} from '../../shared/types/task';
+import {ProgressBar} from '@/entities/ProgressBar';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Exercise'>;
 
@@ -31,7 +24,6 @@ export const ExercisePage = ({navigation}: Props) => {
   const [isError, setIsError] = useState(false);
   const [errors, setErrors] = useState<Set<string>>(new Set());
   const [errorCount, setErrorCount] = useState<number>(0);
-  const [showHelp, setShowHelp] = useState(false);
   const [ansCount, setAnsCount] = useState<number>(0);
   const {limit, mode} = useContext(Context);
 
@@ -74,10 +66,7 @@ export const ExercisePage = ({navigation}: Props) => {
 
   return (
     <>
-      <HelpModal showHelp={showHelp} setShowHelp={setShowHelp} task={task} />
-      <TouchableOpacity style={styles.help} onPress={() => setShowHelp(true)}>
-        <AppText size="s">Нужна помощь?</AppText>
-      </TouchableOpacity>
+      <HelpButton task={task} />
       <Task task={task} ans={ans} isError={isError} animValue={animValue} />
       <ProgressBar ansCount={ansCount} />
       <NumKeyboard setNum={setAns} enter={check} setError={setIsError} />

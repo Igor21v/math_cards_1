@@ -1,5 +1,5 @@
-import {Limit, Mode} from '../../../shared/lib/Context';
-import {TaskProps} from '../ExercisePage';
+import {Limit, Mode} from '../../shared/lib/Context';
+import {TaskProps} from '../../shared/types/task';
 
 interface GenTaskProps {
   limit: Limit;

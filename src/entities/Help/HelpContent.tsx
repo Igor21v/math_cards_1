@@ -1,7 +1,8 @@
 import React from 'react';
-import {TaskProps} from '../ExercisePage';
+
 import {HelpContentAdd} from './HelpContentAdd';
 import {HelpContentSubtract} from './HelpContentSubtract';
+import {TaskProps} from '@/shared/types/task';
 
 interface HelpProps {
   task: TaskProps;
