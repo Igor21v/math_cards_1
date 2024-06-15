@@ -44,7 +44,7 @@ export const NumKeyboard = (props: KeyboardProps) => {
       </View>
       <View style={styles.row}>
         <AppButton style={styles.button} size="xl" onPress={addDigit('4')}>
-          4{' '}
+          4
         </AppButton>
         <AppButton style={styles.button} size="xl" onPress={addDigit('5')}>
           5
