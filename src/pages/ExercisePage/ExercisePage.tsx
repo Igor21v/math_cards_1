@@ -33,7 +33,6 @@ export const ExercisePage = ({navigation}: Props) => {
       navigation.navigate('Results', {
         errorCount,
         errors: Array.from(errors.values()),
-        from: 'Exercise',
       });
     }
   }, [ansCount]);

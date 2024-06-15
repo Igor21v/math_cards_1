@@ -14,7 +14,7 @@ import {getMockValues} from './getMockValues';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Test'>;
 
-export const TestPage = ({navigation}: Props) => {
+export const TestPage = ({navigation, route}: Props) => {
   const [ans, setAns] = useState('?');
   const [task, setTask] = useState<TaskProps>({
     firstNum: 0,
@@ -35,8 +35,8 @@ export const TestPage = ({navigation}: Props) => {
       navigation.navigate('Results', {
         errorCount,
         errors: Array.from(errors.values()),
-        from: 'Test',
       });
+      setAnsCount(0);
     }
   }, [ansCount]);
 

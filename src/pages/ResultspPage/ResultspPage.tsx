@@ -9,7 +9,7 @@ type Props = NativeStackScreenProps<RootStackParamList, 'Results'>;
 
 export const ResultspPage = (props: Props) => {
   const {navigation, route} = props;
-  const {errorCount, errors, from} = route.params;
+  const {errorCount, errors} = route.params;
   const ErrorsRend = () => {
     if (errorCount > 0) {
       return (
@@ -34,7 +34,7 @@ export const ResultspPage = (props: Props) => {
       <AppText>Неправильных ответов: {errorCount}</AppText>
       <ErrorsRend />
       <View style={styles.buttons}>
-        <AppButton size="l" style={styles.button} onPress={() => navigation.replace(from)}>
+        <AppButton size="l" style={styles.button} onPress={() => navigation.goBack()}>
           Решать еще
         </AppButton>
         <AppButton size="l" style={styles.button} onPress={() => navigation.navigate('Home')}>
