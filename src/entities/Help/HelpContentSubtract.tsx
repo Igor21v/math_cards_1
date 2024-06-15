@@ -1,8 +1,8 @@
 import React from 'react';
 import {Image, StyleSheet, View} from 'react-native';
 import {Apple} from './img/Apple';
-import {AppText} from '@/shared/ui/AppText';
-import {TaskProps} from '@/shared/types/task';
+import {AppText} from '@src/shared/ui/AppText';
+import {TaskProps} from '@src/shared/types/task';
 
 interface HelpProps {
   task: TaskProps;
@@ -11,7 +11,7 @@ interface HelpProps {
 export const HelpContentSubtract = (props: HelpProps) => {
   const {task} = props;
   const Smile = () => (
-    <Image source={require('../../../shared/emojis/Smile.png')} style={styles.smile} />
+    <Image source={require('../../shared/emojis/Smile.png')} style={styles.smile} />
   );
 
   // Задача на вычитание из числа больше 10

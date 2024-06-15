@@ -1,7 +1,7 @@
 import React, {useRef} from 'react';
 import {Animated, Easing, StyleSheet} from 'react-native';
 import {AppText} from '../../shared/ui/AppText';
-import {TaskProps} from '@/shared/types/task';
+import {TaskProps} from '@src/shared/types/task';
 
 export interface Props {
   task: TaskProps;

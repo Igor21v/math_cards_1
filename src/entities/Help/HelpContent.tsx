@@ -2,7 +2,7 @@ import React from 'react';
 
 import {HelpContentAdd} from './HelpContentAdd';
 import {HelpContentSubtract} from './HelpContentSubtract';
-import {TaskProps} from '@/shared/types/task';
+import {TaskProps} from '@src/shared/types/task';
 
 interface HelpProps {
   task: TaskProps;

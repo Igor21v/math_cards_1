@@ -2,8 +2,8 @@ import React from 'react';
 import {Image, StyleSheet, View} from 'react-native';
 import {Banana} from './img/Banana';
 import {Apple} from './img/Apple';
-import {AppText} from '@/shared/ui/AppText';
-import {TaskProps} from '@/shared/types/task';
+import {AppText} from '@src/shared/ui/AppText';
+import {TaskProps} from '@src/shared/types/task';
 
 interface HelpProps {
   task: TaskProps;
@@ -12,7 +12,7 @@ interface HelpProps {
 export const HelpContentAdd = (props: HelpProps) => {
   const {task} = props;
   const Smile = () => (
-    <Image source={require('../../../shared/emojis/Smile.png')} style={styles.smile} />
+    <Image source={require('../../shared/emojis/Smile.png')} style={styles.smile} />
   );
 
   // Задача на сложение с суммой больше 10

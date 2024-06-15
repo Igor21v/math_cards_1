@@ -3,9 +3,9 @@ import {StyleSheet, View} from 'react-native';
 import Modal from 'react-native-modal';
 
 import {HelpContent} from './HelpContent';
-import {TaskProps} from '@/shared/types/task';
-import {Cross} from '@/shared/icons/Cross';
-import {colors} from '@/shared/ui/Colors';
+import {TaskProps} from '@src/shared/types/task';
+import {Cross} from '@src/shared/icons/Cross';
+import {colors} from '@src/shared/ui/Colors';
 
 interface HelpProps {
   showHelp: boolean;

@@ -9,7 +9,7 @@ import {genTaskFn} from '../../entities/Task/taskFn';
 import {useAnimateError} from '../../entities/Task/useAnimateError';
 import {HelpButton} from '../../entities/Help';
 import {TaskProps} from '../../shared/types/task';
-import {ProgressBar} from '@/entities/ProgressBar';
+import {ProgressBar} from '@src/entities/ProgressBar';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Exercise'>;
 
