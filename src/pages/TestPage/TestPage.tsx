@@ -1,5 +1,5 @@
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext, useEffect, useRef, useState} from 'react';
 import {StyleSheet, Vibration} from 'react-native';
 import {Context} from '../../shared/lib/Context';
 import {RootStackParamList} from '../../shared/types/route';
@@ -10,6 +10,7 @@ import {HelpButton} from '../../entities/Help';
 import {TaskProps} from '../../shared/types/task';
 import {ProgressBar} from '@src/entities/ProgressBar';
 import {TestKeyboard} from './TestKeyboard';
+import {getMockValues} from './getMockValues';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Test'>;
 
@@ -26,6 +27,7 @@ export const TestPage = ({navigation}: Props) => {
   const [errorCount, setErrorCount] = useState<number>(0);
   const [ansCount, setAnsCount] = useState<number>(0);
   const {limit, mode} = useContext(Context);
+  const variants = useRef<number[]>([]);
 
   // Отбражение итоговой странцы
   useEffect(() => {
@@ -48,10 +50,11 @@ export const TestPage = ({navigation}: Props) => {
   // Генерим задачу
   const genTask = () => {
     const {firstNum, secondNum, operation, ans} = genTaskFn({limit, mode});
+    variants.current = getMockValues(limit, ans);
     setTask({firstNum, secondNum, operation, ans});
+    console.log('lim ' + limit);
+    console.log('variants ' + variants.current);
   };
-
-  const variants = [task.ans, 10, 4, 1];
 
   // Проверка ответа
   const check = (ans: number) => {
@@ -76,7 +79,7 @@ export const TestPage = ({navigation}: Props) => {
       <HelpButton task={task} />
       <Task task={task} ans={ans} isError={isError} animValue={animValue} />
       <ProgressBar ansCount={ansCount} />
-      <TestKeyboard check={check} variants={variants} />
+      <TestKeyboard check={check} variants={variants.current} />
     </>
   );
 };

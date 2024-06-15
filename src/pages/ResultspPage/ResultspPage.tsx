@@ -35,10 +35,10 @@ export const ResultspPage = (props: Props) => {
       <ErrorsRend />
       <View style={styles.buttons}>
         <AppButton size="l" style={styles.button} onPress={() => navigation.replace(from)}>
-          Решать еще примеры
+          Решать еще
         </AppButton>
         <AppButton size="l" style={styles.button} onPress={() => navigation.navigate('Home')}>
-          Выйти в меню
+          Выбрать что-нибудь другое
         </AppButton>
       </View>
     </ScrollView>
