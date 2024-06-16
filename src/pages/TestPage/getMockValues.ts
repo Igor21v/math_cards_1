@@ -14,8 +14,6 @@ export function getMockValues(limit: Limit, ans: number) {
   const position = getRandomInt(0, 3);
   values[0] = values[position];
   values[position] = ans;
-
-  console.log('pos ' + position + ' lim ' + limit + ' ans ' + ans);
   return values;
 
   function getRandomVal(): number {
@@ -23,7 +21,6 @@ export function getMockValues(limit: Limit, ans: number) {
     if (values.includes(val)) {
       val = getRandomVal();
     }
-    console.log('val ' + val);
     return val;
   }
 }

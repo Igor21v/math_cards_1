@@ -1,6 +1,6 @@
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import React, {useContext, useEffect, useRef, useState} from 'react';
-import {StyleSheet, Vibration} from 'react-native';
+import {Pressable, StyleSheet, Vibration, View} from 'react-native';
 import {Context} from '../../shared/lib/Context';
 import {RootStackParamList} from '../../shared/types/route';
 import {Task} from '../../entities/Task';
@@ -9,6 +9,8 @@ import {useAnimateError} from '../../entities/Task/useAnimateError';
 import {HelpButton} from '../../entities/Help';
 import {TaskProps} from '../../shared/types/task';
 import {ProgressBar} from '@src/entities/ProgressBar';
+import {genDiffTasks} from './genDiffTasks';
+import {AppText} from '@src/shared/ui/AppText';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Line'>;
 
@@ -37,20 +39,26 @@ export const LinePage = ({navigation}: Props) => {
     genTasks();
   }, [limit, mode]);
 
-  // Анимация ошибки
-  const {startAnimate, animValue} = useAnimateError();
-
   // Генерим задачу
   const genTasks = () => {
-    const {firstNum, secondNum, operation, ans} = genTaskFn({limit, mode});
-    variants.current = getMockValues(limit, ans);
-    setTasks({firstNum, secondNum, operation, ans});
-    console.log('lim ' + limit);
-    console.log('variants ' + variants.current);
+    setTasks(genDiffTasks({limit, mode}));
   };
 
+  // Генерация примеров
+  const RenderTasks = () => (
+    <>
+      {tasks.map(task => {
+        const taskStr = task.firstNum + task.operation + task.secondNum;
+        return (
+          <Pressable key={taskStr}>
+            <AppText size="l">{taskStr}</AppText>
+          </Pressable>
+        );
+      })}
+    </>
+  );
   // Проверка ответа
-  const check = (ans: number) => {
+  /* const check = (ans: number) => {
     if (tasks.ans === ans) {
       setIsError(false);
       setAns('?');
@@ -65,17 +73,30 @@ export const LinePage = ({navigation}: Props) => {
       setErrors(errors.add(`${task.firstNum} ${task.operation} ${task.secondNum} =  ${task.ans}`));
       setErrorCount(errorCount + 1);
     }
-  };
+  }; */
 
-  return <>\</>;
+  return (
+    <View style={styles.wrap}>
+      <View style={styles.tasksWrap}>
+        <RenderTasks />
+      </View>
+      <View style={styles.ansWrap}>
+        <RenderTasks />
+      </View>
+    </View>
+  );
 };
 
 const styles = StyleSheet.create({
-  help: {
-    position: 'absolute',
-    right: 4,
+  wrap: {
     flexDirection: 'row',
-    alignItems: 'center',
-    padding: 8,
+    flex: 1,
+  },
+  tasksWrap: {
+    justifyContent: 'space-evenly',
+    marginRight: 'auto',
+  },
+  ansWrap: {
+    justifyContent: 'space-evenly',
   },
 });

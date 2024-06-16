@@ -52,8 +52,6 @@ export const TestPage = ({navigation, route}: Props) => {
     const {firstNum, secondNum, operation, ans} = genTaskFn({limit, mode});
     variants.current = getMockValues(limit, ans);
     setTask({firstNum, secondNum, operation, ans});
-    console.log('lim ' + limit);
-    console.log('variants ' + variants.current);
   };
 
   // Проверка ответа
