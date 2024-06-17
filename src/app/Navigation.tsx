@@ -4,7 +4,7 @@ import {StyleSheet} from 'react-native';
 import {ComparePage} from '../pages/ComparePage/ComparePage';
 import {ExercisePage} from '../pages/ExercisePage';
 import {HomePage} from '../pages/HomePage';
-import {PairPage} from '../pages/LinePage/PairPage';
+import {PairPage} from '../pages/PairPage/PairPage';
 import {TestPage} from '../pages/TestPage/TestPage';
 import {RootStackParamList} from '../shared/types/route';
 import {colors} from '../shared/ui/Colors';
