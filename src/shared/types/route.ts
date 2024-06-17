@@ -7,7 +7,7 @@ export type RootStackParamList = {
   Home: undefined;
   Exercise: undefined;
   Test: undefined;
-  Line: undefined;
+  Pair: undefined;
   Compare: undefined;
   Results: resultsProps;
 };

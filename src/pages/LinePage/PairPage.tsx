@@ -12,9 +12,9 @@ import {ProgressBar} from '@src/entities/ProgressBar';
 import {genDiffTasks} from './genDiffTasks';
 import {AppText} from '@src/shared/ui/AppText';
 
-type Props = NativeStackScreenProps<RootStackParamList, 'Line'>;
+type Props = NativeStackScreenProps<RootStackParamList, 'Pair'>;
 
-export const LinePage = ({navigation}: Props) => {
+export const PairPage = ({navigation}: Props) => {
   const [ans, setAns] = useState('?');
   const [tasks, setTasks] = useState<TaskProps[]>([]);
   const [isError, setIsError] = useState(false);
@@ -57,6 +57,15 @@ export const LinePage = ({navigation}: Props) => {
       })}
     </>
   );
+  const RenderAnswer = () => (
+    <>
+      {tasks.map((task, index) => (
+        <Pressable key={index}>
+          <AppText size="l">{task.ans}</AppText>
+        </Pressable>
+      ))}
+    </>
+  );
   // Проверка ответа
   /* const check = (ans: number) => {
     if (tasks.ans === ans) {
@@ -81,7 +90,7 @@ export const LinePage = ({navigation}: Props) => {
         <RenderTasks />
       </View>
       <View style={styles.ansWrap}>
-        <RenderTasks />
+        <RenderAnswer />
       </View>
     </View>
   );
@@ -95,8 +104,10 @@ const styles = StyleSheet.create({
   tasksWrap: {
     justifyContent: 'space-evenly',
     marginRight: 'auto',
+    marginLeft: 30,
   },
   ansWrap: {
     justifyContent: 'space-evenly',
+    marginRight: 30,
   },
 });

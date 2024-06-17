@@ -19,21 +19,21 @@ export const HomePage = ({navigation}: Props) => {
       <TouchableOpacity style={styles.section} onPress={() => navigation.navigate('Compare')}>
         <Text style={styles.text}> Неравенства</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.section} onPress={() => navigation.navigate('Line')}>
-        <Text style={styles.text}> Соедини линию</Text>
+      <TouchableOpacity style={styles.section} onPress={() => navigation.navigate('Pair')}>
+        <Text style={styles.text}> Соедини пару</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.section} onPress={() => navigation.navigate('Line')}>
+      <TouchableOpacity style={styles.section} onPress={() => navigation.navigate('Pair')}>
         <Text style={styles.text}> Контрольная</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.section} onPress={() => navigation.navigate('Line')}>
+      <TouchableOpacity style={styles.section} onPress={() => navigation.navigate('Pair')}>
         <Text style={styles.text}> Задачи</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.section} onPress={() => navigation.navigate('Line')}>
+      <TouchableOpacity style={styles.section} onPress={() => navigation.navigate('Pair')}>
         <Text style={styles.text}> Статистика</Text>
       </TouchableOpacity>
       <TouchableOpacity
         style={[styles.section, styles.endSection]}
-        onPress={() => navigation.navigate('Line')}>
+        onPress={() => navigation.navigate('Pair')}>
         <Text style={styles.text}> Настройки</Text>
       </TouchableOpacity>
     </ScrollView>

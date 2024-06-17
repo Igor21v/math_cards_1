@@ -4,7 +4,7 @@ import {StyleSheet} from 'react-native';
 import {ComparePage} from '../pages/ComparePage/ComparePage';
 import {ExercisePage} from '../pages/ExercisePage';
 import {HomePage} from '../pages/HomePage';
-import {LinePage} from '../pages/LinePage/LinePage';
+import {PairPage} from '../pages/LinePage/PairPage';
 import {TestPage} from '../pages/TestPage/TestPage';
 import {RootStackParamList} from '../shared/types/route';
 import {colors} from '../shared/ui/Colors';
@@ -30,7 +30,7 @@ export const Navigation = () => {
           component={HomePage}
           options={{title: 'Математика 1й класс', headerRight: () => null}}
         />
-        <Stack.Screen name="Line" component={LinePage} options={{title: 'Соедини линию'}} />
+        <Stack.Screen name="Pair" component={PairPage} options={{title: 'Соедини пару'}} />
         <Stack.Screen name="Exercise" component={ExercisePage} options={{title: 'Примеры'}} />
         <Stack.Screen name="Test" component={TestPage} options={{title: 'Тесты'}} />
         <Stack.Screen name="Compare" component={ComparePage} options={{title: 'Неравенства'}} />
