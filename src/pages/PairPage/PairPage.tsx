@@ -11,6 +11,7 @@ import {TaskProps} from '../../shared/types/task';
 import {ProgressBar} from '@src/entities/ProgressBar';
 import {genDiffTasks} from './genDiffTasks';
 import {AppText} from '@src/shared/ui/AppText';
+import {DragAndDropItem} from './DragAndDropItem';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Pair'>;
 
@@ -50,19 +51,20 @@ export const PairPage = ({navigation}: Props) => {
       {tasks.map(task => {
         const taskStr = task.firstNum + task.operation + task.secondNum;
         return (
-          <Pressable key={taskStr}>
+          <DragAndDropItem key={taskStr}>
             <AppText size="l">{taskStr}</AppText>
-          </Pressable>
+          </DragAndDropItem>
         );
       })}
     </>
   );
+  // Генерация ответов
   const RenderAnswer = () => (
     <>
       {tasks.map((task, index) => (
-        <Pressable key={index}>
+        <DragAndDropItem key={index}>
           <AppText size="l">{task.ans}</AppText>
-        </Pressable>
+        </DragAndDropItem>
       ))}
     </>
   );
