@@ -9,8 +9,6 @@ module.exports = {
           '@src': './src',
         },
       },
-      '@babel/plugin-transform-private-methods',
-      {loose: true},
     ],
   ],
 };
