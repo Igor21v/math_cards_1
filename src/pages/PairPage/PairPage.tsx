@@ -1,17 +1,12 @@
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
+import {AppText} from '@src/shared/ui/AppText';
 import React, {useContext, useEffect, useRef, useState} from 'react';
-import {Pressable, StyleSheet, Vibration, View} from 'react-native';
+import {StyleSheet, View} from 'react-native';
 import {Context} from '../../shared/lib/Context';
 import {RootStackParamList} from '../../shared/types/route';
-import {Task} from '../../entities/Task';
-import {genTaskFn} from '@src/entities/Task/taskFn';
-import {useAnimateError} from '../../entities/Task/useAnimateError';
-import {HelpButton} from '../../entities/Help';
 import {TaskProps} from '../../shared/types/task';
-import {ProgressBar} from '@src/entities/ProgressBar';
+import {DragAndDropItem, DropAreaType, DropType} from './DragAndDropItem';
 import {genDiffTasks} from './genDiffTasks';
-import {AppText} from '@src/shared/ui/AppText';
-import {DragAndDropItem} from './DragAndDropItem';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Pair'>;
 
@@ -22,6 +17,8 @@ export const PairPage = ({navigation}: Props) => {
   const [errors, setErrors] = useState<Set<string>>(new Set());
   const [errorCount, setErrorCount] = useState<number>(0);
   const [ansCount, setAnsCount] = useState<number>(0);
+  const dropAns = useRef<DropType[]>([]);
+
   const {limit, mode} = useContext(Context);
   const variants = useRef<number[]>([]);
 
@@ -51,7 +48,7 @@ export const PairPage = ({navigation}: Props) => {
       {tasks.map(task => {
         const taskStr = task.firstNum + task.operation + task.secondNum;
         return (
-          <DragAndDropItem key={taskStr}>
+          <DragAndDropItem key={taskStr} dropHendlers={[dropAns.current[0]]}>
             <AppText size="l">{taskStr}</AppText>
           </DragAndDropItem>
         );
@@ -61,11 +58,24 @@ export const PairPage = ({navigation}: Props) => {
   // Генерация ответов
   const RenderAnswer = () => (
     <>
-      {tasks.map((task, index) => (
-        <DragAndDropItem key={index}>
-          <AppText size="l">{task.ans}</AppText>
-        </DragAndDropItem>
-      ))}
+      {tasks.map((task, index) => {
+        const ininDrop: DropType = {area: {x1: 0, x2: 0, y1: 0, y2: 0}, handler: {}};
+        dropAns.current[index] = ininDrop;
+        const setDrogArea = (dropArea: DropAreaType) => {
+          dropAns.current[index].area = dropArea;
+        };
+
+        dropAns.current[index].handler = {
+          dragEnter: () => console.log('УРА, вошел!!!!!!'),
+          dragLeave: () => console.log('УРА, вышел!!!!!!'),
+          drop: () => console.log('Бросили!!!'),
+        };
+        return (
+          <DragAndDropItem key={index} setDrogArea={setDrogArea}>
+            <AppText size="l">{task.ans}</AppText>
+          </DragAndDropItem>
+        );
+      })}
     </>
   );
   // Проверка ответа
