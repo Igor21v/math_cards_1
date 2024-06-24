@@ -5,8 +5,9 @@ import {StyleSheet, View} from 'react-native';
 import {Context} from '../../shared/lib/Context';
 import {RootStackParamList} from '../../shared/types/route';
 import {TaskProps} from '../../shared/types/task';
-import {DragAndDropItem, DropAreaType, DropType} from './DragAndDropItem';
+import {DragAndDropItem, DropAreaType, DropType} from './DragAndDrop/DragAndDropItem';
 import {genDiffTasks} from './genDiffTasks';
+import {AnsItem} from './AnsItem';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Pair'>;
 
@@ -48,7 +49,7 @@ export const PairPage = ({navigation}: Props) => {
       {tasks.map(task => {
         const taskStr = task.firstNum + task.operation + task.secondNum;
         return (
-          <DragAndDropItem key={taskStr} dropHendlers={[dropAns.current[0]]}>
+          <DragAndDropItem key={taskStr} dropHandlers={dropAns.current}>
             <AppText size="l">{taskStr}</AppText>
           </DragAndDropItem>
         );
@@ -64,17 +65,10 @@ export const PairPage = ({navigation}: Props) => {
         const setDrogArea = (dropArea: DropAreaType) => {
           dropAns.current[index].area = dropArea;
         };
-
-        dropAns.current[index].handler = {
-          dragEnter: () => console.log('УРА, вошел!!!!!!'),
-          dragLeave: () => console.log('УРА, вышел!!!!!!'),
-          drop: () => console.log('Бросили!!!'),
+        const setSetD = (dropArea: DropAreaType) => {
+          dropAns.current[index].area = dropArea;
         };
-        return (
-          <DragAndDropItem key={index} setDrogArea={setDrogArea}>
-            <AppText size="l">{task.ans}</AppText>
-          </DragAndDropItem>
-        );
+        return <AnsItem setDrogArea={setDrogArea} task={task} />;
       })}
     </>
   );
