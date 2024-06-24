@@ -60,15 +60,10 @@ export const PairPage = ({navigation}: Props) => {
   const RenderAnswer = () => (
     <>
       {tasks.map((task, index) => {
-        const ininDrop: DropType = {area: {x1: 0, x2: 0, y1: 0, y2: 0}, handler: {}};
-        dropAns.current[index] = ininDrop;
-        const setDrogArea = (dropArea: DropAreaType) => {
-          dropAns.current[index].area = dropArea;
+        const setDrop = (dropProp: Partial<DropType>) => {
+          dropAns.current[index] = {...dropAns.current[index], ...dropProp};
         };
-        const setSetD = (dropArea: DropAreaType) => {
-          dropAns.current[index].area = dropArea;
-        };
-        return <AnsItem setDrogArea={setDrogArea} task={task} />;
+        return <AnsItem setDrop={setDrop} task={task} key={index} />;
       })}
     </>
   );

@@ -1,23 +1,36 @@
 import {AppText} from '@src/shared/ui/AppText';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {StyleSheet} from 'react-native';
-import {DragAndDropItem, DropAreaType} from './DragAndDrop/DragAndDropItem';
+import {DragAndDropItem, DropAreaType, DropType} from './DragAndDrop/DragAndDropItem';
 import {TaskProps} from '@src/shared/types/task';
 
 interface Props {
-  setDrogArea?: (dropArea: DropAreaType) => void;
+  setDrop?: (dropArea: Partial<DropType>) => void;
   task: TaskProps;
 }
 
 export const AnsItem = (props: Props) => {
-  const {setDrogArea, task} = props;
-  const [dragOver, setDragOver] = useState(false);
+  const {setDrop, task} = props;
+  const [dragOverState, setDragOverState] = useState(false);
+  const setDragOver = (state: boolean) => {
+    setDragOverState(state);
+    setDrop?.({dragOver: state});
+  };
+  useEffect(() => {
+    setDrop?.({setDragOver});
+  });
+  const mods = [];
+  dragOverState && mods.push(styles.dropzone);
 
   return (
-    <DragAndDropItem setDrogArea={setDrogArea}>
+    <DragAndDropItem setDrop={setDrop} style={[...mods]}>
       <AppText size="l">{task.ans}</AppText>
     </DragAndDropItem>
   );
 };
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  dropzone: {
+    borderColor: 'green',
+  },
+});

@@ -21,12 +21,12 @@ export interface DropType {
 }
 
 interface Props extends ViewProps {
-  setDrogArea?: (dropArea: DropAreaType) => void;
+  setDrop?: (dropArea: Partial<DropType>) => void;
   dropHandlers?: DropType[];
 }
 
 export const DragAndDropItem = (props: Props) => {
-  const {children, setDrogArea, dropHandlers} = props;
+  const {children, setDrop, dropHandlers, style} = props;
   const position = useRef(new Animated.ValueXY()).current;
   const [dragging, setDragging] = useState(false);
   const [dropzone, setDropZone] = useState(false);
@@ -36,12 +36,11 @@ export const DragAndDropItem = (props: Props) => {
     wrapRef.current?.measure((fx, fy, width, height, px, py) => {
       dropZone.current = {x1: px, y1: py, x2: px + width, y2: py + height};
     });
-    setDrogArea?.({x1: 200, x2: 300, y1: 2, y2: 200});
+    setDrop?.({area: {x1: 200, x2: 300, y1: 2, y2: 200}});
   });
 
   const mods = [];
   dragging && mods.push(styles.dragging);
-  dropzone && mods.push(styles.dropzone);
   const panResponder = useRef(
     PanResponder.create({
       onStartShouldSetPanResponder: () => true,
@@ -51,13 +50,16 @@ export const DragAndDropItem = (props: Props) => {
         console.log('start');
       },
       onPanResponderMove: (evt, gestureState) => {
-        if (gestureState.moveX > 200) {
-          mods.push(styles.dropzone);
-        }
         const zone1 = calcArea(dropZone.current, gestureState);
         dropHandlers?.forEach(item => {
-          if (inArea(zone1, item.area) && !item.dragOver) {
-            item.setDragOver?.(true);
+          if (inArea(zone1, item.area)) {
+            if (!item.dragOver) {
+              item.setDragOver?.(true);
+              console.log('TTT');
+            }
+          } else if (item.dragOver) {
+            item.setDragOver?.(false);
+            console.log('RRR');
           }
         });
         Animated.event(
@@ -87,6 +89,7 @@ export const DragAndDropItem = (props: Props) => {
       style={[
         styles.wrap,
         ...mods,
+        style,
         {
           transform: position.getTranslateTransform(),
         },
@@ -109,8 +112,5 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     borderStyle: 'dashed',
     borderColor: colors.first,
-  },
-  dropzone: {
-    borderColor: 'green',
   },
 });
