@@ -16,7 +16,7 @@ export const genDiffTasks = (props: Props): TaskProps[] => {
   const tasks = Array.from(Array(8), () => generation());
   return tasks;
 
-  function generation() {
+  function generation(): TaskProps {
     const task = genTaskFn({limit, mode});
     const taskStr = task.firstNum + task.operation + task.secondNum;
     if (!taskSet.has(taskStr)) {
