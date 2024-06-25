@@ -64,10 +64,19 @@ export const DragAndDropItem = (props: Props) => {
           } else if (item?.dragOver) {
             item.setDragOver?.(false);
           }
-          if (maxSquare > 0 && !dropHandlers[maxIndex]?.dragOver) {
-            dropHandlers[maxIndex].setDragOver?.(true);
+        });
+        // Установка для максимальной площади
+        if (maxSquare > 0 && !dropHandlers?.[maxIndex]?.dragOver) {
+          console.log(maxSquare);
+          dropHandlers?.[maxIndex].setDragOver?.(true);
+        }
+        // Сброс остальных
+        dropHandlers?.forEach((item, index) => {
+          if (index !== maxIndex && item.dragOver) {
+            item.setDragOver?.(false);
           }
         });
+
         Animated.event(
           [
             null,
