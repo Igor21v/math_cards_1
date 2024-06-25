@@ -1,7 +1,7 @@
 import {colors} from '@src/shared/ui/Colors';
-import React, {useEffect, useLayoutEffect, useRef, useState} from 'react';
+import React, {useLayoutEffect, useRef, useState} from 'react';
 import {Animated, PanResponder, StyleSheet, View, ViewProps} from 'react-native';
-import {calcArea, inArea} from './calcArea';
+import {calcArea, matchSquareFn} from './calcArea';
 
 export interface DropAreaType {
   x1: number;
@@ -37,10 +37,9 @@ export const DragAndDropItem = (props: Props) => {
       wrapRef.current?.measure((fx, fy, width, height, px, py) => {
         dragZone.current = {x1: px, y1: py, x2: px + width, y2: py + height};
         setDrop?.({area: {x1: px, x2: px + width, y1: py, y2: py + height}});
-        console.log(px);
       });
     });
-  });
+  }, []);
 
   const mods = [];
   (dragging || dragOverState) && mods.push(styles.dragging);
@@ -53,14 +52,20 @@ export const DragAndDropItem = (props: Props) => {
         console.log('start');
       },
       onPanResponderMove: (evt, gestureState) => {
+        // Выделение зоны сброса
         const zone1 = calcArea(dragZone.current, gestureState);
-        dropHandlers?.forEach(item => {
-          if (inArea(zone1, item.area)) {
-            if (!item.dragOver) {
-              item.setDragOver?.(true);
-            }
-          } else if (item.dragOver) {
+        let maxSquare = 0;
+        let maxIndex = -1;
+        dropHandlers?.forEach((item, index) => {
+          const matchSquare = matchSquareFn(zone1, item.area);
+          if (matchSquare > maxSquare) {
+            maxSquare = matchSquare;
+            maxIndex = index;
+          } else if (item?.dragOver) {
             item.setDragOver?.(false);
+          }
+          if (maxSquare > 0 && !dropHandlers[maxIndex]?.dragOver) {
+            dropHandlers[maxIndex].setDragOver?.(true);
           }
         });
         Animated.event(

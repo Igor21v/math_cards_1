@@ -18,7 +18,7 @@ export const AnsItem = (props: Props) => {
   };
   useEffect(() => {
     setDrop?.({setDragOver});
-  });
+  }, []);
 
   return (
     <DragAndDropItem setDrop={setDrop} dragOverState={dragOverState}>
