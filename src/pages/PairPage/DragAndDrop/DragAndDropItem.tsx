@@ -19,6 +19,7 @@ export interface DropType {
   setDragOver?: (state: boolean) => void;
   dragOver?: boolean;
   data?: number;
+  setHide?: (state: boolean) => void;
 }
 
 interface Props extends ViewProps {
@@ -39,7 +40,7 @@ export const DragAndDropItem = (props: Props) => {
     setTimeout(() => {
       wrapRef.current?.measure((fx, fy, width, height, px, py) => {
         dragZone.current = {x1: px, y1: py, x2: px + width, y2: py + height};
-        setDrop?.({area: {x1: px, x2: px + width, y1: py, y2: py + height}});
+        setDrop?.({area: {x1: px, x2: px + width, y1: py, y2: py + height}, setHide});
       });
     });
   }, []);
@@ -47,6 +48,9 @@ export const DragAndDropItem = (props: Props) => {
   const mods = [];
   (dragging || dragOverState) && mods.push(styles.dragging);
   hide && mods.push(styles.hide);
+  // Текущая выделенная зона сброса
+  let currDropItem: DropType | undefined;
+  console.log('data ' + currDropItem?.data);
   const panResponder = useRef(
     PanResponder.create({
       onStartShouldSetPanResponder: () => true,
@@ -67,16 +71,14 @@ export const DragAndDropItem = (props: Props) => {
             maxIndex = index;
           }
         });
-        // Установка для максимальной площади
-        if (maxSquare > 0 && !dropHandlers?.[maxIndex]?.dragOver) {
-          dropHandlers?.[maxIndex].setDragOver?.(true);
+        // Установка зоны сброса с максимальной площадью
+        if (maxSquare === 0) {
+          currDropItem?.setDragOver?.(false);
+        } else if (currDropItem !== dropHandlers?.[maxIndex]) {
+          currDropItem?.setDragOver?.(false);
+          currDropItem = dropHandlers?.[maxIndex];
+          currDropItem?.setDragOver?.(true);
         }
-        // Сброс остальных
-        dropHandlers?.forEach((item, index) => {
-          if (index !== maxIndex && item.dragOver) {
-            item.setDragOver?.(false);
-          }
-        });
 
         Animated.event(
           [
@@ -91,14 +93,12 @@ export const DragAndDropItem = (props: Props) => {
       },
       onPanResponderRelease: () => {
         // Проверка совпадения ответа
-        dropHandlers?.forEach(item => {
-          if (item.dragOver) {
-            if (item.data === data) {
-              setHide(true);
-            }
-            item.setDragOver?.(false);
-          }
-        });
+        if (currDropItem?.data === data) {
+          setHide(true);
+          currDropItem?.setHide?.(true);
+        }
+        currDropItem?.setDragOver?.(false);
+
         Animated.spring(position, {
           toValue: {x: 0, y: 0},
           useNativeDriver: false,
