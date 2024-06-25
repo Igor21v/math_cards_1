@@ -17,11 +17,11 @@ export const AnsItem = (props: Props) => {
     setDrop?.({dragOver: state});
   };
   useEffect(() => {
-    setDrop?.({setDragOver});
+    setDrop?.({setDragOver, data: task.ans});
   }, []);
 
   return (
-    <DragAndDropItem setDrop={setDrop} dragOverState={dragOverState}>
+    <DragAndDropItem setDrop={setDrop} dragOverState={dragOverState} data={task.ans}>
       <AppText size="l">{task.ans}</AppText>
     </DragAndDropItem>
   );

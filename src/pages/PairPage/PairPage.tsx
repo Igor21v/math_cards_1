@@ -49,7 +49,7 @@ export const PairPage = ({navigation}: Props) => {
       {tasks.map(task => {
         const taskStr = task.firstNum + task.operation + task.secondNum;
         return (
-          <DragAndDropItem key={taskStr} dropHandlers={dropAns.current}>
+          <DragAndDropItem key={taskStr} dropHandlers={dropAns.current} data={task.ans}>
             <AppText size="l">{taskStr}</AppText>
           </DragAndDropItem>
         );

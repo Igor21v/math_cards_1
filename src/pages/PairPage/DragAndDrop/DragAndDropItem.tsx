@@ -18,18 +18,21 @@ export interface DropType {
   area: DropAreaType;
   setDragOver?: (state: boolean) => void;
   dragOver?: boolean;
+  data?: number;
 }
 
 interface Props extends ViewProps {
   setDrop?: (dropArea: Partial<DropType>) => void;
   dropHandlers?: DropType[];
   dragOverState?: boolean;
+  data?: number;
 }
 
 export const DragAndDropItem = (props: Props) => {
-  const {children, setDrop, dropHandlers, dragOverState} = props;
+  const {children, setDrop, dropHandlers, dragOverState, data} = props;
   const position = useRef(new Animated.ValueXY()).current;
   const [dragging, setDragging] = useState(false);
+  const [hide, setHide] = useState(false);
   let wrapRef = useRef<View>(null);
   let dragZone = useRef<DropAreaType>({x1: 0, y1: 0, x2: 0, y2: 0});
   useLayoutEffect(() => {
@@ -43,6 +46,7 @@ export const DragAndDropItem = (props: Props) => {
 
   const mods = [];
   (dragging || dragOverState) && mods.push(styles.dragging);
+  hide && mods.push(styles.hide);
   const panResponder = useRef(
     PanResponder.create({
       onStartShouldSetPanResponder: () => true,
@@ -61,13 +65,10 @@ export const DragAndDropItem = (props: Props) => {
           if (matchSquare > maxSquare) {
             maxSquare = matchSquare;
             maxIndex = index;
-          } else if (item?.dragOver) {
-            item.setDragOver?.(false);
           }
         });
         // Установка для максимальной площади
         if (maxSquare > 0 && !dropHandlers?.[maxIndex]?.dragOver) {
-          console.log(maxSquare);
           dropHandlers?.[maxIndex].setDragOver?.(true);
         }
         // Сброс остальных
@@ -89,8 +90,12 @@ export const DragAndDropItem = (props: Props) => {
         )(evt, gestureState);
       },
       onPanResponderRelease: () => {
+        // Проверка совпадения ответа
         dropHandlers?.forEach(item => {
           if (item.dragOver) {
+            if (item.data === data) {
+              setHide(true);
+            }
             item.setDragOver?.(false);
           }
         });
@@ -131,5 +136,8 @@ const styles = StyleSheet.create({
     borderRadius: 8,
     borderStyle: 'dashed',
     borderColor: colors.first,
+  },
+  hide: {
+    opacity: 0,
   },
 });
