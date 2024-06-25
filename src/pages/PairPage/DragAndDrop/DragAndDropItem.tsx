@@ -23,24 +23,27 @@ export interface DropType {
 interface Props extends ViewProps {
   setDrop?: (dropArea: Partial<DropType>) => void;
   dropHandlers?: DropType[];
+  dragOverState?: boolean;
 }
 
 export const DragAndDropItem = (props: Props) => {
-  const {children, setDrop, dropHandlers, style} = props;
+  const {children, setDrop, dropHandlers, dragOverState} = props;
   const position = useRef(new Animated.ValueXY()).current;
   const [dragging, setDragging] = useState(false);
-  const [dropzone, setDropZone] = useState(false);
   let wrapRef = useRef<View>(null);
-  let dropZone = useRef<DropAreaType>({x1: 0, y1: 0, x2: 0, y2: 0});
+  let dragZone = useRef<DropAreaType>({x1: 0, y1: 0, x2: 0, y2: 0});
   useLayoutEffect(() => {
-    wrapRef.current?.measure((fx, fy, width, height, px, py) => {
-      dropZone.current = {x1: px, y1: py, x2: px + width, y2: py + height};
+    setTimeout(() => {
+      wrapRef.current?.measure((fx, fy, width, height, px, py) => {
+        dragZone.current = {x1: px, y1: py, x2: px + width, y2: py + height};
+        setDrop?.({area: {x1: px, x2: px + width, y1: py, y2: py + height}});
+        console.log(px);
+      });
     });
-    setDrop?.({area: {x1: 200, x2: 300, y1: 2, y2: 200}});
   });
 
   const mods = [];
-  dragging && mods.push(styles.dragging);
+  (dragging || dragOverState) && mods.push(styles.dragging);
   const panResponder = useRef(
     PanResponder.create({
       onStartShouldSetPanResponder: () => true,
@@ -50,16 +53,14 @@ export const DragAndDropItem = (props: Props) => {
         console.log('start');
       },
       onPanResponderMove: (evt, gestureState) => {
-        const zone1 = calcArea(dropZone.current, gestureState);
+        const zone1 = calcArea(dragZone.current, gestureState);
         dropHandlers?.forEach(item => {
           if (inArea(zone1, item.area)) {
             if (!item.dragOver) {
               item.setDragOver?.(true);
-              console.log('TTT');
             }
           } else if (item.dragOver) {
             item.setDragOver?.(false);
-            console.log('RRR');
           }
         });
         Animated.event(
@@ -74,6 +75,11 @@ export const DragAndDropItem = (props: Props) => {
         )(evt, gestureState);
       },
       onPanResponderRelease: () => {
+        dropHandlers?.forEach(item => {
+          if (item.dragOver) {
+            item.setDragOver?.(false);
+          }
+        });
         Animated.spring(position, {
           toValue: {x: 0, y: 0},
           useNativeDriver: false,
@@ -89,7 +95,6 @@ export const DragAndDropItem = (props: Props) => {
       style={[
         styles.wrap,
         ...mods,
-        style,
         {
           transform: position.getTranslateTransform(),
         },

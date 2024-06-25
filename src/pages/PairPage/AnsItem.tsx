@@ -19,18 +19,12 @@ export const AnsItem = (props: Props) => {
   useEffect(() => {
     setDrop?.({setDragOver});
   });
-  const mods = [];
-  dragOverState && mods.push(styles.dropzone);
 
   return (
-    <DragAndDropItem setDrop={setDrop} style={[...mods]}>
+    <DragAndDropItem setDrop={setDrop} dragOverState={dragOverState}>
       <AppText size="l">{task.ans}</AppText>
     </DragAndDropItem>
   );
 };
 
-const styles = StyleSheet.create({
-  dropzone: {
-    borderColor: 'green',
-  },
-});
+const styles = StyleSheet.create({});
