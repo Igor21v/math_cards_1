@@ -6,14 +6,20 @@ import {TaskProps} from '@src/shared/types/task';
 import {colors} from '@src/shared/ui/Colors';
 
 interface Props {
-  setDrop?: (dropArea: Partial<DropType>) => void;
+  setDrop?: (dropArea: Partial<DropType<Data>>) => void;
   task: TaskProps;
   content: string;
-  dropHandlers?: DropType[];
+  dropHandlers?: DropType<Data>[];
+  isAnswer?: boolean;
+}
+
+export interface Data {
+  task: TaskProps;
+  isAnswer?: boolean;
 }
 
 export const PairItem = (props: Props) => {
-  const {setDrop, task, dropHandlers, content} = props;
+  const {setDrop, task, dropHandlers, content, isAnswer} = props;
   const [dragOver, setDragOver] = useState(false);
   const [hide, setHide] = useState(false);
   const [dragging, setDragging] = useState(false);
@@ -25,12 +31,12 @@ export const PairItem = (props: Props) => {
   (dragging || dragOver) && mods.push(styles.dragging);
   hide && mods.push(styles.hide);
   return (
-    <DragAndDropItem
+    <DragAndDropItem<Data>
       dropHandlers={dropHandlers}
       dropHandler={setHide}
       setDrop={setDrop}
       setDragging={setDragging}
-      data={task.ans}
+      data={{task, isAnswer}}
       style={[styles.wrap, ...mods]}>
       <AppText size="l">{content}</AppText>
     </DragAndDropItem>

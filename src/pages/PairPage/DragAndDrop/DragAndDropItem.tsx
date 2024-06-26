@@ -17,9 +17,9 @@ export interface DropHadlerType {
 
 // Элемент на который можно сделать сброс другого элемента
 // area - координаты элемента, data - данные которые передаются сбрасываемому элементу, Handler - обработчики наведения и сброса
-export interface DropType {
+export interface DropType<T> {
   area: DropAreaType;
-  data?: number;
+  data?: T;
   overHandler?: (state: boolean) => void;
   dropHandler?: (state: boolean) => void;
 }
@@ -27,15 +27,15 @@ export interface DropType {
 // dropHandlers - массив элементов на которые можно сбросить текущий элемент, data - дополнительные данные для обработки сбороса
 // setDrop - функция записи в массив элемнетов на которые можно перетащить, dropHandler - обработка сброса, setDragging - установка флага перетаскивания
 
-interface Props extends ViewProps {
-  dropHandlers?: DropType[];
-  data?: number;
-  setDrop?: (dropArea: Partial<DropType>) => void;
+interface Props<T> extends ViewProps {
+  dropHandlers?: DropType<T>[];
+  data?: T;
+  setDrop?: (dropArea: Partial<DropType<T>>) => void;
   dropHandler?: (state: boolean) => void;
   setDragging?: (state: boolean) => void;
 }
 
-export const DragAndDropItem = (props: Props) => {
+export const DragAndDropItem = <T,>(props: Props<T>) => {
   const {children, setDrop, dropHandlers, data, dropHandler, setDragging, style} = props;
   const position = useRef(new Animated.ValueXY()).current;
 
@@ -51,7 +51,7 @@ export const DragAndDropItem = (props: Props) => {
   }, []);
 
   // Текущая выделенная зона сброса
-  let currDropItem: DropType | undefined;
+  let currDropItem: DropType<T> | undefined;
   const panResponder = useRef(
     PanResponder.create({
       onStartShouldSetPanResponder: () => true,

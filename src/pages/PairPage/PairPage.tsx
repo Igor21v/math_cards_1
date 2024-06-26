@@ -1,11 +1,11 @@
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
 import React, {useContext, useEffect, useRef, useState} from 'react';
-import {StyleSheet, View} from 'react-native';
+import {StyleSheet, Vibration, View} from 'react-native';
 import {Context} from '../../shared/lib/Context';
 import {RootStackParamList} from '../../shared/types/route';
 import {TaskProps} from '../../shared/types/task';
 import {DropType} from './DragAndDrop/DragAndDropItem';
-import {PairItem} from './DragAndDrop/PairItem';
+import {Data, PairItem} from './DragAndDrop/PairItem';
 import {genDiffTasks} from './genDiffTasks';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Pair'>;
@@ -43,6 +43,23 @@ export const PairPage = ({navigation}: Props) => {
     setTasks(genDiffTasks({limit, mode}));
   };
 
+  // Проверка ответа
+  const check = (data1: Data, data2: Data) => {
+    if (data1.task.ans === data2.task.ans) {
+      setAnsCount(ansCount + 1);
+    } else {
+      Vibration.vibrate(80);
+      setErrorCount(errorCount + 1);
+      let task: TaskProps;
+      if (data1.isAnswer) {
+        task = data2.task;
+      } else {
+        task = data1.task;
+      }
+      setErrors(errors.add(`${task.firstNum} ${task.operation} ${task.secondNum} =  ${task.ans}`));
+    }
+  };
+
   // Генерация примеров
   const RenderTasks = () => (
     <>
@@ -77,28 +94,12 @@ export const PairPage = ({navigation}: Props) => {
             task={task}
             content={`${task.ans}`}
             setDrop={setDrop}
+            isAnswer
           />
         );
       })}
     </>
   );
-  // Проверка ответа
-  /* const check = (ans: number) => {
-    if (tasks.ans === ans) {
-      setIsError(false);
-      setAns('?');
-      genTasks();
-      setAnsCount(ansCount + 1);
-    } else {
-      setAns(`${ans}`);
-      setIsError(true);
-      animValue.setValue(0);
-      startAnimate();
-      Vibration.vibrate(80);
-      setErrors(errors.add(`${task.firstNum} ${task.operation} ${task.secondNum} =  ${task.ans}`));
-      setErrorCount(errorCount + 1);
-    }
-  }; */
 
   return (
     <View style={styles.wrap}>
