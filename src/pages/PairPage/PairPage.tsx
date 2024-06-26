@@ -18,6 +18,7 @@ export const PairPage = ({navigation}: Props) => {
   const [errorCount, setErrorCount] = useState<number>(0);
   const [ansCount, setAnsCount] = useState<number>(0);
   const dropAns = useRef<DropType[]>([]);
+  const dropResp = useRef<DropType[]>([]);
 
   const {limit, mode} = useContext(Context);
   const variants = useRef<number[]>([]);
@@ -37,7 +38,7 @@ export const PairPage = ({navigation}: Props) => {
     genTasks();
   }, [limit, mode]);
 
-  // Генерим задачу
+  // Генерим задачи
   const genTasks = () => {
     setTasks(genDiffTasks({limit, mode}));
   };
@@ -47,8 +48,17 @@ export const PairPage = ({navigation}: Props) => {
     <>
       {tasks.map((task, index) => {
         const taskStr = task.firstNum + task.operation + task.secondNum;
+        const setDrop = (dropProp: Partial<DropType>) => {
+          dropResp.current[index] = {...dropResp.current[index], ...dropProp};
+        };
         return (
-          <PairItem key={index} dropHandlers={dropAns.current} content={taskStr} task={task} />
+          <PairItem
+            key={index}
+            dropHandlers={dropAns.current}
+            task={task}
+            content={taskStr}
+            setDrop={setDrop}
+          />
         );
       })}
     </>
@@ -60,7 +70,15 @@ export const PairPage = ({navigation}: Props) => {
         const setDrop = (dropProp: Partial<DropType>) => {
           dropAns.current[index] = {...dropAns.current[index], ...dropProp};
         };
-        return <PairItem key={index} setDrop={setDrop} task={task} content={`${task.ans}`} />;
+        return (
+          <PairItem
+            key={index}
+            dropHandlers={dropResp.current}
+            task={task}
+            content={`${task.ans}`}
+            setDrop={setDrop}
+          />
+        );
       })}
     </>
   );

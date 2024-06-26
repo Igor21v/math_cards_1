@@ -39,12 +39,12 @@ export const PairItem = (props: Props) => {
 
 const styles = StyleSheet.create({
   wrap: {
-    paddingHorizontal: 8,
+    paddingHorizontal: 16,
     paddingVertical: 4,
   },
   dragging: {
     borderWidth: 1,
-    paddingHorizontal: 7,
+    paddingHorizontal: 15,
     paddingVertical: 3,
     borderRadius: 8,
     borderStyle: 'dashed',
