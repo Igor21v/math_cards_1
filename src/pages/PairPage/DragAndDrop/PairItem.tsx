@@ -3,27 +3,54 @@ import React, {useEffect, useState} from 'react';
 import {StyleSheet} from 'react-native';
 import {DragAndDropItem, DropAreaType, DropType} from './DragAndDropItem';
 import {TaskProps} from '@src/shared/types/task';
+import {colors} from '@src/shared/ui/Colors';
 
 interface Props {
   setDrop?: (dropArea: Partial<DropType>) => void;
   task: TaskProps;
+  content: string;
+  dropHandlers?: DropType[];
 }
 
-export const TaskItem = (props: Props) => {
-  const {setDrop, task} = props;
-  const [dragOverState, setDragOverState] = useState(false);
-  const setDragOver = (state: boolean) => {
-    setDragOverState(state);
-  };
+export const PairItem = (props: Props) => {
+  const {setDrop, task, dropHandlers, content} = props;
+  const [dragOver, setDragOver] = useState(false);
+  const [hide, setHide] = useState(false);
+  const [dragging, setDragging] = useState(false);
   useEffect(() => {
-    setDrop?.({setDragOver, data: task.ans});
+    setDrop?.({overHandler: setDragOver, data: task.ans, dropHandler: setHide});
   }, []);
 
+  const mods = [];
+  (dragging || dragOver) && mods.push(styles.dragging);
+  hide && mods.push(styles.hide);
   return (
-    <DragAndDropItem setDrop={setDrop} dragOverState={dragOverState} data={task.ans}>
-      <AppText size="l">{task.ans}</AppText>
+    <DragAndDropItem
+      dropHandlers={dropHandlers}
+      dropHandler={setHide}
+      setDrop={setDrop}
+      setDragging={setDragging}
+      data={task.ans}
+      style={[styles.wrap, ...mods]}>
+      <AppText size="l">{content}</AppText>
     </DragAndDropItem>
   );
 };
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+  wrap: {
+    paddingHorizontal: 8,
+    paddingVertical: 4,
+  },
+  dragging: {
+    borderWidth: 1,
+    paddingHorizontal: 7,
+    paddingVertical: 3,
+    borderRadius: 8,
+    borderStyle: 'dashed',
+    borderColor: colors.first,
+  },
+  hide: {
+    opacity: 0,
+  },
+});

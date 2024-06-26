@@ -14,39 +14,42 @@ export interface DropHadlerType {
   dragLeave?: () => void;
   drop?: () => void;
 }
+
+// Элемент на который можно сделать сброс другого элемента
+// area - координаты элемента, data - данные которые передаются сбрасываемому элементу, Handler - обработчики наведения и сброса
 export interface DropType {
   area: DropAreaType;
-  setDragOver?: (state: boolean) => void;
   data?: number;
-  setHide?: (state: boolean) => void;
+  overHandler?: (state: boolean) => void;
+  dropHandler?: (state: boolean) => void;
 }
 
+// dropHandlers - массив элементов на которые можно сбросить текущий элемент, data - дополнительные данные для обработки сбороса
+// setDrop - функция записи в массив элемнетов на которые можно перетащить, dropHandler - обработка сброса, setDragging - установка флага перетаскивания
+
 interface Props extends ViewProps {
-  setDrop?: (dropArea: Partial<DropType>) => void;
   dropHandlers?: DropType[];
-  dragOverState?: boolean;
   data?: number;
+  setDrop?: (dropArea: Partial<DropType>) => void;
+  dropHandler?: (state: boolean) => void;
+  setDragging?: (state: boolean) => void;
 }
 
 export const DragAndDropItem = (props: Props) => {
-  const {children, setDrop, dropHandlers, dragOverState, data} = props;
+  const {children, setDrop, dropHandlers, data, dropHandler, setDragging, style} = props;
   const position = useRef(new Animated.ValueXY()).current;
-  const [dragging, setDragging] = useState(false);
-  const [hide, setHide] = useState(false);
+
   let wrapRef = useRef<View>(null);
   let dragZone = useRef<DropAreaType>({x1: 0, y1: 0, x2: 0, y2: 0});
   useLayoutEffect(() => {
     setTimeout(() => {
       wrapRef.current?.measure((fx, fy, width, height, px, py) => {
         dragZone.current = {x1: px, y1: py, x2: px + width, y2: py + height};
-        setDrop?.({area: {x1: px, x2: px + width, y1: py, y2: py + height}, setHide});
+        setDrop?.({area: {x1: px, x2: px + width, y1: py, y2: py + height}});
       });
     });
   }, []);
 
-  const mods = [];
-  (dragging || dragOverState) && mods.push(styles.dragging);
-  hide && mods.push(styles.hide);
   // Текущая выделенная зона сброса
   let currDropItem: DropType | undefined;
   const panResponder = useRef(
@@ -54,7 +57,7 @@ export const DragAndDropItem = (props: Props) => {
       onStartShouldSetPanResponder: () => true,
       onMoveShouldSetPanResponder: () => true,
       onPanResponderGrant: () => {
-        setDragging(true);
+        setDragging?.(true);
         console.log('start');
       },
       onPanResponderMove: (evt, gestureState) => {
@@ -71,11 +74,11 @@ export const DragAndDropItem = (props: Props) => {
         });
         // Установка зоны сброса с максимальной площадью
         if (maxSquare === 0) {
-          currDropItem?.setDragOver?.(false);
+          currDropItem?.overHandler?.(false);
         } else if (currDropItem !== dropHandlers?.[maxIndex]) {
-          currDropItem?.setDragOver?.(false);
+          currDropItem?.overHandler?.(false);
           currDropItem = dropHandlers?.[maxIndex];
-          currDropItem?.setDragOver?.(true);
+          currDropItem?.overHandler?.(true);
         }
 
         Animated.event(
@@ -92,50 +95,30 @@ export const DragAndDropItem = (props: Props) => {
       onPanResponderRelease: () => {
         // Проверка совпадения ответа
         if (currDropItem?.data === data) {
-          setHide(true);
-          currDropItem?.setHide?.(true);
+          dropHandler?.(true);
+          currDropItem?.dropHandler?.(true);
         }
-        currDropItem?.setDragOver?.(false);
+        currDropItem?.overHandler?.(false);
 
         Animated.spring(position, {
           toValue: {x: 0, y: 0},
           useNativeDriver: false,
         }).start();
-        setDragging(false);
+        setDragging?.(false);
       },
     }),
   ).current;
-
   return (
     <Animated.View
       ref={wrapRef}
       style={[
-        styles.wrap,
-        ...mods,
         {
           transform: position.getTranslateTransform(),
         },
+        style,
       ]}
       {...panResponder.panHandlers}>
       {children}
     </Animated.View>
   );
 };
-
-const styles = StyleSheet.create({
-  wrap: {
-    paddingHorizontal: 8,
-    paddingVertical: 4,
-  },
-  dragging: {
-    borderWidth: 1,
-    paddingHorizontal: 7,
-    paddingVertical: 3,
-    borderRadius: 8,
-    borderStyle: 'dashed',
-    borderColor: colors.first,
-  },
-  hide: {
-    opacity: 0,
-  },
-});

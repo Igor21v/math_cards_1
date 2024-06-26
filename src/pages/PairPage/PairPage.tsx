@@ -1,13 +1,12 @@
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import {AppText} from '@src/shared/ui/AppText';
 import React, {useContext, useEffect, useRef, useState} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {Context} from '../../shared/lib/Context';
 import {RootStackParamList} from '../../shared/types/route';
 import {TaskProps} from '../../shared/types/task';
-import {DragAndDropItem, DropAreaType, DropType} from './DragAndDrop/DragAndDropItem';
+import {DropType} from './DragAndDrop/DragAndDropItem';
+import {PairItem} from './DragAndDrop/PairItem';
 import {genDiffTasks} from './genDiffTasks';
-import {AnsItem} from './AnsItem';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Pair'>;
 
@@ -46,12 +45,10 @@ export const PairPage = ({navigation}: Props) => {
   // Генерация примеров
   const RenderTasks = () => (
     <>
-      {tasks.map(task => {
+      {tasks.map((task, index) => {
         const taskStr = task.firstNum + task.operation + task.secondNum;
         return (
-          <DragAndDropItem key={taskStr} dropHandlers={dropAns.current} data={task.ans}>
-            <AppText size="l">{taskStr}</AppText>
-          </DragAndDropItem>
+          <PairItem key={index} dropHandlers={dropAns.current} content={taskStr} task={task} />
         );
       })}
     </>
@@ -63,7 +60,7 @@ export const PairPage = ({navigation}: Props) => {
         const setDrop = (dropProp: Partial<DropType>) => {
           dropAns.current[index] = {...dropAns.current[index], ...dropProp};
         };
-        return <AnsItem setDrop={setDrop} task={task} key={index} />;
+        return <PairItem key={index} setDrop={setDrop} task={task} content={`${task.ans}`} />;
       })}
     </>
   );
