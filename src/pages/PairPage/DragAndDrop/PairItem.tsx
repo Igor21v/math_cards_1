@@ -11,6 +11,7 @@ interface Props {
   content: string;
   dropHandlers?: DropType<Data>[];
   isAnswer?: boolean;
+  check: (data1: Data, data2: Data) => void;
 }
 
 export interface Data {
@@ -19,12 +20,28 @@ export interface Data {
 }
 
 export const PairItem = (props: Props) => {
-  const {setDrop, task, dropHandlers, content, isAnswer} = props;
+  const {setDrop, task, dropHandlers, content, isAnswer, check} = props;
   const [dragOver, setDragOver] = useState(false);
   const [hide, setHide] = useState(false);
   const [dragging, setDragging] = useState(false);
+  const currItemData = {task, isAnswer};
+  // Когда этот элемент бросили на другой
+  const dropHandler = (data: Data) => {
+    check(data, currItemData);
+    if (task.ans === data?.task.ans) {
+      setHide(true);
+      console.log('dropHandler ' + task.firstNum);
+    }
+  };
+  // Когда другой элемент бросили на этот
+  const dropOverHandler = (data?: Data) => {
+    if (task.ans === data?.task.ans) {
+      setHide(true);
+      console.log('dropOverHandler ' + task.ans);
+    }
+  };
   useEffect(() => {
-    setDrop?.({overHandler: setDragOver, data: task.ans, dropHandler: setHide});
+    setDrop?.({overHandler: setDragOver, data: {task, isAnswer}, dropOverHandler});
   }, []);
 
   const mods = [];
@@ -33,10 +50,10 @@ export const PairItem = (props: Props) => {
   return (
     <DragAndDropItem<Data>
       dropHandlers={dropHandlers}
-      dropHandler={setHide}
+      dropHandler={dropHandler}
       setDrop={setDrop}
       setDragging={setDragging}
-      data={{task, isAnswer}}
+      data={currItemData}
       style={[styles.wrap, ...mods]}>
       <AppText size="l">{content}</AppText>
     </DragAndDropItem>

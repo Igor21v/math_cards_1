@@ -16,12 +16,13 @@ export interface DropHadlerType {
 }
 
 // Элемент на который можно сделать сброс другого элемента
-// area - координаты элемента, data - данные которые передаются сбрасываемому элементу, Handler - обработчики наведения и сброса
+// area - координаты элемента, data - данные которые передаются сбрасываемому элементу, overHandler - событие когда навели на этот или отвели с этого элемента другой элемент
+// dropOverHandler - событие когда на этот элемент бросили другой
 export interface DropType<T> {
   area: DropAreaType;
   data?: T;
   overHandler?: (state: boolean) => void;
-  dropHandler?: (state: boolean) => void;
+  dropOverHandler?: (state?: T) => void;
 }
 
 // dropHandlers - массив элементов на которые можно сбросить текущий элемент, data - дополнительные данные для обработки сбороса
@@ -31,7 +32,7 @@ interface Props<T> extends ViewProps {
   dropHandlers?: DropType<T>[];
   data?: T;
   setDrop?: (dropArea: Partial<DropType<T>>) => void;
-  dropHandler?: (state: boolean) => void;
+  dropHandler?: (data: T) => void;
   setDragging?: (state: boolean) => void;
 }
 
@@ -93,11 +94,8 @@ export const DragAndDropItem = <T,>(props: Props<T>) => {
         )(evt, gestureState);
       },
       onPanResponderRelease: () => {
-        // Проверка совпадения ответа
-        if (currDropItem?.data === data) {
-          dropHandler?.(true);
-          currDropItem?.dropHandler?.(true);
-        }
+        currDropItem?.data && dropHandler?.(currDropItem?.data);
+        currDropItem?.dropOverHandler?.(data);
         currDropItem?.overHandler?.(false);
 
         Animated.spring(position, {

@@ -11,17 +11,13 @@ import {genDiffTasks} from './genDiffTasks';
 type Props = NativeStackScreenProps<RootStackParamList, 'Pair'>;
 
 export const PairPage = ({navigation}: Props) => {
-  const [ans, setAns] = useState('?');
   const [tasks, setTasks] = useState<TaskProps[]>([]);
-  const [isError, setIsError] = useState(false);
   const [errors, setErrors] = useState<Set<string>>(new Set());
   const [errorCount, setErrorCount] = useState<number>(0);
   const [ansCount, setAnsCount] = useState<number>(0);
-  const dropAns = useRef<DropType[]>([]);
-  const dropResp = useRef<DropType[]>([]);
-
+  const dropAns = useRef<DropType<Data>[]>([]);
+  const dropResp = useRef<DropType<Data>[]>([]);
   const {limit, mode} = useContext(Context);
-  const variants = useRef<number[]>([]);
 
   // Отбражение итоговой странцы
   useEffect(() => {
@@ -65,7 +61,7 @@ export const PairPage = ({navigation}: Props) => {
     <>
       {tasks.map((task, index) => {
         const taskStr = task.firstNum + task.operation + task.secondNum;
-        const setDrop = (dropProp: Partial<DropType>) => {
+        const setDrop = (dropProp: Partial<DropType<Data>>) => {
           dropResp.current[index] = {...dropResp.current[index], ...dropProp};
         };
         return (
@@ -75,6 +71,7 @@ export const PairPage = ({navigation}: Props) => {
             task={task}
             content={taskStr}
             setDrop={setDrop}
+            check={check}
           />
         );
       })}
@@ -84,7 +81,7 @@ export const PairPage = ({navigation}: Props) => {
   const RenderAnswer = () => (
     <>
       {tasks.map((task, index) => {
-        const setDrop = (dropProp: Partial<DropType>) => {
+        const setDrop = (dropProp: Partial<DropType<Data>>) => {
           dropAns.current[index] = {...dropAns.current[index], ...dropProp};
         };
         return (
@@ -95,6 +92,7 @@ export const PairPage = ({navigation}: Props) => {
             content={`${task.ans}`}
             setDrop={setDrop}
             isAnswer
+            check={check}
           />
         );
       })}
