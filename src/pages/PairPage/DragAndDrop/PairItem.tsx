@@ -1,7 +1,7 @@
 import {AppText} from '@src/shared/ui/AppText';
 import React, {useEffect, useState} from 'react';
 import {StyleSheet} from 'react-native';
-import {DragAndDropItem, DropAreaType, DropType} from './DragAndDrop/DragAndDropItem';
+import {DragAndDropItem, DropAreaType, DropType} from './DragAndDropItem';
 import {TaskProps} from '@src/shared/types/task';
 
 interface Props {
@@ -9,7 +9,7 @@ interface Props {
   task: TaskProps;
 }
 
-export const AnsItem = (props: Props) => {
+export const TaskItem = (props: Props) => {
   const {setDrop, task} = props;
   const [dragOverState, setDragOverState] = useState(false);
   const setDragOver = (state: boolean) => {

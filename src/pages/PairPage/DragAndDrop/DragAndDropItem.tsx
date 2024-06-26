@@ -17,7 +17,6 @@ export interface DropHadlerType {
 export interface DropType {
   area: DropAreaType;
   setDragOver?: (state: boolean) => void;
-  dragOver?: boolean;
   data?: number;
   setHide?: (state: boolean) => void;
 }
@@ -50,7 +49,6 @@ export const DragAndDropItem = (props: Props) => {
   hide && mods.push(styles.hide);
   // Текущая выделенная зона сброса
   let currDropItem: DropType | undefined;
-  console.log('data ' + currDropItem?.data);
   const panResponder = useRef(
     PanResponder.create({
       onStartShouldSetPanResponder: () => true,
