@@ -1,6 +1,5 @@
-import {colors} from '@src/shared/ui/Colors';
-import React, {useLayoutEffect, useRef, useState} from 'react';
-import {Animated, PanResponder, StyleSheet, View, ViewProps} from 'react-native';
+import React, {useLayoutEffect, useRef} from 'react';
+import {Animated, PanResponder, View, ViewProps} from 'react-native';
 import {calcArea, matchSquareFn} from './calcArea';
 
 export interface DropAreaType {

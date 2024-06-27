@@ -1,9 +1,9 @@
+import {TaskProps} from '@src/shared/types/task';
 import {AppText} from '@src/shared/ui/AppText';
+import {colors} from '@src/shared/ui/Colors';
 import React, {useEffect, useState} from 'react';
 import {StyleSheet} from 'react-native';
-import {DragAndDropItem, DropAreaType, DropType} from './DragAndDropItem';
-import {TaskProps} from '@src/shared/types/task';
-import {colors} from '@src/shared/ui/Colors';
+import {DragAndDropItem, DropType} from './DragAndDropItem';
 
 interface Props {
   setDrop?: (dropArea: Partial<DropType<Data>>) => void;

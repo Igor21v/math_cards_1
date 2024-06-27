@@ -12,23 +12,12 @@ type Props = NativeStackScreenProps<RootStackParamList, 'Pair'>;
 
 export const PairPage = ({navigation}: Props) => {
   const [tasks, setTasks] = useState<TaskProps[]>([]);
-  const [errors, setErrors] = useState<Set<string>>(new Set());
-  const [errorCount, setErrorCount] = useState<number>(0);
-  const [ansCount, setAnsCount] = useState<number>(0);
+  const errors = new Set<string>();
+  let errorCount = 0;
+  let ansCount = 0;
   const dropAns = useRef<DropType<Data>[]>([]);
   const dropResp = useRef<DropType<Data>[]>([]);
   const {limit, mode} = useContext(Context);
-
-  // Отбражение итоговой странцы
-  useEffect(() => {
-    if (ansCount > 9) {
-      navigation.navigate('Results', {
-        errorCount,
-        errors: Array.from(errors.values()),
-      });
-      setAnsCount(0);
-    }
-  }, [ansCount]);
 
   useEffect(() => {
     genTasks();
@@ -42,17 +31,28 @@ export const PairPage = ({navigation}: Props) => {
   // Проверка ответа
   const check = (data1: Data, data2: Data) => {
     if (data1.task.ans === data2.task.ans) {
-      setAnsCount(ansCount + 1);
+      // Отбражение итоговой странцы если все решили
+      console.log(ansCount);
+      if (++ansCount > 7) {
+        navigation.navigate('Results', {
+          errorCount: errorCount,
+          errors: Array.from(errors.values()),
+        });
+        ansCount = 0;
+        errorCount = 0;
+        errors.clear();
+        genTasks();
+      }
     } else {
       Vibration.vibrate(80);
-      setErrorCount(errorCount + 1);
+      errorCount++;
       let task: TaskProps;
       if (data1.isAnswer) {
         task = data2.task;
       } else {
         task = data1.task;
       }
-      setErrors(errors.add(`${task.firstNum} ${task.operation} ${task.secondNum} =  ${task.ans}`));
+      errors.add(`${task.firstNum} ${task.operation} ${task.secondNum} =  ${task.ans}`);
     }
   };
 
