@@ -23,8 +23,8 @@ export const TestPage = ({navigation, route}: Props) => {
     ans: 0,
   });
   const [isError, setIsError] = useState(false);
-  const [errors, setErrors] = useState<Set<string>>(new Set());
-  const [errorCount, setErrorCount] = useState<number>(0);
+  const errors = useRef(new Set<string>());
+  const errorCount = useRef(0);
   const [ansCount, setAnsCount] = useState<number>(0);
   const {limit, mode} = useContext(Context);
   const variants = useRef<number[]>([]);
@@ -33,16 +33,23 @@ export const TestPage = ({navigation, route}: Props) => {
   useEffect(() => {
     if (ansCount > 9) {
       navigation.navigate('Results', {
-        errorCount,
-        errors: Array.from(errors.values()),
+        errorCount: errorCount.current,
+        errors: Array.from(errors.current.values()),
       });
-      setAnsCount(0);
+      clear();
     }
   }, [ansCount]);
 
   useEffect(() => {
+    clear();
     genTask();
   }, [limit, mode]);
+
+  const clear = () => {
+    setAnsCount(0);
+    errorCount.current = 0;
+    errors.current.clear();
+  };
 
   // Анимация ошибки
   const {startAnimate, animValue} = useAnimateError();
@@ -67,8 +74,8 @@ export const TestPage = ({navigation, route}: Props) => {
       animValue.setValue(0);
       startAnimate();
       Vibration.vibrate(80);
-      setErrors(errors.add(`${task.firstNum} ${task.operation} ${task.secondNum} =  ${task.ans}`));
-      setErrorCount(errorCount + 1);
+      errors.current.add(`${task.firstNum} ${task.operation} ${task.secondNum} =  ${task.ans}`);
+      errorCount.current++;
     }
   };
 
@@ -81,13 +88,3 @@ export const TestPage = ({navigation, route}: Props) => {
     </>
   );
 };
-
-const styles = StyleSheet.create({
-  help: {
-    position: 'absolute',
-    right: 4,
-    flexDirection: 'row',
-    alignItems: 'center',
-    padding: 8,
-  },
-});

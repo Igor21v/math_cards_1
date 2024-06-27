@@ -1,5 +1,5 @@
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import React, {useContext, useEffect, useState} from 'react';
+import React, {useContext, useEffect, useRef, useState} from 'react';
 import {StyleSheet, Vibration} from 'react-native';
 import {Context} from '../../shared/lib/Context';
 import {RootStackParamList} from '../../shared/types/route';
@@ -22,8 +22,8 @@ export const ExercisePage = ({navigation}: Props) => {
     ans: 0,
   });
   const [isError, setIsError] = useState(false);
-  const [errors, setErrors] = useState<Set<string>>(new Set());
-  const [errorCount, setErrorCount] = useState<number>(0);
+  const errors = useRef(new Set<string>());
+  const errorCount = useRef(0);
   const [ansCount, setAnsCount] = useState<number>(0);
   const {limit, mode} = useContext(Context);
 
@@ -31,15 +31,23 @@ export const ExercisePage = ({navigation}: Props) => {
   useEffect(() => {
     if (ansCount > 9) {
       navigation.navigate('Results', {
-        errorCount,
-        errors: Array.from(errors.values()),
+        errorCount: errorCount.current,
+        errors: Array.from(errors.current.values()),
       });
+      clear();
     }
   }, [ansCount]);
 
   useEffect(() => {
     genTask();
+    clear();
   }, [limit, mode]);
+
+  const clear = () => {
+    setAnsCount(0);
+    errorCount.current = 0;
+    errors.current.clear();
+  };
 
   // Анимация ошибки
   const {startAnimate, animValue} = useAnimateError();
@@ -62,8 +70,8 @@ export const ExercisePage = ({navigation}: Props) => {
       animValue.setValue(0);
       startAnimate();
       Vibration.vibrate(80);
-      setErrors(errors.add(`${task.firstNum} ${task.operation} ${task.secondNum} =  ${task.ans}`));
-      setErrorCount(errorCount + 1);
+      errors.current.add(`${task.firstNum} ${task.operation} ${task.secondNum} =  ${task.ans}`);
+      errorCount.current++;
     }
   };
 
@@ -76,13 +84,3 @@ export const ExercisePage = ({navigation}: Props) => {
     </>
   );
 };
-
-const styles = StyleSheet.create({
-  help: {
-    position: 'absolute',
-    right: 4,
-    flexDirection: 'row',
-    alignItems: 'center',
-    padding: 8,
-  },
-});
