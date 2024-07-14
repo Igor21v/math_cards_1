@@ -27,7 +27,7 @@ const styles = StyleSheet.create({
     borderRadius: 12,
     alignItems: 'center',
     justifyContent: 'center',
-    elevation: 8,
+    elevation: 2,
   },
   backgroundText: {
     color: colors.second,

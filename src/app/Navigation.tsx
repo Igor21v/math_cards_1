@@ -21,7 +21,7 @@ export const Navigation = () => {
           headerRight: () => <HeaderRight />,
           headerTintColor: colors.second,
           headerStyle: styles.stackNav,
-          navigationBarHidden: true,
+          navigationBarColor: colors.second,
           statusBarStyle: 'inverted',
           statusBarColor: colors.first,
         }}>
