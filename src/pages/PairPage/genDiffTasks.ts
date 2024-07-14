@@ -27,3 +27,17 @@ export const genDiffTasks = (props: Props): TaskProps[] => {
     }
   }
 };
+
+export const getMixArr = () => {
+  const arr = Array(8);
+  for (let i = 0; i < 8; i++) {
+    arr[i] = i;
+  }
+  for (let i = 0; i < 8; i++) {
+    const randomIndex = Math.floor(Math.random() * 8);
+    const temp = arr[i];
+    arr[i] = arr[randomIndex];
+    arr[randomIndex] = temp;
+  }
+  return arr;
+};

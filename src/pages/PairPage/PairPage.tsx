@@ -6,7 +6,7 @@ import {RootStackParamList} from '../../shared/types/route';
 import {TaskProps} from '../../shared/types/task';
 import {DropType} from './DragAndDrop/DragAndDropItem';
 import {Data, PairItem} from './DragAndDrop/PairItem';
-import {genDiffTasks} from './genDiffTasks';
+import {genDiffTasks, getMixArr} from './genDiffTasks';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Pair'>;
 
@@ -76,27 +76,32 @@ export const PairPage = ({navigation}: Props) => {
       })}
     </>
   );
-  // Генерация ответов
-  const RenderAnswer = () => (
-    <>
-      {tasks.map((task, index) => {
-        const setDrop = (dropProp: Partial<DropType<Data>>) => {
-          dropAns.current[index] = {...dropAns.current[index], ...dropProp};
-        };
-        return (
-          <PairItem
-            key={index}
-            dropHandlers={dropResp.current}
-            task={task}
-            content={`${task.ans}`}
-            setDrop={setDrop}
-            isAnswer
-            check={check}
-          />
-        );
-      })}
-    </>
-  );
+  const RenderAnswer = () => {
+    const randomIndexes = getMixArr();
+    console.log(randomIndexes);
+    const answers = [];
+    for (let i = 0; i < 8; i++) {
+      const index = randomIndexes[i];
+      console.log(index);
+      const task = tasks[index];
+      console.log(task);
+      const setDrop = (dropProp: Partial<DropType<Data>>) => {
+        dropAns.current[index] = {...dropAns.current[index], ...dropProp};
+      };
+      answers.push(
+        <PairItem
+          key={index}
+          dropHandlers={dropResp.current}
+          task={task}
+          content={`${task?.ans}`}
+          setDrop={setDrop}
+          isAnswer
+          check={check}
+        />,
+      );
+    }
+    return answers;
+  };
 
   return (
     <View style={styles.wrap}>
