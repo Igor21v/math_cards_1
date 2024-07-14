@@ -32,7 +32,6 @@ export const PairPage = ({navigation}: Props) => {
   const check = (data1: Data, data2: Data) => {
     if (data1.task.ans === data2.task.ans) {
       // Отбражение итоговой странцы если все решили
-      console.log(ansCount);
       if (++ansCount > 7) {
         navigation.navigate('Results', {
           errorCount: errorCount,

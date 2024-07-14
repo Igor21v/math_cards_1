@@ -33,7 +33,6 @@ export const PairItem = (props: Props) => {
       if (task.ans === data?.task.ans) {
         setHide(true);
         setDrop?.({disabled: true});
-        console.log('dropHandler ' + task.firstNum);
       }
     }
   };
@@ -43,7 +42,6 @@ export const PairItem = (props: Props) => {
       if (task.ans === data?.task.ans) {
         setHide(true);
         setDrop?.({disabled: true});
-        console.log('dropOverHandler ' + task.ans);
       }
     }
   };

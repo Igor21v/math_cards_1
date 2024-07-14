@@ -61,7 +61,6 @@ export const DragAndDropItem = <T,>(props: Props<T>) => {
       onMoveShouldSetPanResponder: () => true,
       onPanResponderGrant: () => {
         setDragging?.(true);
-        console.log('start ');
       },
       onPanResponderMove: (evt, gestureState) => {
         // Выделение зоны сброса
@@ -78,8 +77,6 @@ export const DragAndDropItem = <T,>(props: Props<T>) => {
           }
         });
         // Установка зоны сброса с максимальной площадью
-
-        // если покидаем активную зону
         if (maxSquare === 0 && currDropItem) {
           currDropItem?.overHandler?.(false);
           currDropItem = undefined;
