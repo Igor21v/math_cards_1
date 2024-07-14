@@ -17,26 +17,29 @@ export interface DropHadlerType {
 // Элемент на который можно сделать сброс другого элемента
 // area - координаты элемента, data - данные которые передаются сбрасываемому элементу, overHandler - событие когда навели на этот или отвели с этого элемента другой элемент
 // dropOverHandler - событие когда на этот элемент бросили другой
+// disabled - бросание на элемент отключено
 export interface DropType<T> {
   area: DropAreaType;
   data?: T;
   overHandler?: (state: boolean) => void;
   dropOverHandler?: (state?: T) => void;
+  disabled?: boolean;
 }
 
 // dropHandlers - массив элементов на которые можно сбросить текущий элемент, data - дополнительные данные для обработки сбороса
 // setDrop - функция записи в массив элемнетов на которые можно перетащить, dropHandler - обработка сброса, setDragging - установка флага перетаскивания
-
+// disabled - перетаскивание отключено
 interface Props<T> extends ViewProps {
   dropHandlers?: DropType<T>[];
   data?: T;
   setDrop?: (dropArea: Partial<DropType<T>>) => void;
   dropHandler?: (data: T) => void;
   setDragging?: (state: boolean) => void;
+  disabled?: boolean;
 }
 
 export const DragAndDropItem = <T,>(props: Props<T>) => {
-  const {children, setDrop, dropHandlers, data, dropHandler, setDragging, style} = props;
+  const {children, setDrop, dropHandlers, data, dropHandler, setDragging, style, disabled} = props;
   const position = useRef(new Animated.ValueXY()).current;
 
   let wrapRef = useRef<View>(null);
@@ -51,14 +54,14 @@ export const DragAndDropItem = <T,>(props: Props<T>) => {
   }, []);
 
   // Текущая выделенная зона сброса
-  let currDropItem: DropType<T> | undefined;
+  let currDropItem: DropType<T> | null | undefined;
   const panResponder = useRef(
     PanResponder.create({
       onStartShouldSetPanResponder: () => true,
       onMoveShouldSetPanResponder: () => true,
       onPanResponderGrant: () => {
         setDragging?.(true);
-        console.log('start');
+        console.log('start ');
       },
       onPanResponderMove: (evt, gestureState) => {
         // Выделение зоны сброса
@@ -66,15 +69,20 @@ export const DragAndDropItem = <T,>(props: Props<T>) => {
         let maxSquare = 0;
         let maxIndex = -1;
         dropHandlers?.forEach((item, index) => {
-          const matchSquare = matchSquareFn(zone1, item.area);
-          if (matchSquare > maxSquare) {
-            maxSquare = matchSquare;
-            maxIndex = index;
+          if (!item.disabled) {
+            const matchSquare = matchSquareFn(zone1, item.area);
+            if (matchSquare > maxSquare) {
+              maxSquare = matchSquare;
+              maxIndex = index;
+            }
           }
         });
         // Установка зоны сброса с максимальной площадью
-        if (maxSquare === 0) {
+
+        // если покидаем активную зону
+        if (maxSquare === 0 && currDropItem) {
           currDropItem?.overHandler?.(false);
+          currDropItem = undefined;
         } else if (currDropItem !== dropHandlers?.[maxIndex]) {
           currDropItem?.overHandler?.(false);
           currDropItem = dropHandlers?.[maxIndex];
@@ -93,10 +101,12 @@ export const DragAndDropItem = <T,>(props: Props<T>) => {
         )(evt, gestureState);
       },
       onPanResponderRelease: () => {
-        currDropItem?.data && dropHandler?.(currDropItem?.data);
-        currDropItem?.dropOverHandler?.(data);
-        currDropItem?.overHandler?.(false);
+        if (!currDropItem?.disabled) {
+          currDropItem?.data && dropHandler?.(currDropItem?.data);
+          currDropItem?.dropOverHandler?.(data);
+        }
 
+        currDropItem?.overHandler?.(false);
         Animated.spring(position, {
           toValue: {x: 0, y: 0},
           useNativeDriver: false,
@@ -105,6 +115,12 @@ export const DragAndDropItem = <T,>(props: Props<T>) => {
       },
     }),
   ).current;
+
+  if (disabled) {
+    panResponder.panHandlers.onResponderGrant = () => {};
+    panResponder.panHandlers.onResponderMove = () => {};
+    panResponder.panHandlers.onResponderRelease = () => {};
+  }
   return (
     <Animated.View
       ref={wrapRef}

@@ -25,21 +25,29 @@ export const PairItem = (props: Props) => {
   const [hide, setHide] = useState(false);
   const [dragging, setDragging] = useState(false);
   const currItemData = {task, isAnswer};
+
   // Когда этот элемент бросили на другой
   const dropHandler = (data: Data) => {
-    check(data, currItemData);
-    if (task.ans === data?.task.ans) {
-      setHide(true);
-      console.log('dropHandler ' + task.firstNum);
+    if (!hide) {
+      check(data, currItemData);
+      if (task.ans === data?.task.ans) {
+        setHide(true);
+        setDrop?.({disabled: true});
+        console.log('dropHandler ' + task.firstNum);
+      }
     }
   };
   // Когда другой элемент бросили на этот
   const dropOverHandler = (data?: Data) => {
-    if (task.ans === data?.task.ans) {
-      setHide(true);
-      console.log('dropOverHandler ' + task.ans);
+    if (!hide) {
+      if (task.ans === data?.task.ans) {
+        setHide(true);
+        setDrop?.({disabled: true});
+        console.log('dropOverHandler ' + task.ans);
+      }
     }
   };
+
   useEffect(() => {
     setDrop?.({overHandler: setDragOver, data: {task, isAnswer}, dropOverHandler});
   }, []);
@@ -54,7 +62,8 @@ export const PairItem = (props: Props) => {
       setDrop={setDrop}
       setDragging={setDragging}
       data={currItemData}
-      style={[styles.wrap, ...mods]}>
+      style={[styles.wrap, ...mods]}
+      disabled={hide}>
       <AppText size="l">{content}</AppText>
     </DragAndDropItem>
   );
