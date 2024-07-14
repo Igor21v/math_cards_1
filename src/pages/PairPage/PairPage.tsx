@@ -78,13 +78,10 @@ export const PairPage = ({navigation}: Props) => {
   );
   const RenderAnswer = () => {
     const randomIndexes = getMixArr();
-    console.log(randomIndexes);
     const answers = [];
     for (let i = 0; i < 8; i++) {
       const index = randomIndexes[i];
-      console.log(index);
       const task = tasks[index];
-      console.log(task);
       const setDrop = (dropProp: Partial<DropType<Data>>) => {
         dropAns.current[index] = {...dropAns.current[index], ...dropProp};
       };

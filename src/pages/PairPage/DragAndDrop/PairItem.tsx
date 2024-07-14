@@ -47,7 +47,7 @@ export const PairItem = (props: Props) => {
   };
 
   useEffect(() => {
-    setDrop?.({overHandler: setDragOver, data: {task, isAnswer}, dropOverHandler});
+    setDrop?.({overHandler: setDragOver, data: {task, isAnswer}, dropOverHandler, disabled: false});
   }, []);
 
   const mods = [];
