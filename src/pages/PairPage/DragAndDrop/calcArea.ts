@@ -2,6 +2,7 @@ import {PanResponderGestureState} from 'react-native';
 import {DropAreaType} from './DragAndDropItem';
 
 export function calcArea(dropZone: DropAreaType, gestureState: PanResponderGestureState) {
+  console.log('y: ' + gestureState.dy);
   const x1 = dropZone.x1 + gestureState.dx;
   const x2 = dropZone.x2 + gestureState.dx;
   const y1 = dropZone.y1 + gestureState.dy;
