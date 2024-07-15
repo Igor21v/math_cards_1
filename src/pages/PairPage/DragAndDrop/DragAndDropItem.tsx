@@ -50,7 +50,7 @@ export const DragAndDropItem = <T,>(props: Props<T>) => {
         dragZone.current = {x1: px, y1: py, x2: px + width, y2: py + height};
         setDrop?.({area: {x1: px, x2: px + width, y1: py, y2: py + height}});
       });
-    }, 100);
+    }, 20);
   }, []);
 
   // Текущая выделенная зона сброса
@@ -84,8 +84,6 @@ export const DragAndDropItem = <T,>(props: Props<T>) => {
           currDropItem?.overHandler?.(false);
           currDropItem = dropHandlers?.[maxIndex];
           currDropItem?.overHandler?.(true);
-          console.log('y1 ' + currDropItem?.area.y1);
-          console.log('y2Z ' + zone1.y2);
         }
 
         Animated.event(
