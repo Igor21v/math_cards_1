@@ -41,21 +41,18 @@ export const HelpContentSubtract = (props: HelpProps) => {
     } else {
       // Задача на вычитание из числа больше 10 с ответом >= 10
       return (
-        <>
-          <AppText>Вычти из первого числа 10, отними второе и затем прибавь 10</AppText>
-          <View style={styles.wrapContent}>
-            <View style={styles.content}>
-              <AppText size="l" style={styles.green}>
-                {task.firstNum}
-                {' - 10 - '}
-              </AppText>
-              <AppText size="l" style={styles.red}>
-                {task.secondNum}
-                {' + 10'}
-              </AppText>
-            </View>
+        <View style={styles.wrapContent}>
+          <View style={styles.content}>
+            <AppText size="l" style={styles.green}>
+              {task.firstNum - 10}
+              {' - '}
+              {task.secondNum}
+            </AppText>
+            <AppText size="l" style={styles.red}>
+              {' + 10'}
+            </AppText>
           </View>
-        </>
+        </View>
       );
     }
   }
