@@ -11,3 +11,9 @@ export type RootStackParamList = {
   Compare: undefined;
   Results: resultsProps;
 };
+
+declare global {
+  namespace ReactNavigation {
+    interface RootParamList extends RootStackParamList {}
+  }
+}
