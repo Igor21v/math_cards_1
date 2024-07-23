@@ -31,7 +31,7 @@ function App(): React.JSX.Element {
     setLabels(labels => ({...labels, [label]: true}));
     setStorage(`label${label}`, `${Date.now()}`);
     const endOfToday = new Date();
-    endOfToday.setHours(15, 49, 59, 999);
+    endOfToday.setHours(16, 49, 59, 999);
     const restTime = endOfToday.getTime() - Date.now();
     console.log('rest ' + restTime / 1000);
     if (!labelTimerIsRun.current) {

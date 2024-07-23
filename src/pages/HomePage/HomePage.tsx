@@ -8,27 +8,11 @@ import {Context} from '@src/shared/lib/Context';
 type Props = NativeStackScreenProps<RootStackParamList, 'Home'>;
 
 export const HomePage = ({navigation}: Props) => {
-  const {labels} = useContext(Context);
   return (
     <View style={styles.wrap}>
-      <PageItem
-        img={require('../../shared/img/maths_board.png')}
-        text="Примеры"
-        onPress={() => navigation.navigate('Exercise')}
-        label={labels.Exercise}
-      />
-      <PageItem
-        img={require('../../shared/img/test.png')}
-        text="Тесты"
-        onPress={() => navigation.navigate('Test')}
-        label={labels.Test}
-      />
-      <PageItem
-        img={require('../../shared/img/chain.png')}
-        text="Соедини пару"
-        onPress={() => navigation.navigate('Pair')}
-        label={labels.Pair}
-      />
+      <PageItem img={require('../../shared/img/maths_board.png')} text="Примеры" page="Exercise" />
+      <PageItem img={require('../../shared/img/test.png')} text="Тесты" page="Test" />
+      <PageItem img={require('../../shared/img/chain.png')} text="Соедини пару" page="Pair" />
 
       {/* <TouchableOpacity style={styles.section} onPress={() => navigation.navigate('Compare')}>
         <Text style={styles.text}> Неравенства</Text>

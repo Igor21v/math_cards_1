@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import {
   Image,
   ImageSourcePropType,
@@ -8,20 +8,26 @@ import {
 } from 'react-native';
 import {AppText} from '../../shared/ui/AppText';
 import {colors} from '../../shared/ui/Colors';
+import {RootStackParamList} from '@src/shared/types/route';
+import {NavigationProp, ParamListBase, useNavigation} from '@react-navigation/native';
+import {Context} from '@src/shared/lib/Context';
 
-interface Props extends TouchableOpacityProps {
+interface Props {
   text: string;
   img: ImageSourcePropType;
-  label?: boolean;
+  page: keyof RootStackParamList;
 }
 
 export const PageItem = (props: Props) => {
-  const {img, text, label, ...rest} = props;
+  const {img, text, page} = props;
+  const navigation: NavigationProp<ParamListBase> = useNavigation();
+  const {labels} = useContext(Context);
+
   return (
-    <TouchableOpacity style={styles.section} {...rest}>
+    <TouchableOpacity style={styles.section} onPress={() => navigation.navigate(page)}>
       <Image source={img} style={styles.icon} />
       <AppText style={styles.text}>{text}</AppText>
-      {label && <AppText style={styles.label}>&bull;</AppText>}
+      {labels[page] && <AppText style={styles.label}>&bull;</AppText>}
     </TouchableOpacity>
   );
 };
