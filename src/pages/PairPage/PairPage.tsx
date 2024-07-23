@@ -7,6 +7,7 @@ import {TaskProps} from '../../shared/types/task';
 import {DropType} from './DragAndDrop/DragAndDropItem';
 import {Data, PairItem} from './DragAndDrop/PairItem';
 import {genDiffTasks, getMixArr} from './genDiffTasks';
+import {setStorage} from '@src/shared/lib/setStorage';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Pair'>;
 
@@ -17,7 +18,7 @@ export const PairPage = ({navigation}: Props) => {
   let ansCount = 0;
   const dropAns = useRef<DropType<Data>[]>([]);
   const dropResp = useRef<DropType<Data>[]>([]);
-  const {limit, mode} = useContext(Context);
+  const {limit, mode, setLabel} = useContext(Context);
 
   useEffect(() => {
     genTasks();
@@ -37,6 +38,7 @@ export const PairPage = ({navigation}: Props) => {
           errorCount: errorCount,
           errors: Array.from(errors.values()),
         });
+        setLabel('Pair');
         ansCount = 0;
         errorCount = 0;
         errors.clear();

@@ -11,6 +11,7 @@ import {TaskProps} from '../../shared/types/task';
 import {ProgressBar} from '@src/entities/ProgressBar';
 import {TestKeyboard} from './TestKeyboard';
 import {getMockValues} from './getMockValues';
+import {setStorage} from '@src/shared/lib/setStorage';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Test'>;
 
@@ -26,7 +27,7 @@ export const TestPage = ({navigation, route}: Props) => {
   const errors = useRef(new Set<string>());
   const errorCount = useRef(0);
   const [ansCount, setAnsCount] = useState<number>(0);
-  const {limit, mode} = useContext(Context);
+  const {limit, mode, setLabel} = useContext(Context);
   const variants = useRef<number[]>([]);
 
   // Отбражение итоговой странцы
@@ -37,6 +38,7 @@ export const TestPage = ({navigation, route}: Props) => {
         errors: Array.from(errors.current.values()),
       });
       clear();
+      setLabel('Test');
     }
   }, [ansCount]);
 

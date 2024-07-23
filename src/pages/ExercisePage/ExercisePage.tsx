@@ -10,6 +10,7 @@ import {useAnimateError} from '../../entities/Task/useAnimateError';
 import {HelpButton} from '../../entities/Help';
 import {TaskProps} from '../../shared/types/task';
 import {ProgressBar} from '@src/entities/ProgressBar';
+import {setStorage} from '@src/shared/lib/setStorage';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Exercise'>;
 
@@ -25,7 +26,7 @@ export const ExercisePage = ({navigation}: Props) => {
   const errors = useRef(new Set<string>());
   const errorCount = useRef(0);
   const [ansCount, setAnsCount] = useState<number>(0);
-  const {limit, mode} = useContext(Context);
+  const {limit, mode, setLabel} = useContext(Context);
 
   // Отбражение итоговой странцы
   useEffect(() => {
@@ -35,6 +36,7 @@ export const ExercisePage = ({navigation}: Props) => {
         errors: Array.from(errors.current.values()),
       });
       clear();
+      setLabel('Exercise');
     }
   }, [ansCount]);
 
