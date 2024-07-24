@@ -26,7 +26,7 @@ export const ExercisePage = ({navigation}: Props) => {
   const errors = useRef(new Set<string>());
   const errorCount = useRef(0);
   const [ansCount, setAnsCount] = useState<number>(0);
-  const {limit, mode, setLabel} = useContext(Context);
+  const {limit, mode} = useContext(Context);
 
   // Отбражение итоговой странцы
   useEffect(() => {
@@ -36,7 +36,7 @@ export const ExercisePage = ({navigation}: Props) => {
         errors: Array.from(errors.current.values()),
       });
       clear();
-      setLabel('Exercise');
+      setStorage(`labelExercise`, `${Date.now()}`);
     }
   }, [ansCount]);
 

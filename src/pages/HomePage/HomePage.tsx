@@ -1,9 +1,8 @@
 import {NativeStackScreenProps} from '@react-navigation/native-stack';
-import React, {useContext} from 'react';
+import React from 'react';
 import {StyleSheet, View} from 'react-native';
 import {RootStackParamList} from '../../shared/types/route';
 import {PageItem} from './PageItem';
-import {Context} from '@src/shared/lib/Context';
 
 type Props = NativeStackScreenProps<RootStackParamList, 'Home'>;
 

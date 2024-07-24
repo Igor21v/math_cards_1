@@ -27,7 +27,7 @@ export const TestPage = ({navigation, route}: Props) => {
   const errors = useRef(new Set<string>());
   const errorCount = useRef(0);
   const [ansCount, setAnsCount] = useState<number>(0);
-  const {limit, mode, setLabel} = useContext(Context);
+  const {limit, mode} = useContext(Context);
   const variants = useRef<number[]>([]);
 
   // Отбражение итоговой странцы
@@ -38,7 +38,7 @@ export const TestPage = ({navigation, route}: Props) => {
         errors: Array.from(errors.current.values()),
       });
       clear();
-      setLabel('Test');
+      setStorage(`labelTest`, `${Date.now()}`);
     }
   }, [ansCount]);
 

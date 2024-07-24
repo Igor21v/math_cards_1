@@ -1,16 +1,15 @@
-import React, {useContext} from 'react';
 import {
-  Image,
-  ImageSourcePropType,
-  StyleSheet,
-  TouchableOpacity,
-  TouchableOpacityProps,
-} from 'react-native';
+  NavigationProp,
+  ParamListBase,
+  useFocusEffect,
+  useNavigation,
+} from '@react-navigation/native';
+import {getStorage} from '@src/shared/lib/getStorage';
+import {RootStackParamList} from '@src/shared/types/route';
+import React, {useCallback, useRef, useState} from 'react';
+import {Image, ImageSourcePropType, StyleSheet, TouchableOpacity} from 'react-native';
 import {AppText} from '../../shared/ui/AppText';
 import {colors} from '../../shared/ui/Colors';
-import {RootStackParamList} from '@src/shared/types/route';
-import {NavigationProp, ParamListBase, useNavigation} from '@react-navigation/native';
-import {Context} from '@src/shared/lib/Context';
 
 interface Props {
   text: string;
@@ -21,13 +20,41 @@ interface Props {
 export const PageItem = (props: Props) => {
   const {img, text, page} = props;
   const navigation: NavigationProp<ParamListBase> = useNavigation();
-  const {labels} = useContext(Context);
+  const [label, setLabel] = useState(false);
+  const timer = useRef<NodeJS.Timeout>();
 
+  const initLabel = (storTime: number) => {
+    setLabel(false);
+    if (Number.isInteger(+storTime)) {
+      const startOfToday = new Date();
+      startOfToday.setHours(0, 0, 0, 0);
+      // Если сегодня задачу решали ставим метку до конца дня
+      if (storTime > startOfToday.getTime()) {
+        setLabel(true);
+        const endOfToday = new Date();
+        endOfToday.setHours(23, 59, 59, 999);
+        const restTime = endOfToday.getTime() - Date.now();
+        timer.current = setTimeout(() => {
+          setLabel(false);
+        }, restTime);
+      }
+    }
+  };
+
+  useFocusEffect(
+    useCallback(() => {
+      getStorage(`label${page}`, initLabel);
+      return () => {
+        clearInterval(timer.current);
+        timer.current = undefined;
+      };
+    }, []),
+  );
   return (
     <TouchableOpacity style={styles.section} onPress={() => navigation.navigate(page)}>
       <Image source={img} style={styles.icon} />
       <AppText style={styles.text}>{text}</AppText>
-      {labels[page] && <AppText style={styles.label}>&bull;</AppText>}
+      {label && <AppText style={styles.label}>&bull;</AppText>}
     </TouchableOpacity>
   );
 };

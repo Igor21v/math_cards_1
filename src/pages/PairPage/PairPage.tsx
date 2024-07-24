@@ -18,7 +18,7 @@ export const PairPage = ({navigation}: Props) => {
   let ansCount = 0;
   const dropAns = useRef<DropType<Data>[]>([]);
   const dropResp = useRef<DropType<Data>[]>([]);
-  const {limit, mode, setLabel} = useContext(Context);
+  const {limit, mode} = useContext(Context);
 
   useEffect(() => {
     genTasks();
@@ -38,7 +38,7 @@ export const PairPage = ({navigation}: Props) => {
           errorCount: errorCount,
           errors: Array.from(errors.values()),
         });
-        setLabel('Pair');
+        setStorage(`labelPair`, `${Date.now()}`);
         ansCount = 0;
         errorCount = 0;
         errors.clear();
