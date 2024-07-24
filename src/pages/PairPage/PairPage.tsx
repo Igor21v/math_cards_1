@@ -99,7 +99,7 @@ export const PairPage = ({navigation}: Props) => {
         />,
       );
     }
-    return answers;
+    return <>{answers}</>;
   };
 
   return (
