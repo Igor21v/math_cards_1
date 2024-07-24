@@ -17,7 +17,7 @@ export const NumKeyboard = (props: KeyboardProps) => {
       setNum(currNum => {
         setError(false);
         if (currNum === '?') return num;
-        if (currNum.length < 3) return currNum + num;
+        if (currNum.length < 2) return currNum + num;
         return currNum;
       });
     };
