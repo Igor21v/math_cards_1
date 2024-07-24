@@ -22,7 +22,6 @@ export const HelpContentAdd = (props: HelpProps) => {
       const addition = 10 - task.firstNum;
       return (
         <>
-          <AppText>Дополни число {task.firstNum} до 10ти и прибавь то что осталось</AppText>
           <View style={styles.wrapContent}>
             <View style={styles.content}>
               <AppText size="l" style={styles.green}>
@@ -36,8 +35,8 @@ export const HelpContentAdd = (props: HelpProps) => {
           </View>
         </>
       );
-    } else {
-      // Задача на сложение с суммой больше 10 первое число > или = 10
+    } else if (task.firstNum > 10) {
+      // Задача на сложение с суммой больше 10 первое число > 10
       const addition = task.firstNum - 10;
       return (
         <View style={styles.wrapContent}>
@@ -52,6 +51,19 @@ export const HelpContentAdd = (props: HelpProps) => {
               10
             </AppText>
           </View>
+        </View>
+      );
+    } else {
+      // Задача на сложение с суммой больше 10 первое число = 10
+      return (
+        <View style={styles.wrapContent}>
+          <AppText size="l" style={styles.green}>
+            {task.firstNum}
+            {' + '}
+            {task.secondNum}
+            {' = '}
+            {task.ans}
+          </AppText>
         </View>
       );
     }

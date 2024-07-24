@@ -21,10 +21,6 @@ export const HelpContentSubtract = (props: HelpProps) => {
       const addition = task.firstNum - 10;
       return (
         <>
-          <AppText>
-            Вычти из числа {task.firstNum} число {addition}, получишь 10. А затем вычти то что
-            осталось.
-          </AppText>
           <View style={styles.wrapContent}>
             <View style={styles.content}>
               <AppText size="l" style={styles.green}>
