@@ -3,7 +3,7 @@ import {getStorage} from '@src/shared/lib/getStorage';
 import {setStorage} from '@src/shared/lib/setStorage';
 import {AppButton} from '@src/shared/ui/AppButton';
 import React, {useEffect} from 'react';
-import {AppRegistry, StyleSheet, View, NativeModules} from 'react-native';
+import {AppRegistry, StyleSheet, View, NativeModules, NativeEventEmitter} from 'react-native';
 import {RootStackParamList} from '../../shared/types/route';
 import {PageItem} from './PageItem';
 
@@ -26,6 +26,17 @@ export const HomePage = ({navigation}: Props) => {
   const startFn2 = () => {
     NativeModules.AppTasks.taskOne('TTT');
   };
+
+  useEffect(() => {
+    const eventEmitter = new NativeEventEmitter(NativeModules.ToastExample);
+    let eventListener = eventEmitter.addListener('OnResume', event => {
+      console.log('Поймано событие с Native ' + event);
+    });
+    return () => {
+      eventListener.remove();
+    };
+  }, []);
+
   return (
     <View style={styles.wrap}>
       <PageItem img={require('../../shared/img/maths_board.png')} text="Примеры" page="Exercise" />

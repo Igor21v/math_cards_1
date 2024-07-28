@@ -7,6 +7,8 @@ import com.facebook.react.defaults.DefaultReactActivityDelegate
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
+import com.facebook.react.modules.core.DeviceEventManagerModule
+import com.facebook.react.bridge.ReactApplicationContext
 
 class MainActivity : ReactActivity() {
 
@@ -15,10 +17,19 @@ class MainActivity : ReactActivity() {
    * rendering of the component.
    */
   override fun getMainComponentName(): String = "math_cards_1"
-    override fun onStart() {
-      super.onStart()
-      Log.d("СОБЫТИЕ SART", "Create event called with name")
-    }
+  override fun onStart() {
+    super.onStart()
+    Log.d("СОБЫТИЕ onStart", "Старт приложения")
+  }
+  override fun onResume() {
+    super.onResume()
+    Log.d("СОБЫТИЕ onResume", "Фокус приложения")
+    getReactNativeHost()?.getReactInstanceManager()?.getCurrentReactContext()?.getJSModule(DeviceEventManagerModule.RCTDeviceEventEmitter::class.java)?.emit("OnResume", "ff")        
+  }
+  override fun onPause() {
+    super.onPause()
+    Log.d("СОБЫТИЕ onPause", "Пауза приложения")
+  }
   
   /**
    * Returns the instance of the [ReactActivityDelegate]. We use [DefaultReactActivityDelegate]

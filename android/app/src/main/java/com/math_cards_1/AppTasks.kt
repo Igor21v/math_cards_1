@@ -15,6 +15,8 @@ class AppTasks(private val reactContext: ReactApplicationContext) :
 
     @ReactMethod
     fun taskOne(name: String) {
-        Log.d("НАЖАТИЕ", "Create event called with name: $name")
+        Log.d("СОБЫТИЕ НАЖАТИЕ", "Create event called with name: $name")
     }
+
+    
 }
