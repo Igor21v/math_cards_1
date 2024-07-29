@@ -6,8 +6,15 @@ import {
 } from '@react-navigation/native';
 import {getStorage} from '@src/shared/lib/getStorage';
 import {RootStackParamList} from '@src/shared/types/route';
-import React, {useCallback, useRef, useState} from 'react';
-import {Image, ImageSourcePropType, StyleSheet, TouchableOpacity} from 'react-native';
+import React, {useCallback, useEffect, useRef, useState} from 'react';
+import {
+  Image,
+  ImageSourcePropType,
+  NativeEventEmitter,
+  NativeModules,
+  StyleSheet,
+  TouchableOpacity,
+} from 'react-native';
 import {AppText} from '../../shared/ui/AppText';
 import {colors} from '../../shared/ui/Colors';
 
@@ -34,6 +41,7 @@ export const PageItem = (props: Props) => {
         const endOfToday = new Date();
         endOfToday.setHours(23, 59, 59, 999);
         const restTime = endOfToday.getTime() - Date.now();
+        clearInterval(timer.current);
         timer.current = setTimeout(() => {
           setLabel(false);
         }, restTime);
@@ -41,15 +49,29 @@ export const PageItem = (props: Props) => {
     }
   };
 
+  // Происходит при возврате к экрану в стеке react navigation
   useFocusEffect(
     useCallback(() => {
       getStorage(`label${page}`, initLabel);
       return () => {
         clearInterval(timer.current);
-        timer.current = undefined;
       };
     }, []),
   );
+
+  // OnResume происходит когда приложение становиться видимым
+  useEffect(() => {
+    const eventEmitter = new NativeEventEmitter();
+    let eventListener = eventEmitter.addListener('OnResume', event => {
+      console.log('Event!!! Resume');
+      getStorage(`label${page}`, initLabel);
+    });
+    return () => {
+      eventListener.remove();
+      clearInterval(timer.current);
+    };
+  }, []);
+
   return (
     <TouchableOpacity style={styles.section} onPress={() => navigation.navigate(page)}>
       <Image source={img} style={styles.icon} />

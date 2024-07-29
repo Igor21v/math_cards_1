@@ -10,39 +10,18 @@ import {PageItem} from './PageItem';
 type Props = NativeStackScreenProps<RootStackParamList, 'Home'>;
 
 export const HomePage = ({navigation}: Props) => {
-  useEffect(() => {
-    const consoleLog = (time: number) => {
-      if (Number.isInteger(+time)) {
-        console.log('time', time);
-      } else {
-        console.log('NOT TIME');
-      }
-    };
-    getStorage('time', consoleLog);
-  }, []);
-  useEffect(() => {
+  /*  useEffect(() => {
     NativeModules.BackgroundTask.startService();
   }, []);
   const startFn2 = () => {
     NativeModules.AppTasks.taskOne('TTT');
-  };
-
-  useEffect(() => {
-    const eventEmitter = new NativeEventEmitter(NativeModules.ToastExample);
-    let eventListener = eventEmitter.addListener('OnResume', event => {
-      console.log('Поймано событие с Native ' + event);
-    });
-    return () => {
-      eventListener.remove();
-    };
-  }, []);
+  }; */
 
   return (
     <View style={styles.wrap}>
       <PageItem img={require('../../shared/img/maths_board.png')} text="Примеры" page="Exercise" />
       <PageItem img={require('../../shared/img/test.png')} text="Тесты" page="Test" />
       <PageItem img={require('../../shared/img/chain.png')} text="Соедини пару" page="Pair" />
-      <AppButton onPress={startFn2}>Start background task</AppButton>
 
       {/* <TouchableOpacity style={styles.section} onPress={() => navigation.navigate('Compare')}>
         <Text style={styles.text}> Неравенства</Text>

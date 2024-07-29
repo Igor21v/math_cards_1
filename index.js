@@ -7,7 +7,7 @@ import App from './src/app/App';
 import {name as appName} from './app.json';
 
 AppRegistry.registerComponent(appName, () => App);
-const fn = async () => {
-  console.log('ЗАРАБОТАЛО!!!');
+const fnHeadlessJS = async () => {
+  console.log('Background task is run');
 };
-AppRegistry.registerHeadlessTask('BackgroundTask', () => fn);
+AppRegistry.registerHeadlessTask('BackgroundTask', () => fnHeadlessJS);
